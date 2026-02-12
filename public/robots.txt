@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://q8design.vn/
+
+# Sitemaps
+Sitemap: https://q8design.vn/sitemap.xml

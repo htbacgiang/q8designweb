@@ -1,0 +1,765 @@
+/* Q8 Design Brand Guidelines Implementation */
+
+/* Geogrotesque font definitions moved to fonts.css for better organization */
+
+:root {
+  /* Q8 Design Official Color Palette - Neutral & Minimalist */
+  --q8-cod-gray: #121212;      /* Logo, main headings, important text */
+  --q8-nevada: #5E676B;        /* Secondary text, subtitles */
+  --q8-oslo-gray: #878E92;     /* Body text, descriptions */
+  --q8-bombay: #B0B5B8;        /* Light text, borders, dividers */
+  --q8-alabaster: #F9F9F9;     /* Background, cards, sections */
+  --q8-white: #FFFFFF;         /* Pure white for contrast */
+  
+  /* New Color Palette - User Requested */
+  --q8-primary-50: #F9F9F9;    /* Light background */
+  --q8-primary-500: #B0B5B8;   /* Light gray */
+  --q8-primary-600: #878E92;   /* Medium gray */
+  --q8-primary-700: #5E676B;   /* Dark gray */
+  --q8-primary-900: #121212;   /* Dark background/text */
+  
+  /* Semantic color mapping */
+  --q8-primary: var(--q8-cod-gray);
+  --q8-secondary: var(--q8-nevada);
+  --q8-text: var(--q8-oslo-gray);
+  --q8-text-light: var(--q8-bombay);
+  --q8-background: var(--q8-alabaster);
+  --q8-surface: var(--q8-white);
+  
+  /* Typography Scale */
+  --q8-font-family: 'Geogrotesque', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  /* Force Geogrotesque for all text */
+  font-family: 'Geogrotesque', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  /* Font Weights matching Geogrotesque */
+  --q8-font-light: 300;
+  --q8-font-regular: 400;
+  --q8-font-medium: 500;
+  --q8-font-bold: 600;
+  --q8-font-bold: 700;
+  
+  /* Spacing */
+  --q8-spacing-xs: 0.25rem;    /* 4px */
+  --q8-spacing-sm: 0.5rem;     /* 8px */
+  --q8-spacing-md: 1rem;       /* 16px */
+  --q8-spacing-lg: 1.5rem;     /* 24px */
+  --q8-spacing-xl: 2rem;       /* 32px */
+  --q8-spacing-2xl: 3rem;      /* 48px */
+  --q8-spacing-3xl: 4rem;      /* 64px */
+  
+  /* Border Radius */
+  --q8-radius-sm: 0.375rem;    /* 6px */
+  --q8-radius-md: 0.5rem;      /* 8px */
+  --q8-radius-lg: 1rem;        /* 16px */
+  --q8-radius-xl: 1.5rem;      /* 24px */
+  
+  /* Shadows */
+  --q8-shadow-sm: 0 1px 2px 0 rgba(18, 18, 18, 0.05);
+  --q8-shadow-md: 0 4px 6px -1px rgba(18, 18, 18, 0.1), 0 2px 4px -1px rgba(18, 18, 18, 0.06);
+  --q8-shadow-lg: 0 10px 15px -3px rgba(18, 18, 18, 0.1), 0 4px 6px -2px rgba(18, 18, 18, 0.05);
+  --q8-shadow-xl: 0 20px 25px -5px rgba(18, 18, 18, 0.1), 0 10px 10px -5px rgba(18, 18, 18, 0.04);
+}
+
+/* Base Typography */
+body {
+  font-family: var(--q8-font-family);
+  color: var(--q8-cod-gray);
+  background-color: var(--q8-white);
+  line-height: 1.6;
+}
+
+/* Q8 Design Typography Classes */
+.q8-text-brand {
+  color: var(--q8-cod-gray);
+}
+
+.q8-text-secondary {
+  color: var(--q8-nevada);
+}
+
+.q8-text-muted {
+  color: var(--q8-oslo-gray);
+}
+
+.q8-text-light {
+  color: var(--q8-bombay);
+}
+
+.q8-bg-primary {
+  background-color: var(--q8-cod-gray);
+}
+
+.q8-bg-secondary {
+  background-color: var(--q8-nevada);
+}
+
+.q8-bg-light {
+  background-color: var(--q8-alabaster);
+}
+
+.q8-bg-surface {
+  background-color: var(--q8-surface);
+}
+
+/* Additional color utilities for specific Q8 colors */
+.q8-text-cod-gray {
+  color: var(--q8-cod-gray);
+}
+
+.q8-text-nevada {
+  color: var(--q8-nevada);
+}
+
+.q8-text-oslo-gray {
+  color: var(--q8-oslo-gray);
+}
+
+.q8-text-bombay {
+  color: var(--q8-bombay);
+}
+
+.q8-bg-cod-gray {
+  background-color: var(--q8-cod-gray);
+}
+
+.q8-bg-nevada {
+  background-color: var(--q8-nevada);
+}
+
+.q8-bg-oslo-gray {
+  background-color: var(--q8-oslo-gray);
+}
+
+.q8-bg-bombay {
+  background-color: var(--q8-bombay);
+}
+
+.q8-bg-alabaster {
+  background-color: var(--q8-alabaster);
+}
+
+/* Typography Styles */
+.q8-heading-xl {
+  font-size: 3.75rem;
+  font-weight: var(--q8-font-bold);
+  line-height: 1.1;
+  color: var(--q8-cod-gray);
+  letter-spacing: -0.025em;
+}
+
+.q8-heading-lg {
+  font-size: 3rem;
+  font-weight: var(--q8-font-bold);
+  line-height: 1.2;
+  color: var(--q8-cod-gray);
+  letter-spacing: -0.025em;
+}
+
+.q8-heading-md {
+  font-size: 2.25rem;
+  font-weight: var(--q8-font-bold);
+  line-height: 1.3;
+  color: var(--q8-cod-gray);
+}
+
+.q8-heading-sm {
+  font-size: 1.875rem;
+  font-weight: var(--q8-font-bold);
+  line-height: 1.3;
+  color: var(--q8-cod-gray);
+}
+
+.q8-subtitle {
+  font-size: 1.25rem;
+  font-weight: var(--q8-font-medium);
+  color: var(--q8-nevada);
+  line-height: 1.4;
+}
+
+.q8-body-lg {
+  font-size: 1.125rem;
+  font-weight: var(--q8-font-regular);
+  color: var(--q8-oslo-gray);
+  line-height: 1.6;
+}
+
+.q8-body {
+  font-size: 1rem;
+  font-weight: var(--q8-font-regular);
+  color: var(--q8-oslo-gray);
+  line-height: 1.6;
+}
+
+.q8-body-sm {
+  font-size: 0.875rem;
+  font-weight: var(--q8-font-regular);
+  color: var(--q8-oslo-gray);
+  line-height: 1.5;
+}
+
+.q8-caption {
+  font-size: 0.75rem;
+  font-weight: var(--q8-font-regular);
+  color: var(--q8-bombay);
+  line-height: 1.4;
+}
+
+/* Button Styles */
+.q8-btn-primary {
+  background-color: var(--q8-cod-gray);
+  color: var(--q8-white);
+  border: 2px solid var(--q8-cod-gray);
+  font-weight: var(--q8-font-bold);
+  padding: 0.75rem 2rem;
+  border-radius: var(--q8-radius-lg);
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.q8-btn-primary:hover {
+  background-color: var(--q8-nevada);
+  border-color: var(--q8-nevada);
+  transform: translateY(-1px);
+  box-shadow: var(--q8-shadow-lg);
+}
+
+.q8-btn-secondary {
+  background-color: transparent;
+  color: var(--q8-cod-gray);
+  border: 2px solid var(--q8-cod-gray);
+  font-weight: var(--q8-font-bold);
+  padding: 0.75rem 2rem;
+  border-radius: var(--q8-radius-lg);
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.q8-btn-secondary:hover {
+  background-color: var(--q8-cod-gray);
+  color: var(--q8-white);
+  transform: translateY(-1px);
+  box-shadow: var(--q8-shadow-lg);
+}
+
+.q8-btn-ghost {
+  background-color: transparent;
+  color: var(--q8-nevada);
+  border: 1px solid var(--q8-bombay);
+  font-weight: var(--q8-font-medium);
+  padding: 0.5rem 1.5rem;
+  border-radius: var(--q8-radius-md);
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.q8-btn-ghost:hover {
+  background-color: var(--q8-alabaster);
+  border-color: var(--q8-nevada);
+  color: var(--q8-cod-gray);
+}
+
+/* Card Styles */
+.q8-card {
+  background-color: var(--q8-white);
+  border-radius: var(--q8-radius-xl);
+  box-shadow: var(--q8-shadow-md);
+  padding: var(--q8-spacing-xl);
+  transition: all 0.3s ease;
+}
+
+.q8-card:hover {
+  box-shadow: var(--q8-shadow-xl);
+  transform: translateY(-4px);
+}
+
+.q8-card-minimal {
+  background-color: var(--q8-alabaster);
+  border-radius: var(--q8-radius-lg);
+  padding: var(--q8-spacing-lg);
+  border: 1px solid rgba(176, 181, 184, 0.2);
+}
+
+/* Section Styles */
+.q8-section {
+  padding: var(--q8-spacing-3xl) 0;
+}
+
+.q8-section-light {
+  background-color: var(--q8-alabaster);
+}
+
+.q8-section-dark {
+  background-color: var(--q8-cod-gray);
+  color: var(--q8-white);
+}
+
+/* Badge/Tag Styles */
+.q8-badge {
+  background-color: var(--q8-cod-gray);
+  color: var(--q8-white);
+  font-size: 0.75rem;
+  font-weight: var(--q8-font-bold);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--q8-radius-md);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.q8-badge-outline {
+  background-color: transparent;
+  color: var(--q8-cod-gray);
+  border: 1px solid var(--q8-bombay);
+  font-size: 0.75rem;
+  font-weight: var(--q8-font-medium);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--q8-radius-md);
+}
+
+/* Logo Styles */
+.q8-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--q8-spacing-sm);
+  text-decoration: none;
+}
+
+.q8-logo img {
+  transition: transform 0.3s ease;
+  max-height: 3rem;
+  width: auto;
+  object-fit: contain;
+}
+
+.q8-logo:hover img {
+  transform: scale(1.05);
+}
+
+/* Form Styles */
+.q8-input {
+  background-color: var(--q8-white);
+  border: 1px solid var(--q8-bombay);
+  border-radius: var(--q8-radius-md);
+  padding: 0.75rem 1rem;
+  font-family: var(--q8-font-family);
+  font-size: 1rem;
+  color: var(--q8-cod-gray);
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.q8-input:focus {
+  outline: none;
+  border-color: var(--q8-cod-gray);
+  box-shadow: 0 0 0 3px rgba(18, 18, 18, 0.1);
+}
+
+.q8-input::placeholder {
+  color: var(--q8-bombay);
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+  .q8-heading-xl {
+    font-size: 2.5rem;
+  }
+  
+  .q8-heading-lg {
+    font-size: 2rem;
+  }
+  
+  .q8-heading-md {
+    font-size: 1.75rem;
+  }
+  
+  .q8-section {
+    padding: var(--q8-spacing-2xl) 0;
+  }
+}
+
+/* Animation utilities */
+.q8-fade-in {
+  animation: q8FadeIn 0.6s ease-out;
+}
+
+.q8-slide-up {
+  animation: q8SlideUp 0.8s ease-out;
+}
+
+/* Hero Section Enhanced Animations */
+.animate-fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+.animate-text-shimmer {
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 70%
+  );
+  background-size: 200% 200%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+}
+
+/* Text Effects */
+.text-shadow-glow {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
+               0 0 40px rgba(255, 255, 255, 0.3),
+               0 0 60px rgba(255, 255, 255, 0.1);
+}
+
+.text-shadow-strong {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8),
+               0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Button Effects */
+.btn-glow-orange {
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.4),
+              0 0 40px rgba(249, 115, 22, 0.2),
+              0 0 60px rgba(249, 115, 22, 0.1);
+}
+
+.btn-glow-orange:hover {
+  box-shadow: 0 0 30px rgba(249, 115, 22, 0.6),
+              0 0 50px rgba(249, 115, 22, 0.4),
+              0 0 80px rgba(249, 115, 22, 0.2);
+}
+
+@keyframes q8FadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes q8SlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(30px) scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Stats Section Enhanced Animations */
+@keyframes statsGlow {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1),
+                0 0 40px rgba(255, 255, 255, 0.05),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+  50% { 
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2),
+                0 0 60px rgba(255, 255, 255, 0.1),
+                inset 0 0 30px rgba(255, 255, 255, 0.15);
+  }
+}
+
+@keyframes statsPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.9; }
+}
+
+@keyframes statsFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+/* Stats container animation */
+.q8-stats-container {
+  animation: statsGlow 4s ease-in-out infinite;
+}
+
+.q8-stats-container:hover {
+  animation: statsGlow 2s ease-in-out infinite;
+}
+
+/* Individual stat animations */
+.q8-stat-item {
+  animation: statsFloat 6s ease-in-out infinite;
+}
+
+.q8-stat-item:nth-child(2) {
+  animation-delay: 1s;
+}
+
+.q8-stat-item:nth-child(3) {
+  animation-delay: 2s;
+}
+
+.q8-stat-number {
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.3),
+               0 0 60px rgba(255, 255, 255, 0.1),
+               0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.q8-stat-number:hover {
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.5),
+               0 0 80px rgba(255, 255, 255, 0.2),
+               0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Global Font Override - Ensure Geogrotesque is used everywhere */
+*, *::before, *::after {
+  font-family: 'Geogrotesque', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+/* Ensure body uses Geogrotesque */
+body {
+  font-family: 'Geogrotesque', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+/* Override any inherited fonts */
+h1, h2, h3, h4, h5, h6, p, span, div, button, input, textarea, a {
+  font-family: 'Geogrotesque', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+/* Fixed Navigation Spacing */
+.q8-main-content {
+  padding-top: 80px; /* Height of fixed navigation */
+}
+
+/* Hero section should be full height without top padding */
+.q8-hero-section {
+  margin-top: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Mobile: optimized for landscape images - use aspect ratio for better display */
+@media (max-width: 639px) {
+  .q8-hero-section {
+    aspect-ratio: 16 / 9 !important;
+    min-height: auto !important;
+    height: auto !important;
+    max-height: 50vh !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    display: block !important;
+    flex-direction: unset !important;
+    justify-content: unset !important;
+    position: relative !important;
+  }
+  
+  .q8-hero-section > div {
+    height: 100% !important;
+    min-height: 100% !important;
+    position: relative !important;
+    width: 100% !important;
+  }
+  
+  .q8-hero-section img,
+  .q8-hero-section [data-next-image] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .q8-hero-section {
+    aspect-ratio: 16 / 9 !important;
+    min-height: auto !important;
+    height: auto !important;
+    max-height: 60vh !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    display: block !important;
+    flex-direction: unset !important;
+    justify-content: unset !important;
+    position: relative !important;
+  }
+  
+  .q8-hero-section > div {
+    height: 100% !important;
+    min-height: 100% !important;
+    position: relative !important;
+    width: 100% !important;
+  }
+  
+  .q8-hero-section img,
+  .q8-hero-section [data-next-image] {
+    object-fit: contain !important;
+    object-position: center center !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+/* Desktop: full screen */
+@media (min-width: 768px) {
+  .q8-hero-section {
+    min-height: 100vh;
+    height: 100vh;
+    margin-top: -80px;
+    padding-top: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+/* Hero content spacing and alignment */
+.q8-hero-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+  padding: 0;
+}
+
+@media (min-width: 1024px) {
+  .q8-hero-content {
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
+/* Responsive spacing adjustments */
+@media (max-width: 767px) {
+  .q8-hero-content {
+    padding: 0;
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
+/* Scroll Indicator Centering for Desktop */
+.q8-hero-section .absolute.bottom-6 {
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Ensure smooth animation on all devices */
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+/* Mobile-specific centering adjustments */
+@media (max-width: 768px) {
+  .q8-hero-section .absolute.bottom-6 {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    width: auto !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    position: absolute !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    bottom: 1.5rem !important;
+    /* Ensure bounce animation works on mobile */
+    animation: bounce 2s infinite !important;
+    animation-duration: 2s !important;
+    animation-timing-function: ease-in-out !important;
+    animation-iteration-count: infinite !important;
+    will-change: transform !important;
+  }
+  
+  /* Enhanced bounce animation for mobile */
+  @keyframes bounce {
+    0%, 20%, 53%, 80%, 100% {
+      animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      transform: translateX(-50%) translateY(0);
+    }
+    40%, 43% {
+      animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+      transform: translateX(-50%) translateY(-8px);
+    }
+    70% {
+      animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+      transform: translateX(-50%) translateY(-4px);
+    }
+    90% {
+      transform: translateX(-50%) translateY(-2px);
+    }
+  }
+  
+  /* Optimize performance on mobile devices */
+  .q8-hero-section .absolute.bottom-6 * {
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+    transform-style: preserve-3d !important;
+    -webkit-transform-style: preserve-3d !important;
+  }
+}
+
+/* Custom Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F9F9F9;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #B0B5B8;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #878E92;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #B0B5B8 #F9F9F9;
+}

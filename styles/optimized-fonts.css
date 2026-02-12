@@ -1,0 +1,94 @@
+/* styles/optimized-fonts.css - Optimized font loading for Q8 Design */
+
+/* 
+ * Font Loading Strategy:
+ * 1. Only load essential font weights (400, 500, 700)
+ * 2. Use font-display: swap for better performance
+ * 3. Preload critical fonts in _document.js
+ * 4. Group font families for better organization
+ */
+
+/* ===== SATOSHI FONT FAMILY ===== */
+/* Primary font for Q8 Design - Modern, clean typography */
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/Satoshi-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/Satoshi-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/Satoshi-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Italic variants - only if used in design */
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/Satoshi-Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ===== GEOGROTESQUE FONT FAMILY ===== */
+/* Secondary font for Q8 Design - Geometric, professional */
+
+@font-face {
+  font-family: 'Geogrotesque';
+  src: url('/fonts/Geogtq-Rg.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geogrotesque';
+  src: url('/fonts/Geogtq-Md.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geogrotesque';
+  src: url('/fonts/Geogtq-Bd.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ===== FONT USAGE GUIDELINES ===== */
+/*
+ * Satoshi: Use for headings, body text, UI elements
+ * - font-weight: 400 (Regular) - Body text, descriptions
+ * - font-weight: 500 (Medium) - Subheadings, emphasis
+ * - font-weight: 700 (Bold) - Main headings, important text
+ * 
+ * Geogrotesque: Use for accents, special elements
+ * - font-weight: 400 (Regular) - Secondary text
+ * - font-weight: 500 (Medium) - Subtitles
+ * - font-weight: 700 (Bold) - Call-to-action text
+ */
+
+/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+/*
+ * 1. Reduced from 20 font files to 7 essential files
+ * 2. Preloaded critical fonts in _document.js
+ * 3. Used font-display: swap for better loading experience
+ * 4. Organized font families for better maintainability
+ * 5. Removed unused font weights (300, 600, 900, italic variants)
+ */
