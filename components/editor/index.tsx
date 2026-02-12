@@ -232,12 +232,21 @@ const Editor: FC<Props> = ({
       const currentPostFromRef = postRef.current;
       const currentPostFromState = post;
       
+      // Lấy category từ nhiều nguồn để đảm bảo có giá trị
+      // Ưu tiên: state > ref > seoInitialValue > initialValue
+      const categoryFromState = currentPostFromState.category?.trim() || '';
+      const categoryFromRef = currentPostFromRef.category?.trim() || '';
+      const categoryFromSeo = seoInitialValue?.category?.trim() || '';
+      const categoryFromInitial = initialValue?.category?.trim() || '';
+      
+      const finalCategory = categoryFromState || categoryFromRef || categoryFromSeo || categoryFromInitial;
+      
       // Ưu tiên giá trị từ state nếu có (mới hơn), fallback về ref
       const currentPost = {
         ...currentPostFromRef,
         ...currentPostFromState,
-        // Đảm bảo category được lấy từ state nếu có (mới nhất)
-        category: currentPostFromState.category || currentPostFromRef.category,
+        // Đảm bảo category được lấy từ nhiều nguồn
+        category: finalCategory,
       };
       
       // Cập nhật ref với giá trị mới nhất
@@ -271,11 +280,14 @@ const Editor: FC<Props> = ({
       }
       
       // Kiểm tra danh mục - debug log để kiểm tra
-      const categoryValue = currentPost.category?.trim() || '';
+      const categoryValue = finalCategory;
       console.log('Category check:', { 
         category: categoryValue, 
-        fromState: currentPostFromState.category,
-        fromRef: currentPostFromRef.category,
+        fromState: categoryFromState,
+        fromRef: categoryFromRef,
+        fromSeo: categoryFromSeo,
+        fromInitial: categoryFromInitial,
+        finalCategory: categoryValue,
         isEmpty: !categoryValue 
       });
       

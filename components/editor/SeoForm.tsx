@@ -242,11 +242,11 @@ const SEOForm: FC<Props> = ({
         focusKeyword: initialValue.focusKeyword || "",
       };
       setValues(newValues);
-      // Gọi onChange để cập nhật post state trong Editor component
-      // Chỉ gọi onChange nếu giá trị thực sự khác với giá trị hiện tại để tránh loop
-      if (JSON.stringify(newValues) !== JSON.stringify(values)) {
+      // Luôn gọi onChange khi khởi tạo từ initialValue để đảm bảo post state được cập nhật
+      // Sử dụng setTimeout để đảm bảo state đã được set trước khi gọi onChange
+      setTimeout(() => {
         onChange(newValues);
-      }
+      }, 0);
       // If initialValue has a slug, it means it's been set before, so mark as manually edited
       // This prevents auto-generation from overwriting existing slug
       // If slug is empty, allow auto-generation from title

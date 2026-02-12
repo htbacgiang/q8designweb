@@ -25,11 +25,15 @@ export const generateFormData = (post: FinalPost) => {
       }
     } else if (key === "category") {
       // Đảm bảo category luôn được gửi lên (trim để đảm bảo format đúng)
+      // Nếu category là empty string hoặc undefined, vẫn gửi lên để API có thể xử lý
       if (typeof value === "string") {
-        formData.append("category", value.trim());
-      } else {
-        formData.append("category", value);
+        const trimmedCategory = value.trim();
+        // Luôn append category, kể cả khi rỗng (API sẽ giữ nguyên giá trị cũ nếu rỗng)
+        formData.append("category", trimmedCategory);
+      } else if (value !== undefined && value !== null) {
+        formData.append("category", String(value));
       }
+      // Nếu value là undefined hoặc null, không append (đã được xử lý ở trên)
     } else {
       // Các field khác
       formData.append(key, value);
