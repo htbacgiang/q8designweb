@@ -135,7 +135,11 @@ const Editor: FC<Props> = ({
   const editor = useEditor({
     immediatelyRender: false,
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        heading: {
+          levels: [1, 2, 3, 4, 5, 6], // Hỗ trợ tất cả các level heading
+        },
+      }),
       Underline,
       TextStyle,
       Color,
@@ -222,6 +226,23 @@ const Editor: FC<Props> = ({
 
     const handleSubmit = () => {
       if (!editor) return;
+      
+      // Đảm bảo postRef được cập nhật với giá trị mới nhất từ state trước khi validate
+      // Sử dụng cả ref và state để đảm bảo lấy giá trị mới nhất
+      const currentPostFromRef = postRef.current;
+      const currentPostFromState = post;
+      
+      // Ưu tiên giá trị từ state nếu có (mới hơn), fallback về ref
+      const currentPost = {
+        ...currentPostFromRef,
+        ...currentPostFromState,
+        // Đảm bảo category được lấy từ state nếu có (mới nhất)
+        category: currentPostFromState.category || currentPostFromRef.category,
+      };
+      
+      // Cập nhật ref với giá trị mới nhất
+      postRef.current = currentPost;
+      
       isSubmittingRef.current = true; // Chặn auto-save tạo thêm nháp khi đang submit
       
       // Validation: Kiểm tra các trường bắt buộc
@@ -229,40 +250,53 @@ const Editor: FC<Props> = ({
       const hasActualContent = !!(editorContent && editorContent !== '<p></p>' && editorContent !== '<p><br></p>');
       
       // Kiểm tra tiêu đề
-      if (!post.title || post.title.trim() === '') {
+      if (!currentPost.title || currentPost.title.trim() === '') {
         toast.error("Vui lòng nhập tiêu đề bài viết!");
+        isSubmittingRef.current = false; // Reset khi validation fail
         return;
       }
       
       // Kiểm tra nội dung
       if (!hasActualContent) {
         toast.error("Vui lòng nhập nội dung bài viết!");
+        isSubmittingRef.current = false; // Reset khi validation fail
         return;
       }
       
       // Kiểm tra slug
-      if (!post.slug || post.slug.trim() === '') {
+      if (!currentPost.slug || currentPost.slug.trim() === '') {
         toast.error("Vui lòng nhập slug cho bài viết!");
+        isSubmittingRef.current = false; // Reset khi validation fail
         return;
       }
       
-      // Kiểm tra danh mục
-      if (!post.category || post.category.trim() === '') {
+      // Kiểm tra danh mục - debug log để kiểm tra
+      const categoryValue = currentPost.category?.trim() || '';
+      console.log('Category check:', { 
+        category: categoryValue, 
+        fromState: currentPostFromState.category,
+        fromRef: currentPostFromRef.category,
+        isEmpty: !categoryValue 
+      });
+      
+      if (!categoryValue) {
         toast.error("Vui lòng chọn danh mục cho bài viết!");
+        isSubmittingRef.current = false; // Reset khi validation fail
         return;
       }
       
       // Kiểm tra meta description
-      if (!post.meta || post.meta.trim() === '') {
+      if (!currentPost.meta || currentPost.meta.trim() === '') {
         toast.error("Vui lòng nhập meta description cho bài viết!");
+        isSubmittingRef.current = false; // Reset khi validation fail
         return;
       }
       
       // Từ khóa chính (Focus Keyword) không bắt buộc
       
       // Luôn ưu tiên id từ ref (đã được set ngay khi lưu nháp) để tránh tạo bài mới thay vì publish nháp
-      const idToUse = postIdRef.current ?? post.id;
-      onSubmit({ ...post, id: idToUse, content: editorContent, isDraft, isFeatured });
+      const idToUse = postIdRef.current ?? currentPost.id;
+      onSubmit({ ...currentPost, id: idToUse, content: editorContent, isDraft, isFeatured });
     };
 
     const saveDraft = useCallback(async () => {
@@ -524,9 +558,16 @@ const Editor: FC<Props> = ({
 
 
     const updateTitle: ChangeEventHandler<HTMLInputElement> = ({ target }) =>
-      setPost({ ...post, title: target.value });
+      setPost(prev => ({ ...prev, title: target.value }));
 
-    const updateSeoValue = (result: SeoResult) => setPost({ ...post, ...result });
+    const updateSeoValue = (result: SeoResult) => {
+      setPost(prev => {
+        const updated = { ...prev, ...result };
+        // Cập nhật ref ngay lập tức để đảm bảo giá trị mới nhất
+        postRef.current = updated;
+        return updated;
+      });
+    };
 
     const updateThumbnail = (file: File) => setPost({ ...post, thumbnail: file });
 
@@ -542,10 +583,21 @@ const Editor: FC<Props> = ({
 
     useEffect(() => {
       if (initialValue) {
-        setPost({ ...initialValue });
-        editor?.commands.setContent(initialValue.content);
+        // Đảm bảo category được trim và set đúng cách
+        const normalizedInitialValue = {
+          ...initialValue,
+          category: initialValue.category ? initialValue.category.trim() : "",
+        };
+        setPost(normalizedInitialValue);
+        // Cập nhật ref ngay lập tức
+        postRef.current = normalizedInitialValue;
+        
+        // Đảm bảo content được set đúng cách, giữ nguyên HTML structure bao gồm h2, h3
+        if (editor && initialValue.content) {
+          editor.commands.setContent(initialValue.content);
+        }
 
-        const { meta, slug, tags, category, focusKeyword } = initialValue;
+        const { meta, slug, tags, category, focusKeyword } = normalizedInitialValue;
         setSeoInitialValue({ meta, slug, tags, category, focusKeyword });
         
         // Cập nhật trạng thái nháp từ initialValue
@@ -584,6 +636,13 @@ const Editor: FC<Props> = ({
         setContentChanged(false);
       }
     }, [initialValue, editor]);
+
+    // Reset isSubmittingRef khi busy thay đổi từ true về false (submit hoàn thành)
+    useEffect(() => {
+      if (!busy && isSubmittingRef.current) {
+        isSubmittingRef.current = false;
+      }
+    }, [busy]);
 
     // Memoize button visibility conditions để tránh re-render không cần thiết
     const showDraftButton = useMemo(() => isCreatingNewPost, [isCreatingNewPost]);

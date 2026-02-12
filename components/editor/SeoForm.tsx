@@ -186,6 +186,11 @@ const SEOForm: FC<Props> = ({
     let { name, value } = target;
     if (name === "meta") value = value.substring(0, 250);
     
+    // Trim category để đảm bảo khớp với các option trong select
+    if (name === "category") {
+      value = value.trim();
+    }
+    
     // If slug is being edited manually
     if (name === "slug") {
       // If slug is cleared, allow auto-generation again
@@ -225,15 +230,23 @@ const SEOForm: FC<Props> = ({
   useEffect(() => {
     if (initialValue) {
       const hasExistingSlug = !!initialValue.slug;
-      setValues({
+      // Trim category để đảm bảo khớp với các option trong select
+      const categoryValue = initialValue.category ? initialValue.category.trim() : "";
+      const newValues = {
         meta: initialValue.meta || "",
         slug: slugify(initialValue.slug || "", {
           strict: true,
         }),
         tags: initialValue.tags || "",
-        category: initialValue.category || "",
+        category: categoryValue,
         focusKeyword: initialValue.focusKeyword || "",
-      });
+      };
+      setValues(newValues);
+      // Gọi onChange để cập nhật post state trong Editor component
+      // Chỉ gọi onChange nếu giá trị thực sự khác với giá trị hiện tại để tránh loop
+      if (JSON.stringify(newValues) !== JSON.stringify(values)) {
+        onChange(newValues);
+      }
       // If initialValue has a slug, it means it's been set before, so mark as manually edited
       // This prevents auto-generation from overwriting existing slug
       // If slug is empty, allow auto-generation from title
@@ -242,9 +255,28 @@ const SEOForm: FC<Props> = ({
       // Reset when initialValue is cleared
       setIsSlugManuallyEdited(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialValue]);
 
   const { meta, slug, category, focusKeyword } = values;
+
+  // Danh sách các category options
+  const categoryOptions = [
+    "Thiết kế kiến trúc",
+    "Thiết kế nội thất",
+    "Thi công xây dựng",
+    "Cải tạo không gian",
+    "Xu hướng thiết kế",
+    "Dự án hoàn thành",
+    "Tin tức công ty",
+  ];
+
+  // Kiểm tra xem category hiện tại có trong danh sách options không
+  // Nếu không có và category có giá trị, thêm nó vào để hiển thị
+  const displayOptions = [...categoryOptions];
+  if (category && category.trim() !== '' && !categoryOptions.includes(category.trim())) {
+    displayOptions.push(category.trim());
+  }
 
   return (
     <div className="space-y-6">
@@ -282,13 +314,11 @@ const SEOForm: FC<Props> = ({
             <option value="" disabled>
               Chọn một danh mục
             </option>
-            <option value="Thiết kế kiến trúc">Thiết kế kiến trúc</option>
-            <option value="Thiết kế nội thất">Thiết kế nội thất</option>
-            <option value="Thi công xây dựng">Thi công xây dựng</option>
-            <option value="Cải tạo không gian">Cải tạo không gian</option>
-            <option value="Xu hướng thiết kế">Xu hướng thiết kế</option>
-            <option value="Dự án hoàn thành">Dự án hoàn thành</option>
-            <option value="Tin tức công ty">Tin tức công ty</option>
+            {displayOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
           </select>
         </div>
         

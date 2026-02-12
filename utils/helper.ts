@@ -23,6 +23,13 @@ export const generateFormData = (post: FinalPost) => {
         // URL từ gallery - append như string vào body
         formData.append("thumbnail", value.trim());
       }
+    } else if (key === "category") {
+      // Đảm bảo category luôn được gửi lên (trim để đảm bảo format đúng)
+      if (typeof value === "string") {
+        formData.append("category", value.trim());
+      } else {
+        formData.append("category", value);
+      }
     } else {
       // Các field khác
       formData.append(key, value);

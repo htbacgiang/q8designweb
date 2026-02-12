@@ -78,7 +78,7 @@ export const getServerSideProps: GetServerSideProps<ServerSideResponse> = async 
           tags: tags.join(", "),
           thumbnail: thumbnail?.url || "",
           slug,
-          category,
+          category: category ? category.trim() : "", // Trim category để đảm bảo khớp với select options
           meta,
           focusKeyword: "",
           isDraft: isDraft || false, // Nếu bài viết đã publish thì isDraft = false

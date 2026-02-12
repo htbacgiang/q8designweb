@@ -1,5 +1,4 @@
-import { FC } from "react";
-import { useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Editor } from "@tiptap/react";
 import type { Node } from "prosemirror-model";
 import { AiFillCaretDown } from "react-icons/ai";
@@ -38,6 +37,26 @@ const ToolBar: FC<Props> = ({
   onOpenImageClick,
 }): JSX.Element | null => {
   const [textColor, setTextColor] = useState<string>("#000000");
+  const [, forceUpdate] = useState({}); // State để force re-render khi selection thay đổi
+
+  // Theo dõi selection changes để cập nhật label
+  useEffect(() => {
+    if (!editor) return;
+
+    const handleUpdate = () => {
+      // Force re-render khi selection thay đổi
+      forceUpdate({});
+    };
+
+    // Lắng nghe các sự kiện selection và update
+    editor.on('selectionUpdate', handleUpdate);
+    editor.on('update', handleUpdate);
+
+    return () => {
+      editor.off('selectionUpdate', handleUpdate);
+      editor.off('update', handleUpdate);
+    };
+  }, [editor]);
 
   const handleTextColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!editor) return;

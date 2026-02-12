@@ -146,10 +146,20 @@ const updatePost: NextApiHandler = async (req, res) => {
       return field || '';
     };
     
+    // Xử lý content đặc biệt: có thể là array hoặc string, cần join nếu là array
+    const getContentValue = (field: any): string => {
+      if (Array.isArray(field)) {
+        // Nếu là array, join lại thành string (trường hợp content bị split)
+        return field.join('');
+      }
+      return field || '';
+    };
+    
     const error = validateSchema(postValidationSchema, { ...body });
     if (error) return res.status(400).json({ error });
 
-    const { title, content, meta, slug, category } = body;
+    const { title, meta, slug, category } = body;
+    const content = getContentValue(body.content); // Xử lý content đặc biệt
     const isDraftValue = getFieldValue((body as any).isDraft);
     // Nếu isDraft được gửi lên, parse nó (true/false string)
     // Nếu không có, giữ nguyên giá trị hiện tại của post
@@ -173,7 +183,18 @@ const updatePost: NextApiHandler = async (req, res) => {
     } else {
       post.slug = slug;
     }
-    post.category = category;
+    // Xử lý category: luôn trim và chỉ cập nhật nếu có giá trị hợp lệ
+    // Nếu category rỗng hoặc không được gửi lên, giữ nguyên category hiện tại
+    const categoryValue = getFieldValue(category);
+    if (categoryValue !== undefined && categoryValue !== null) {
+      const trimmedCategory = categoryValue.trim();
+      // Chỉ cập nhật nếu có giá trị (không rỗng)
+      if (trimmedCategory !== '') {
+        post.category = trimmedCategory;
+      }
+      // Nếu category rỗng nhưng post hiện tại có category, giữ nguyên category hiện tại
+      // (không làm gì cả, post.category vẫn giữ nguyên giá trị cũ)
+    }
     
     // Cập nhật trạng thái nháp nếu có (chỉ update khi được gửi lên)
     if (isDraft !== undefined) {

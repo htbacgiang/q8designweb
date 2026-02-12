@@ -158,10 +158,10 @@ const SinglePost: NextPage<Props> = ({ post, meta }) => {
       thumbnail={meta?.og?.image}
       meta={meta}
     >
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row">
           {/* Main Content - 75% width on md and up */}
-          <div className="w-full md:w-3/4 pr-0 md:pr-8 mb-4 md:mb-0">
+          <div className="w-full md:w-3/4 pr-0 md:pr-4 mb-4 md:mb-0 ">
             <div className="md:pb-20 pb-6 container mx-auto ">
               {/* Breadcrumb */}
               <div className="flex font-bold gap-2 text-base text-gray-600">
@@ -184,7 +184,7 @@ const SinglePost: NextPage<Props> = ({ post, meta }) => {
               <div className="mt-2 uppercase text-blue-800 font-xl">
                 <b>{category}</b>
               </div>
-              <div className="blog prose prose-lg dark:prose-invert max-w-2xl md:max-w-4xl lg:max-w-5xl [&_img]:mx-auto">
+              <div className="blog prose prose-lg dark:prose-invert [&_img]:mx-auto">
                 <style jsx>{`
                   .blog img {
                     display: block;
@@ -221,11 +221,11 @@ const SinglePost: NextPage<Props> = ({ post, meta }) => {
           </div>
 
           {/* Recent Posts Section - 25% width on md and up */}
-          <div className="w-full md:w-1/4 px-0.5 ">
+          <div className="w-full md:w-1/4 px-0.5  pl-3">
             <div className="pt-5">
-              <h2 className="text-3xl font-bold text-primary-dark dark:text-primary p-2 mb-4">
+              <p className="text-3xl font-bold text-primary-dark dark:text-primary p-2 mb-4">
                 Bài viết gần đây
-              </h2>
+              </p>
               <div className="flex flex-col space-y-4">
                 {recentPosts && recentPosts.length > 0 ? recentPosts.slice(0, 5).map((p) => (
                   <Link key={p.slug} href={`/bai-viet/${p.slug}`} legacyBehavior>
@@ -236,7 +236,7 @@ const SinglePost: NextPage<Props> = ({ post, meta }) => {
                           alt={`Thumbnail for ${p.title}`}
                           width={80}
                           height={80}
-                          className="w-20 h-20 object-cover rounded"
+                          className="w-32 h-32 object-cover rounded"
                         />
                       )}
                       <div className="flex flex-col flex-1">
@@ -317,6 +317,8 @@ export const getServerSideProps: GetServerSideProps<
     }
 
     // Chỉ lấy các bài viết đã publish và chưa bị xóa cho recent posts
+    const baseUrl = "https://q8design.vn";
+    
     const posts = await Post.find({
       _id: { $ne: post._id },
       isDraft: false,
@@ -326,17 +328,22 @@ export const getServerSideProps: GetServerSideProps<
       .limit(5)
       .select("slug title thumbnail category createdAt");
 
-    const recentPosts = posts.map((p) => ({
-      id: p._id.toString(),
-      title: p.title,
-      slug: p.slug,
-      category: p.category || "Uncategorized",
-      thumbnail: p.thumbnail?.url,
-      createdAt: p.createdAt.toString(),
-    }));
+    const recentPosts = posts.map((p) => {
+      // Normalize thumbnail URL giống như bài viết chính
+      const thumbUrl = p.thumbnail?.url;
+      const normalizedThumbnail = normalizeImageUrl(thumbUrl, baseUrl);
+      
+      return {
+        id: p._id.toString(),
+        title: p.title,
+        slug: p.slug,
+        category: p.category || "Uncategorized",
+        thumbnail: normalizedThumbnail,
+        createdAt: p.createdAt.toString(),
+      };
+    });
 
     const { _id, title, content, meta, slug, tags, thumbnail, category, createdAt } = post;
-    const baseUrl = "https://q8design.vn";
     const thumbnailUrl = normalizeImageUrl(thumbnail?.url, baseUrl);
 
     const metaData = {
