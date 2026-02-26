@@ -4,59 +4,25 @@ import "../styles/dashboard.css";
 import "../styles/about-animations.css";
 import "../styles/q8design.css";
 import "../styles/optimized-fonts.css";
-import { Rajdhani } from "next/font/google";
-import localFont from "next/font/local";
+import { Hanken_Grotesk, Judson } from "next/font/google";
 import { SessionProvider } from "next-auth/react"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
 import { createSiteNavigation } from "../utils/metaUtils";
 
-
-// Optimized font configuration - only essential weights
-const geogrotesque = localFont({
-  src: [
-    {
-      path: '../public/fonts/Geogtq-Rg.otf',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/Geogtq-Md.otf',
-      weight: '500',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/Geogtq-Bd.otf',
-      weight: '700',
-      style: 'normal',
-    },
-  ],
-  variable: '--font-geogrotesque',
-  display: 'swap',
+const hankenGrotesk = Hanken_Grotesk({
+  subsets: ["latin", "vietnamese"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-hanken-grotesk",
+  display: "swap",
 });
 
-// Satoshi font configuration - primary font for Q8 Design
-const satoshi = localFont({
-  src: [
-    {
-      path: '../public/fonts/Satoshi-Regular.otf',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/Satoshi-Medium.otf',
-      weight: '500',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/Satoshi-Bold.otf',
-      weight: '700',
-      style: 'normal',
-    },
-  ],
-  variable: '--font-satoshi',
-  display: 'swap',
+const judson = Judson({
+  subsets: ["latin", "vietnamese"],
+  weight: ["400", "700"],
+  variable: "--font-judson",
+  display: "swap",
 });
   function MyApp({ Component, pageProps: { session, meta, posts, ...pageProps } }) {
   
@@ -211,7 +177,7 @@ const satoshi = localFont({
             </Head>
           )}
           <SessionProvider session={session}>
-            <div className={`${geogrotesque.variable} ${satoshi.variable} font-sans`} style={{fontFamily: 'var(--font-satoshi), var(--font-geogrotesque), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'}}>
+            <div className={`${hankenGrotesk.variable} ${judson.variable}`} style={{ fontFamily: "var(--font-hanken-grotesk), -apple-system, BlinkMacSystemFont, sans-serif" }}>
               <ToastContainer
                 position="top-right"
                 autoClose={3000}

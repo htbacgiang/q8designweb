@@ -17,19 +17,28 @@ import {
   FaMapMarkerAlt
 } from "react-icons/fa";
 
+const DESKTOP_BREAKPOINT = 1024; // Tailwind lg
+
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const router = useRouter();
 
-  // Handle scroll effect
+  // Detect desktop và scroll
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    const checkDesktop = () => setIsDesktop(window.innerWidth >= DESKTOP_BREAKPOINT);
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+
+    checkDesktop();
+    handleScroll();
+    window.addEventListener("resize", checkDesktop);
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("resize", checkDesktop);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   // Close mobile menu when route changes
@@ -94,19 +103,25 @@ export default function Navigation() {
     setActiveDropdown(activeDropdown === index ? null : index);
   };
 
+  const isTransparentNav = !isScrolled;
+
   return (
     <>
 
-      {/* Main Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? "q8-bg-surface backdrop-blur-md shadow-lg border-b" 
-          : "bg-white/80 backdrop-blur-sm shadow-sm"
-      }`} style={{borderColor: isScrolled ? 'var(--q8-alabaster)' : 'transparent'}}>
+      {/* Main Navigation - Desktop & Mobile: nền trong suốt mặc định, scroll → nền trắng */}
+      <nav
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-in-out ${
+          isScrolled ? "bg-white shadow-lg border-b" : ""
+        }`}
+        style={{
+          borderColor: isScrolled ? "var(--q8-alabaster)" : "transparent",
+          ...(isTransparentNav ? { backgroundColor: "transparent" } : {}),
+        }}
+      >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Link href="/" className="q8-logo group flex items-center">
+            <Link href="/" className={`q8-logo group flex items-center transition-all duration-500 ease-in-out ${isTransparentNav ? "brightness-0 invert" : ""}`}>
               <div className="relative group-hover:scale-105 transition-transform duration-300">
                 <Image
                   src="/logo-q8.png"
@@ -117,7 +132,6 @@ export default function Navigation() {
                   className="h-12 w-auto object-contain"
                 />
               </div>
-             
             </Link>
 
             {/* Desktop Navigation */}
@@ -128,9 +142,11 @@ export default function Navigation() {
                     <>
                       <button
                         className={`flex items-center space-x-1 px-3 py-2 rounded-lg font-medium transition-all duration-300 ${
-                          isActivePath(item.href)
-                            ? "q8-text-brand q8-bg-light"
-                            : "q8-text-secondary hover:q8-text-brand hover:q8-bg-light"
+                          isTransparentNav
+                            ? "text-white hover:text-white/90 hover:bg-white/10"
+                            : isActivePath(item.href)
+                              ? "q8-text-brand q8-bg-light"
+                              : "q8-text-secondary hover:q8-text-brand hover:q8-bg-light"
                         }`}
                       >
                         <span>{item.name}</span>
@@ -156,9 +172,11 @@ export default function Navigation() {
                     <Link
                       href={item.href}
                       className={`px-3 py-2 rounded-lg font-medium transition-all duration-300 ${
-                        isActivePath(item.href)
-                          ? "q8-text-cod-gray q8-bg-alabaster"
-                          : "q8-text-oslo-gray hover:q8-text-cod-gray hover:q8-bg-alabaster"
+                        isTransparentNav
+                          ? "text-white hover:text-white/90 hover:bg-white/10"
+                          : isActivePath(item.href)
+                            ? "q8-text-cod-gray q8-bg-alabaster"
+                            : "q8-text-oslo-gray hover:q8-text-cod-gray hover:q8-bg-alabaster"
                       }`}
                     >
                       {item.name}
@@ -173,7 +191,9 @@ export default function Navigation() {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="lg:hidden w-10 h-10 flex items-center justify-center rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors"
+                className={`lg:hidden w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-500 ease-in-out ${
+                  isTransparentNav ? "text-white hover:bg-white/10" : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+                }`}
                 aria-label="Toggle mobile menu"
               >
                 {isMenuOpen ? <FaTimes /> : <FaBars />}

@@ -58,7 +58,8 @@ export default function BlogSection() {
   }
 
   return (
-    <section className="py-20 bg-q8-primary-50">
+    <section className="py-20"
+    >
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-8">
@@ -79,7 +80,7 @@ export default function BlogSection() {
           {featuredPosts.map((post, index) => (
             <article 
               key={post.id}
-              className="group bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+              className="group bg-white overflow-hidden transition-all duration-500 transform hover:-translate-y-2"
             >
               {/* Post Image */}
               <div className="relative h-64 overflow-hidden">
@@ -117,7 +118,7 @@ export default function BlogSection() {
               </div>
 
               {/* Post Content */}
-              <div className="p-6">
+              <div className="py-6 px-0">
                 {/* Tags */}
                 {post.tags && post.tags.length > 0 && (
                   <div className="flex flex-wrap gap-2 mb-3">

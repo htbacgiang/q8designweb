@@ -36,42 +36,8 @@ export default function Document() {
         <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
         <link rel="dns-prefetch" href="//unpkg.com" />
         
-        {/* Preload critical fonts for better performance */}
-        <link 
-          rel="preload" 
-          href="/fonts/Satoshi-Regular.otf" 
-          as="font" 
-          type="font/otf" 
-          crossOrigin="anonymous" 
-        />
-        <link 
-          rel="preload" 
-          href="/fonts/Satoshi-Medium.otf" 
-          as="font" 
-          type="font/otf" 
-          crossOrigin="anonymous" 
-        />
-        <link 
-          rel="preload" 
-          href="/fonts/Satoshi-Bold.otf" 
-          as="font" 
-          type="font/otf" 
-          crossOrigin="anonymous" 
-        />
-        <link 
-          rel="preload" 
-          href="/fonts/Geogtq-Rg.otf" 
-          as="font" 
-          type="font/otf" 
-          crossOrigin="anonymous" 
-        />
-        <link 
-          rel="preload" 
-          href="/fonts/Geogtq-Bd.otf" 
-          as="font" 
-          type="font/otf" 
-          crossOrigin="anonymous" 
-        />
+        {/* Fonts: Hanken Grotesk loaded via next/font in _app.js */}
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </Head>
       <body>
         <Main />

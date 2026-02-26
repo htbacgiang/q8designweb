@@ -10,7 +10,7 @@ const FurnitureViewer = () => {
 
   return (
     <div 
-      className="min-h-screen text-white bg-gray-50"
+      className="min-h-screen text-white "
     
     >
       {/* Background Pattern */}

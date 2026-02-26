@@ -3,18 +3,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Geogrotesque Font Variables */
+/* Hanken Grotesk - set by next/font in _app.js as --font-hanken-grotesk */
 :root {
-  --font-geogrotesque: 'Geogrotesque', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-primary: var(--font-hanken-grotesk), 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* Global Font Application */
 * {
-  font-family: var(--font-geogrotesque) !important;
+  font-family: var(--font-primary) !important;
 }
 
 body {
-  font-family: var(--font-geogrotesque) !important;
+  font-family: var(--font-primary) !important;
 }
 
 /* Custom animations for Banner */
