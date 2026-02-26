@@ -7,7 +7,7 @@ import { FaArrowRight, FaCube, FaMapMarkerAlt, FaRuler } from "react-icons/fa";
 import { useProjects } from "../../hooks/useProjects";
 
 export default function ProjectsSection() {
-  const [activeFilter, setActiveFilter] = useState("all");
+  const [activeFilter, setActiveFilter] = useState("apartment");
   const [displayProjects, setDisplayProjects] = useState([]);
   const sectionRef = useRef(null);
   const cardRefs = useRef([]);
@@ -139,36 +139,36 @@ export default function ProjectsSection() {
     <section ref={sectionRef} className="py-10">
       <div className="container mx-auto px-4">
         <div
-          className={`text-center mb-4 transition-all duration-1000 ease-out ${
-            sectionInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-          }`}
+          className={`text-start  mb-4 transition-all duration-1000 ease-out ${sectionInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`}
         >
-          <div className="inline-block mb-0">
-            <h2 className="px-4 py-2 bg-q8-primary-100 text-q8-primary-700 rounded-full text-base font-medium uppercase tracking-wider">
-              Dự án đã hoàn thành
-            </h2>
-          </div>
-          <p className="text-lg text-q8-primary-600 max-w-5xl mx-auto leading-relaxed">
-            Khám phá gallery gồm những dự án tiêu biểu nhất của Q8 Design. Mỗi dự án là một câu
-            chuyện thiết kế độc đáo, phản ánh dấu ấn cá nhân và phong cách sống của gia chủ.
-          </p>
+            <div className="flex items-center gap-2 text-[var(--q8-primary-600)] text-sm font-bold uppercase mb-2">
+              <h2 className="inline-flex items-center gap-1">
+               Dự án đã hoàn thành
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </h2>
+            </div>
+            <p className="text-xl font-bold text-[var(--q8-cod-gray)] leading-tight tracking-tight">
+            Gallery những
+              <span className="text-[#c4a77d]"> dự án tiêu biểu nhất</span> của Q8 Design
+            </p>
         </div>
 
         <div
-          className={`flex flex-wrap justify-center gap-2 mb-12 transition-all duration-1000 ease-out ${
-            sectionInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
+          className={`flex flex-wrap justify-center gap-2 mb-12 transition-all duration-1000 ease-out ${sectionInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            }`}
           style={{ transitionDelay: sectionInView ? "120ms" : "0ms" }}
         >
           {filterCategories.map((category) => (
             <button
               key={category.id}
               onClick={() => setActiveFilter(category.id)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                activeFilter === category.id
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeFilter === category.id
                   ? "bg-gradient-to-r from-q8-primary-900 to-q8-primary-700 text-white shadow-lg transform scale-105"
                   : "bg-gradient-to-r from-q8-primary-100 to-q8-primary-200 text-q8-primary-600 hover:from-q8-primary-200 hover:to-q8-primary-300 hover:text-q8-primary-800 shadow-sm"
-              }`}
+                }`}
             >
               {category.name} ({category.count})
             </button>
@@ -207,9 +207,8 @@ export default function ProjectsSection() {
                       cardRefs.current[index] = el;
                     }}
                     data-project-id={projectId}
-                    className={`transition-all duration-1000 ease-out ${
-                      isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                    }`}
+                    className={`transition-all duration-1000 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                      }`}
                     style={{ transitionDelay: isVisible ? `${Math.min(index * 80, 400)}ms` : "0ms" }}
                   >
                     <Link href={`/du-an/${project.slug}`} className="group block">
@@ -274,9 +273,8 @@ export default function ProjectsSection() {
                       cardRefs.current[index] = el;
                     }}
                     data-project-id={projectId}
-                    className={`transition-all duration-1000 ease-out ${
-                      isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                    }`}
+                    className={`transition-all duration-1000 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                      }`}
                     style={{ transitionDelay: isVisible ? `${Math.min(index * 80, 480)}ms` : "0ms" }}
                   >
                     <Link href={`/du-an/${project.slug}`} className="group block">
@@ -337,7 +335,7 @@ export default function ProjectsSection() {
             <p className="text-gray-600 mb-4">Không có dự án nào được tìm thấy.</p>
             <Link
               href="/du-an"
-              className="inline-flex items-center px-6 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-700"
+            className="btn-default inline-flex items-center gap-2 px-6 py-3 bg-[#7c877f] hover:bg-q8-primary-700 text-white font-semibold  transition-colors"
             >
               Xem tất cả dự án
             </Link>
@@ -347,7 +345,7 @@ export default function ProjectsSection() {
         <div className="text-center">
           <Link
             href="/du-an"
-            className="inline-flex items-center px-8 py-2 bg-q8-primary-900 hover:bg-q8-primary-700 text-white font-bold rounded-full transition-colors duration-300 group"
+            className="btn-default inline-flex items-center gap-2 px-6 py-3 bg-[#7c877f] hover:bg-q8-primary-700 text-white font-semibold  transition-colors"
           >
             Khám phá thêm dự án
             <FaArrowRight className="ml-3 transition-transform group-hover:translate-x-1" />

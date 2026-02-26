@@ -24,12 +24,8 @@ export default function HomePage() {
         <ServicesSection />
         {/* Work Process - Quy trình làm việc */}
         <WorkProcessSection />
-        {/* Clients Section - Khách hàng của chúng tôi */}
-        <ClientsSection />
         {/* FAQ Section - Câu hỏi thường gặp */}
         <FAQSection />
-
-        <FurnitureViewer />
         {/* Blog Section - Tin tức & Kiến thức */}
         <BlogSection />
         {/* CTA Banner - Ảnh cố định, nội dung scroll */}

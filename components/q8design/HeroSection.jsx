@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import Image from "next/image";
 import { FaChevronRight } from "react-icons/fa";
 import ContactForm from "../header/ContactForm";
 
@@ -73,44 +75,51 @@ export default function HeroSection() {
         style={{ height: "100vh", maxHeight: "100vh", marginTop: "-80px" }}
       >
         <div className="absolute inset-0">
-          <img
+          <Image
             src={HERO_IMAGE}
-            alt=""
+            alt="Hero background"
+            fill
+            priority
             className="absolute inset-0 w-full h-full object-cover"
+            sizes="100vw"
           />
           <div className="absolute inset-0 bg-black/80 z-10" aria-hidden />
         </div>
 
         <div className="relative z-20 flex flex-col items-center justify-center h-full text-center text-white px-4">
-          <h2 className="hero-headline-judson text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight max-w-4xl mb-6 text-white">
+          <h2 className="hero-headline-judson text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight max-w-6xl mb-2 text-white">
             <span className="hero-headline-with-underline">
-              Q8 Desgin
+              Q8 Design
               <svg className="hero-underline-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150" preserveAspectRatio="none" aria-hidden>
                 <path d="M7.7,145.6C109,125,299.9,116.2,401,121.3c42.1,2.2,87.6,11.8,87.3,25.7" />
               </svg>
             </span>{" "}
-            của giấc mơ,
-            <br />
-            nhà thiết kế hiện thực.
+            - Kiến tạo không gian sống
+
           </h2>
           <p className="text-white/90 text-base sm:text-lg md:text-xl max-w-2xl mb-10 leading-relaxed">
-            Biến điều bình thường thành những kiệt tác kiến trúc. Mọi hành trình lớn đều bắt đầu từ một bước chân. Hãy bắt đầu ngay.
+            Chúng tôi không chỉ lắp đặt nội thất, chúng tôi thổi &#39;hồn sống&#39; vào không gian bằng sự tử tế và kỹ thuật khắt khe.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4">
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 2, ease: [0.22, 1.5, 0.36, 1.5] }}
+          >
             <Link
               href="/du-an"
-              className="inline-flex items-center justify-center px-8 py-4 rounded-lg font-semibold uppercase tracking-wide text-sm text-white bg-[#c4a77d] hover:bg-[#b8956a] hover:-translate-y-px transition-all focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent"
+              className="inline-flex items-center justify-center px-8 py-4  font-semibold uppercase tracking-wide text-sm text-white bg-[#c4a77d] hover:bg-[#b8956a] hover:-translate-y-px transition-all focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent"
             >
               Dự án của chúng tôi
             </Link>
             <Link
               href="/dich-vu"
-              className="inline-flex items-center justify-center px-8 py-4 rounded-lg font-semibold uppercase tracking-wide text-sm text-white border-2 border-white/80 bg-transparent hover:bg-white/10 hover:border-white hover:-translate-y-px transition-all focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent"
+              className="inline-flex items-center justify-center px-8 py-4 font-semibold uppercase tracking-wide text-sm text-white border-2 border-white/80 bg-transparent hover:bg-white/10 hover:border-white hover:-translate-y-px transition-all focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent"
             >
               Xem dịch vụ
               <FaChevronRight className="ml-2 w-4 h-4" aria-hidden />
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
 

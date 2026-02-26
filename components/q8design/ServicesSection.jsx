@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
@@ -36,6 +36,15 @@ export default function ServicesSection() {
   const gridRef = useRef(null);
   const isGridInView = useInView(gridRef, { once: true, amount: 0.15 });
 
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const handler = (e) => setIsDesktop(e.matches);
+    setIsDesktop(mq.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
   const cardVariants = (fromLeft) => ({
     hidden: {
       opacity: 0,
@@ -53,33 +62,28 @@ export default function ServicesSection() {
   });
 
   return (
-    <section className="py-16 md:py-20 bg-white">
+    <section className="py-6 md:py-12 bg-white">
       <div className="container mx-auto px-4 ">
         {/* Section Header */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 mb-12">
           <div className="lg:col-span-6">
-            <div className="flex items-center gap-2 text-[var(--q8-primary-600)] text-sm font-bold uppercase mb-3">
-              <span className="inline-flex items-center gap-1">
+            <div className="flex items-center gap-2 text-[var(--q8-primary-600)] text-sm font-bold uppercase mb-2">
+              <h2 className="inline-flex items-center gap-1">
                 Dịch vụ của Q8 Design
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
-              </span>
+              </h2>
             </div>
-            <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold text-[var(--q8-cod-gray)] leading-tight tracking-tight">
-              Giải pháp thiết kế sáng tạo cho{" "}
-              <span className="text-[var(--q8-primary-700)]">mọi nhu cầu</span>
-            </h2>
-          </div>
-          <div className="lg:col-span-6 flex items-center">
-            <p className="text-[var(--q8-primary-600)] text-base md:text-lg leading-relaxed max-w-xl lg:ml-auto">
-              Các dịch vụ chính của Q8 Design với giải pháp toàn diện từ thiết kế đến thi công, biến mọi ý tưởng của bạn thành hiện thực một cách hoàn hảo.
+            <p className="text-xl font-bold text-[var(--q8-cod-gray)] leading-tight tracking-tight">
+              Giải pháp vẹn tròn cho
+              <span className="text-[#c4a77d]"> hành trình xây tổ ấm</span>
             </p>
           </div>
+
         </div>
 
-        {/* Services Grid - 4 cards với Framer Motion */}
-        <div ref={gridRef} className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
+        <div ref={gridRef} className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 md:gap-6 mb-6">
           {services.map((service, index) => {
             const fromLeft = index < 2;
             return (
@@ -93,80 +97,166 @@ export default function ServicesSection() {
               >
                 <Link href={`/dich-vu/${service.slug}`} className="block h-full">
                   <motion.div
-                    className="relative aspect-[4/5] min-h-[320px] overflow-hidden rounded-lg"
+                    className="relative aspect-[3/4] sm:aspect-[4/5] min-h-[260px] sm:min-h-[320px] overflow-hidden"
                     initial={false}
-                    whileHover={{
-                      y: -10,
-                      boxShadow: "0 24px 48px rgba(0,0,0,0.2)",
-                      transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
-                    }}
+                    whileHover={
+                      isDesktop
+                        ? {
+                          y: -10,
+                          boxShadow: "0 24px 48px rgba(0,0,0,0.2)",
+                          transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+                        }
+                        : undefined
+                    }
+                    whileTap={
+                      !isDesktop
+                        ? {
+                          scale: 0.98,
+                          boxShadow: "0 16px 32px rgba(0,0,0,0.15)",
+                          transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] },
+                        }
+                        : undefined
+                    }
                     style={{
                       boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
                     }}
                   >
-                    {/* Image với scale mượt khi hover */}
                     <motion.div
                       className="absolute inset-0"
                       initial={false}
-                      whileHover={{
-                        scale: 1.08,
-                        transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-                      }}
+                      whileHover={
+                        isDesktop
+                          ? {
+                            scale: 1.08,
+                            transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+                          }
+                          : undefined
+                      }
+                      whileTap={
+                        !isDesktop
+                          ? {
+                            scale: 1.03,
+                            transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] },
+                          }
+                          : undefined
+                      }
                     >
                       <Image
                         src={service.image}
                         alt={service.title}
                         fill
                         className="object-cover"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                       />
                     </motion.div>
 
-                    {/* Overlay - đậm hơn khi hover */}
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent rounded-lg"
+                      className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent"
                       aria-hidden
                       initial={false}
-                      whileHover={{
-                        background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.1) 100%)",
-                        transition: { duration: 0.35 },
-                      }}
+                      whileHover={
+                        isDesktop
+                          ? {
+                            background:
+                              "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.1) 100%)",
+                            transition: { duration: 0.35 },
+                          }
+                          : undefined
+                      }
+                      whileTap={
+                        !isDesktop
+                          ? {
+                            background:
+                              "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.15) 100%)",
+                            transition: { duration: 0.2 },
+                          }
+                          : undefined
+                      }
                     />
 
-                    {/* Arrow icon - nổi bật khi hover */}
                     <motion.div
-                      className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 flex items-center justify-center text-[var(--q8-primary-700)] z-20"
+                      className="absolute top-3 right-3 w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/90 flex items-center justify-center text-[var(--q8-primary-700)] z-20"
                       initial={false}
-                      whileHover={{
-                        scale: 1.15,
-                        x: 4,
-                        y: -4,
-                        transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
-                      }}
+                      whileHover={
+                        isDesktop
+                          ? {
+                            scale: 1.15,
+                            x: 4,
+                            y: -4,
+                            transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+                          }
+                          : undefined
+                      }
+                      whileTap={
+                        !isDesktop
+                          ? {
+                            scale: 1.05,
+                            x: 2,
+                            y: -2,
+                            transition: { duration: 0.2 },
+                          }
+                          : undefined
+                      }
                     >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 17L17 7M17 7H7M17 7v10" />
                       </svg>
                     </motion.div>
 
-                    {/* Title + description - trượt nhẹ lên khi hover */}
                     <motion.div
-                      className="absolute bottom-0 left-0 right-0 p-5 md:p-6 z-20"
+                      className="absolute bottom-0 left-0 right-0 p-4 md:p-6 z-20"
                       initial={false}
-                      whileHover={{
-                        y: -6,
-                        transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
-                      }}
+                      whileHover={
+                        isDesktop
+                          ? {
+                            y: -6,
+                            transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
+                          }
+                          : undefined
+                      }
+                      whileTap={
+                        !isDesktop
+                          ? {
+                            y: -3,
+                            transition: { duration: 0.2 },
+                          }
+                          : undefined
+                      }
                     >
-                      <h3 className="text-lg md:text-xl font-bold text-white mb-2 leading-tight">
+                      <h3 className="text-base md:text-xl font-bold text-white mb-1 md:mb-2 leading-tight"
+                        style={{
+                          overflow: "hidden",
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical",
+                        }}
+                      >
                         {service.title}
                       </h3>
                       <motion.p
-                        className="text-white/95 text-sm leading-relaxed"
+                        className="text-white/90 text-xs md:text-sm leading-relaxed"
                         initial={false}
-                        whileHover={{
-                          opacity: 1,
-                          transition: { duration: 0.25 },
+                        whileHover={
+                          isDesktop
+                            ? {
+                              opacity: 1,
+                              transition: { duration: 0.25 },
+                            }
+                            : undefined
+                        }
+                        whileTap={
+                          !isDesktop
+                            ? {
+                              opacity: 1,
+                              transition: { duration: 0.2 },
+                            }
+                            : undefined
+                        }
+                        style={{
+                          overflow: "hidden",
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical",
                         }}
                       >
                         {service.description}
@@ -190,7 +280,7 @@ export default function ServicesSection() {
           <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
             <Link
               href="/dich-vu"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-[#1e4620] hover:bg-[#2d5a27] text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-colors duration-300"
+              className="btn-default inline-flex items-center gap-2 px-6 py-3 bg-[#7c877f] hover:bg-q8-primary-700 text-white font-semibold  transition-colors"
             >
               Tất cả dịch vụ
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

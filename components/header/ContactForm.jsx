@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -22,8 +23,7 @@ export default function ContactForm() {
       newErrors.phone = "Số điện thoại không hợp lệ (VD: 0987654321)";
     if (formData.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
       newErrors.email = "Email không hợp lệ";
-    if (!formData.message.trim()) newErrors.message = "Vui lòng nhập yêu cầu tư vấn";
-    else if (formData.message.length > 500)
+    if (formData.message && formData.message.length > 500)
       newErrors.message = "Tin nhắn không được vượt quá 500 ký tự";
 
     setErrors(newErrors);
@@ -94,72 +94,51 @@ export default function ContactForm() {
 
   return (
     <div className="">
-      <div className="max-w-8xl mx-auto">
-        <div className="bg-q8-primary-50 borde rounded-3xl p-8 md:p-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <div ref={leftSectionRef} className="opacity-0 md:block hidden">
-              <h2 className="text-xl font-bold text-q8-primary-600 uppercase tracking-wide mb-2">
-                Đăng ký tư vấn
+      <div className="max-w-5xl mx-auto bg-white  overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-12">
+          <div ref={leftSectionRef} className="relative hidden md:block md:col-span-5 h-64 md:h-auto opacity-0">
+            <Image
+              src="/images/tu-van.webp"
+              alt="Q8 Design contact"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 40vw"
+              priority
+            />
+          </div>
+          <div ref={rightSectionRef} className="md:col-span-7 px-4 md:px-8 py-6 md:py-10 opacity-0">
+            <div className="flex items-center gap-2 text-[var(--q8-primary-600)] text-sm font-bold uppercase mb-2">
+              <h2 className="inline-flex items-center gap-1">
+                Form liên hệ
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
               </h2>
-              <h3 className="text-xl font-bold text-q8-primary-900 mb-4">
-                Tư vấn thiết kế không gian sống của Q8 Design
-              </h3>
-              <p className="text-lg text-q8-primary-700">
-                Q8 Design chuyên cung cấp dịch vụ thiết kế kiến trúc và nội thất toàn diện. Từ thiết kế nhà phố, biệt thự đến nội thất chung cư, văn phòng. Chúng tôi cam kết mang đến những không gian sống độc đáo, hiện đại và phù hợp với phong cách riêng của bạn.
-              </p>
-              <p>
-                Liên hệ ngay để nhận tư vấn miễn phí và báo giá chi tiết cho dự án của bạn!
-              </p>
             </div>
+            <p className="text-lg md:text-2xl font-bold text-[var(--q8-cod-gray)] tracking-tight mb-3">
+              Đội ngũ Q8 rất mong <span className="text-q8-primary-700">nhận phản hồi từ bạn</span>
+            </p>
 
-            <div ref={rightSectionRef} className="opacity-0">
-              <form
-                onSubmit={handleSubmit}
-                className="space-y-4"
-                role="form"
-                aria-label="Form đăng ký tư vấn thiết kế Q8 Design"
-              >
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <input
-                      id="name"
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="Họ và tên"
-                      aria-invalid={!!errors.name}
-                      aria-describedby={errors.name ? "name-error" : undefined}
-                      className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-q8-primary-600 ${
-                        errors.name ? "border-red-500" : "border-q8-primary-300"
+            <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5" role="form" aria-label="Form liên hệ">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
+                <div>
+                  <input
+                    id="name"
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Họ và tên*"
+                    aria-invalid={!!errors.name}
+                    aria-describedby={errors.name ? "name-error" : undefined}
+                    className={`w-full h-10 md:h-11 px-3 md:px-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-q8-primary-900 ${errors.name ? "border-red-500" : "border-q8-primary-500"
                       }`}
-                    />
-                    {errors.name && (
-                      <p id="name-error" className="text-red-500 text-sm mt-1">
-                        {errors.name}
-                      </p>
-                    )}
-                  </div>
-                  <div>
-                    <input
-                      id="phone"
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      placeholder="Số điện thoại"
-                      aria-invalid={!!errors.phone}
-                      aria-describedby={errors.phone ? "phone-error" : undefined}
-                      className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-q8-primary-600 ${
-                        errors.phone ? "border-red-500" : "border-q8-primary-300"
-                      }`}
-                    />
-                    {errors.phone && (
-                      <p id="phone-error" className="text-red-500 text-sm mt-1">
-                        {errors.phone}
-                      </p>
-                    )}
-                  </div>
+                  />
+                  {errors.name && (
+                    <p id="name-error" className="text-red-600 text-sm mt-1">
+                      {errors.name}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <input
@@ -168,74 +147,84 @@ export default function ContactForm() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="Email của bạn (tùy chọn)"
-                                          aria-invalid={!!errors.email}
-                      aria-describedby={errors.email ? "email-error" : undefined}
-                      className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-q8-primary-600 ${
-                        errors.email ? "border-red-500" : "border-q8-primary-300"
+                    placeholder="Email*"
+                    aria-invalid={!!errors.email}
+                    aria-describedby={errors.email ? "email-error" : undefined}
+                    className={`w-full h-10 md:h-11 px-3 md:px-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-q8-primary-900 ${errors.email ? "border-red-500" : "border-q8-primary-500"
                       }`}
                   />
                   {errors.email && (
-                    <p id="email-error" className="text-red-500 text-sm mt-1">
+                    <p id="email-error" className="text-red-600 text-sm mt-1">
                       {errors.email}
                     </p>
                   )}
                 </div>
-                <div>
-                  <div className="relative">
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      placeholder="Mô tả chi tiết dự án của bạn (loại nhà, diện tích, phong cách, ngân sách dự kiến...)"
-                      aria-describedby={errors.message ? "message-error" : undefined}
-                      className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-q8-primary-600 h-32 resize-none ${
-                        errors.message ? "border-red-500" : "border-q8-primary-300"
-                      }`}
-                    />
-                    <div className="absolute bottom-2 right-2 text-xs text-q8-primary-400">
-                      {formData.message.length}/500
-                    </div>
-                  </div>
-                  {errors.message && (
-                    <p id="message-error" className="text-red-500 text-sm mt-1">
-                      {errors.message}
-                    </p>
-                  )}
-                </div>
-                <button
-                  type="submit"
-                  disabled={status === "Đang gửi..."}
-                  className="w-full bg-q8-primary-900 text-white font-bold py-3 rounded-full hover:bg-q8-primary-700 transition-colors disabled:bg-q8-primary-300 flex items-center justify-center gap-2"
-                  aria-disabled={status === "Đang gửi..."}
-                >
-                  {status === "Đang gửi..." ? (
-                    <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                      Đang gửi...
-                    </>
-                  ) : (
-                    <>
-                      Đăng ký tư vấn <span>→</span>
-                    </>
-                  )}
-                </button>
-              </form>
-              {status && (
-                <p
-                  className={`mt-2 text-center ${
-                    status.includes("thành công") ? "text-q8-primary-600" : "text-red-600"
+              </div>
+              <div>
+                <input
+                  id="phone"
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="Số điện thoại *"
+                  aria-invalid={!!errors.phone}
+                  aria-describedby={errors.phone ? "phone-error" : undefined}
+                  className={`w-full h-10 md:h-11 px-3 md:px-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-q8-primary-900 ${errors.phone ? "border-red-500" : "border-q8-primary-500"
+                    }`}
+                />
+                {errors.phone && (
+                  <p id="phone-error" className="text-red-600 text-sm mt-1">
+                    {errors.phone}
+                  </p>
+                )}
+              </div>
+              <div>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Lời nhắn (tùy chọn)"
+                  aria-describedby={errors.message ? "message-error" : undefined}
+                  className={`w-full min-h-[100px] md:min-h-[140px] px-3 md:px-4 py-2.5 md:py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-q8-primary-900 resize-none ${errors.message ? "border-red-500" : "border-q8-primary-500"
+                    }`}
+                />
+                {errors.message && (
+                  <p id="message-error" className="text-red-600 text-sm mt-1">
+                    {errors.message}
+                  </p>
+                )}
+              </div>
+              <button
+                type="submit"
+                disabled={status === "Đang gửi..."}
+                className="btn-default inline-flex items-center gap-2 px-5 md:px-6 py-2 md:py-3 bg-[#7c877f] hover:bg-q8-primary-700 text-white font-semibold  transition-colors"
+                aria-disabled={status === "Đang gửi..."}
+              >
+                {status === "Đang gửi..." ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    Đang gửi...
+                  </>
+                ) : (
+                  <>
+                    Gửi <span>→</span>
+                  </>
+                )}
+              </button>
+            </form>
+            {status && (
+              <p
+                className={`mt-2 md:mt-3 ${status.includes("thành công") ? "text-q8-primary-600" : "text-red-600"
                   }`}
-                >
-                  {status}
-                </p>
-              )}
-            </div>
+              >
+                {status}
+              </p>
+            )}
           </div>
         </div>
       </div>
-
       <style jsx>{`
         .opacity-0 {
           opacity: 0;

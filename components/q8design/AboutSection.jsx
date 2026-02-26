@@ -116,7 +116,7 @@ export default function AboutSection() {
               }`}
               style={{ transitionDelay: isInView ? "80ms" : "0ms" }}
             >
-              <h3 className="text-q8-primary-600 text-sm font-medium uppercase tracking-wide">Giới thiệu</h3>
+              <h3 className="text-q8-primary-600 text-sm font-medium uppercase tracking-wide">Giới thiệu về Q8 Design</h3>
               <h2 className="text-3xl md:text-4xl lg:text-[2.5rem] font-bold text-q8-primary-900 leading-tight">
               Đội ngũ chuyên nghiệp với kinh nghiệm dày dặn
               </h2>

@@ -34,38 +34,6 @@ export default function AboutPage() {
     }
   ];
 
-  const timeline = [
-    {
-      year: "2014",
-      title: "Thành lập Q8 Design",
-      description: "Khởi đầu với đội ngũ 5 người, định hướng trở thành công ty thiết kế và thi công nội thất hàng đầu Việt Nam."
-    },
-    {
-      year: "2016", 
-      title: "Mở rộng thị trường",
-      description: "Hoàn thành 50+ dự án đầu tiên, mở rộng hoạt động ra các tỉnh thành phía Bắc."
-    },
-    {
-      year: "2018",
-      title: "Đạt chứng nhận ISO",
-      description: "Nhận chứng nhận ISO 9001:2015, khẳng định chất lượng dịch vụ và quy trình quản lý chuyên nghiệp."
-    },
-    {
-      year: "2020",
-      title: "Mở showroom lớn",
-      description: "Khai trương showroom 500m² tại Hà Nội, trưng bày các sản phẩm nội thất cao cấp."
-    },
-    {
-      year: "2022",
-      title: "Giải thưởng Top 10",
-      description: "Đạt giải Top 10 Công ty thiết kế nội thất uy tín nhất Việt Nam năm 2022."
-    },
-    {
-      year: "2024",
-      title: "Hiện tại",
-      description: "Hoàn thành 500+ dự án, đội ngũ 50+ chuyên gia, phục vụ khách hàng trên toàn quốc."
-    }
-  ];
 
   const teamMembers = [
     {
@@ -134,7 +102,8 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
+      <section className="q8-hero-section relative h-[45vh] flex items-center justify-center overflow-hidden">
+        
         <div className="absolute inset-0">
           <Image
             src="/images/doi-ngu-thiet-ke-noi-that-q8design.webp"
@@ -156,14 +125,14 @@ export default function AboutPage() {
             Câu chuyện thương hiệu {""}
             <span className="text-q8-primary-100">Q8 Design</span>
           </span>
-          <p className="text-xl text-q8-primary-50 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl text-q8-primary-50 max-w-5xl mx-auto leading-relaxed">
             Tại Q8 Design, chúng tôi không chỉ thiết kế và thi công các công trình. 
             Chúng tôi kiến tạo nên những không gian sống đầy cảm hứng, nơi mỗi chi tiết 
             đều phản ánh dấu ấn cá nhân và câu chuyện của gia chủ.
           </p>
         </div>
       </section>
-
+    
       {/* Vision & Mission */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">

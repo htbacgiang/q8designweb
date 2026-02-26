@@ -14,7 +14,7 @@ export default function BlogSection() {
       try {
         setLoading(true);
         const response = await axios.get('/api/posts?includeDrafts=false');
-        
+
         if (response.data && response.data.posts) {
           // Take first 3 posts for homepage
           setBlogPosts(response.data.posts.slice(0, 3));
@@ -36,17 +36,17 @@ export default function BlogSection() {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('vi-VN', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+    return date.toLocaleDateString('vi-VN', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
     });
   };
 
   // Loading state
   if (loading) {
     return (
-      <section className="py-20 bg-q8-primary-50">
+      <section className="py-6 md:py-12  bg-q8-primary-50">
         <div className="container mx-auto px-4">
           <div className="flex justify-center items-center py-20">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-q8-primary-900"></div>
@@ -62,23 +62,28 @@ export default function BlogSection() {
     >
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center mb-8">
-          <div className="inline-block mb-4">
-            <span className="px-4 py-2 bg-q8-primary-100 text-q8-primary-700 rounded-full text-sm font-medium uppercase tracking-wider">
+        <div className=" mb-8">
+
+          <div className="flex items-center gap-2 text-[var(--q8-primary-600)] text-sm font-bold uppercase mb-2">
+            <h2 className="inline-flex items-center gap-1">
               Tin tức & Kiến thức
-            </span>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </h2>
           </div>
-          <h2 className="text-3xl md:text-4xl  font-bold text-q8-primary-900 mb-6">
-            Blog & Cảm hứng thiết kế
-          </h2>
-    
+
+          <p className="text-xl font-bold text-[var(--q8-cod-gray)] leading-tight tracking-tight">
+            Tin tức công ty &
+            <span className="text-[#c4a77d]">  Cảm hứng thiết kế </span>
+          </p>
         </div>
 
 
         {/* Featured Posts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {featuredPosts.map((post, index) => (
-            <article 
+            <article
               key={post.id}
               className="group bg-white overflow-hidden transition-all duration-500 transform hover:-translate-y-2"
             >
@@ -96,7 +101,7 @@ export default function BlogSection() {
                     <span className="text-gray-400 text-4xl">📝</span>
                   </div>
                 )}
-                
+
                 {/* Category Badge */}
                 {post.category && (
                   <div className="absolute top-4 left-4">
@@ -108,7 +113,7 @@ export default function BlogSection() {
 
                 {/* Featured Badge - First 3 are featured */}
                 <div className="absolute top-4 right-4">
-                  <span className="bg-q8-primary-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                  <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
                     Nổi bật
                   </span>
                 </div>
@@ -157,7 +162,7 @@ export default function BlogSection() {
                 </div>
 
                 {/* Read More */}
-                <Link 
+                <Link
                   href={`/bai-viet/${post.slug}`}
                   className="inline-flex items-center text-q8-primary-700 hover:text-q8-primary-900 font-medium transition-colors group/link"
                 >
@@ -171,9 +176,9 @@ export default function BlogSection() {
 
         {/* Bottom CTA */}
         <div className="text-center mt-16">
-          <Link 
+          <Link
             href="/bai-viet"
-            className="inline-flex items-center px-8 py-4 bg-q8-primary-900 hover:bg-q8-primary-700 text-white font-bold rounded-full transition-colors duration-300 group"
+              className="btn-default inline-flex items-center gap-2 px-6 py-3 bg-[#7c877f] hover:bg-q8-primary-700 text-white font-semibold  transition-colors"
           >
             Xem tất cả bài viết
             <FaArrowRight className="ml-3 transition-transform group-hover:translate-x-1" />

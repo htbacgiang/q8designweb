@@ -680,75 +680,24 @@ h1, h2, h3, h4, h5, h6, p, span, div, button, input, textarea, a {
   padding-bottom: 0;
 }
 
-/* Mobile: optimized for landscape images - use aspect ratio for better display */
+/* Mobile */
 @media (max-width: 639px) {
   .q8-hero-section {
-    aspect-ratio: 16 / 9 !important;
-    min-height: auto !important;
-    height: auto !important;
-    max-height: 50vh !important;
-    margin-top: 0 !important;
-    padding-top: 0 !important;
-    display: block !important;
-    flex-direction: unset !important;
-    justify-content: unset !important;
-    position: relative !important;
-  }
-  
-  .q8-hero-section > div {
-    height: 100% !important;
-    min-height: 100% !important;
-    position: relative !important;
-    width: 100% !important;
-  }
-  
-  .q8-hero-section img,
-  .q8-hero-section [data-next-image] {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    object-fit: contain !important;
-    object-position: center center !important;
-    width: 100% !important;
-    height: 100% !important;
+    margin-top: -80px !important;
+    padding-top: 80px !important;
   }
 }
 
 @media (min-width: 640px) and (max-width: 767px) {
   .q8-hero-section {
-    aspect-ratio: 16 / 9 !important;
-    min-height: auto !important;
-    height: auto !important;
-    max-height: 60vh !important;
-    margin-top: 0 !important;
-    padding-top: 0 !important;
-    display: block !important;
-    flex-direction: unset !important;
-    justify-content: unset !important;
-    position: relative !important;
-  }
-  
-  .q8-hero-section > div {
-    height: 100% !important;
-    min-height: 100% !important;
-    position: relative !important;
-    width: 100% !important;
-  }
-  
-  .q8-hero-section img,
-  .q8-hero-section [data-next-image] {
-    object-fit: contain !important;
-    object-position: center center !important;
-    width: 100% !important;
-    height: 100% !important;
+    margin-top: -80px !important;
+    padding-top: 80px !important;
   }
 }
 
 /* Desktop: full screen */
 @media (min-width: 768px) {
   .q8-hero-section {
-    min-height: 100vh;
-    height: 100vh;
     margin-top: -80px;
     padding-top: 80px;
     display: flex;

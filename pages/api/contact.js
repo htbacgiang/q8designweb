@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     const { name, phone, email, message } = req.body;
 
     // Validate required fields
-    if (!name || !phone || !message) {
+    if (!name || !phone) {
       return res.status(400).json({ 
         success: false, 
         message: 'Vui lòng điền đầy đủ thông tin bắt buộc' 
@@ -50,7 +50,7 @@ export default async function handler(req, res) {
       name: name.trim(),
       phone: phone.trim(),
       email: email ? email.trim().toLowerCase() : null,
-      purpose: message.trim(),
+      purpose: message ? message.trim() : undefined,
       courseSlug: 'thiet-ke-noi-that', // Default service for Q8 Design
       status: 'active',
       source: 'website_contact_form',

@@ -158,7 +158,7 @@ export default function RenovationServicePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative md:h-[70vh] h-[50vh] flex items-center justify-center overflow-hidden">
+      <section className="q8-hero-section relative md:h-[70vh] h-[50vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/images/service-renovation.jpg"

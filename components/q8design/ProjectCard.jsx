@@ -56,7 +56,15 @@ export default function ProjectCard({ project, index, isVisible, filterCategorie
         >
           <motion.div
             className="absolute inset-0"
-            variants={{ hover: { scale: 1.08, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } }}
+            variants={{
+              hover: {
+                scale: 1.08,
+                transition: {
+                  duration: 0.5,
+                  ease: [0.22, 1, 0.36, 1],
+                },
+              },
+            }}
           >
             <SafeImage
               src={project.image}
