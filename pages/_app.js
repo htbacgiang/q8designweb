@@ -4,28 +4,15 @@ import "../styles/dashboard.css";
 import "../styles/about-animations.css";
 import "../styles/q8design.css";
 import "../styles/optimized-fonts.css";
-import { Hanken_Grotesk, Judson } from "next/font/google";
 import { SessionProvider } from "next-auth/react"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
 import { createSiteNavigation } from "../utils/metaUtils";
 
-const hankenGrotesk = Hanken_Grotesk({
-  subsets: ["latin", "vietnamese"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-hanken-grotesk",
-  display: "swap",
-});
-
-const judson = Judson({
-  subsets: ["latin", "vietnamese"],
-  weight: ["400", "700"],
-  variable: "--font-judson",
-  display: "swap",
-});
-  function MyApp({ Component, pageProps: { session, meta, posts, ...pageProps } }) {
+const DISABLE_GOOGLE_FONTS = process.env.DISABLE_GOOGLE_FONTS === "true";
   
+function MyApp({ Component, pageProps: { session, meta, posts, ...pageProps } }) {
   return (
       <>
           {meta && (
@@ -177,7 +164,7 @@ const judson = Judson({
             </Head>
           )}
           <SessionProvider session={session}>
-            <div className={`${hankenGrotesk.variable} ${judson.variable}`} style={{ fontFamily: "var(--font-hanken-grotesk), -apple-system, BlinkMacSystemFont, sans-serif" }}>
+            <div style={{ fontFamily: "var(--font-hanken-grotesk), -apple-system, BlinkMacSystemFont, sans-serif" }}>
               <ToastContainer
                 position="top-right"
                 autoClose={3000}

@@ -5,6 +5,8 @@
 
 /* Hanken Grotesk - set by next/font in _app.js as --font-hanken-grotesk */
 :root {
+  --font-hanken-grotesk: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-judson: 'Geogrotesque', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, serif;
   --font-primary: var(--font-hanken-grotesk), 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
