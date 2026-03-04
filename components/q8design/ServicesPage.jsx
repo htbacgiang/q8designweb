@@ -11,6 +11,7 @@ import {
   FaClock,
   FaShieldAlt
 } from "react-icons/fa";
+import CTABannerSection from './CTABannerSection';
 
 export default function ServicesPage() {
   const mainServices = [
@@ -225,7 +226,7 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative md:h-[60vh] h-[40vh] flex items-center justify-center overflow-hidden">
+      <section className="q8-hero-section relative h-[45vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/images/banner2.jpg"
@@ -239,9 +240,9 @@ export default function ServicesPage() {
         
         <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
          
-          <h1 className="text-2xl md:text-6xl font-bold mb-4">
+          <h2 className="text-2xl md:text-5xl font-bold mb-4">
             Dịch vụ <span className="text-q8-primary-400">Kiến tạo không gian sống</span>
-          </h1>
+          </h2>
           <p className="text-xl text-q8-primary-200 max-w-3xl mx-auto leading-relaxed">
             Tại Q8 Design, chúng tôi cung cấp giải pháp toàn diện, 
             biến mọi ý tưởng của bạn thành hiện thực một cách hoàn hảo
@@ -250,12 +251,9 @@ export default function ServicesPage() {
       </section>
 
       {/* Main Services */}
-      <section className="py-20 bg-white">
+      <section className="py-6 md:py-8 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <span className="px-4 py-2 bg-q8-primary-100 text-q8-primary-600 rounded-full text-sm font-medium uppercase tracking-wider">
-              Dịch vụ chính
-            </span>
             <h2 className="text-xl md:text-4xl font-bold text-q8-primary-900 mt-6 mb-2">
               Các dịch vụ chính của Q8 Design
             </h2>
@@ -270,7 +268,7 @@ export default function ServicesPage() {
                 <div key={index} className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
                   {/* Image */}
                   <div className={index % 2 === 1 ? 'lg:col-start-2' : ''}>
-                    <div className="relative overflow-hidden rounded-3xl shadow-2xl">
+                    <div className="relative overflow-hidden shadow-2xl">
                       <Image
                         src={service.image}
                         alt={service.title}
@@ -317,7 +315,7 @@ export default function ServicesPage() {
                         : service.title === 'Thi công trọn gói' ? 'thi-cong-tron-goi'
                         : service.title === 'Cải tạo không gian' ? 'cai-tao-noi-that-chung-cu'
                         : 'tu-van-ho-tro'}`}
-                      className={`inline-flex items-center px-6 py-3 ${colorClass.split(' ')[0]} text-white font-bold rounded-full hover:opacity-90 transition-all duration-300 group`}
+                      className={`btn-default inline-flex items-center gap-2 px-6 py-3 bg-[#7c877f] hover:bg-q8-primary-700 text-white font-semibold  transition-colors`}
                     >
                       Xem chi tiết
                       <FaArrowRight className="ml-2 transition-transform group-hover:translate-x-1" />
@@ -331,9 +329,9 @@ export default function ServicesPage() {
       </section>
 
       {/* Services by Type - Architecture Design */}
-      <section className="py-20 bg-q8-primary-50">
+      <section className="py-6 md:py-8 ">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+          <div className="text-center mb-8">
             <h2 className="text-xl md:text-4xl font-bold text-q8-primary-900 mb-2">
               {servicesByType.architecture.title}
             </h2>
@@ -374,9 +372,9 @@ export default function ServicesPage() {
       </section>
 
       {/* Services by Type - Interior Design */}
-      <section className="py-20 bg-white">
+      <section className="py-6 md:py-8 bg-white">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+          <div className="text-center mb-8">
             <h2 className="text-xl md:text-4xl font-bold text-q8-primary-900 mb-2">
               {servicesByType.interior.title}
             </h2>
@@ -417,9 +415,9 @@ export default function ServicesPage() {
       </section>
 
       {/* Services by Type - Construction */}
-      <section className="py-20 bg-q8-primary-50">
+      <section className="py-6 md:py-8 ">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+          <div className="text-center mb-8">
             <h2 className="text-xl md:text-4xl font-bold text-q8-primary-900 mb-2">
               {servicesByType.construction.title}
             </h2>
@@ -459,16 +457,13 @@ export default function ServicesPage() {
       </section>
 
       {/* Workflow Process */}
-      <section className="py-20 bg-q8-primary-50">
+      <section className="py-6 md:py-8 ">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <span className="px-4 py-2 bg-q8-primary-100 text-q8-primary-600 rounded-full text-sm font-medium uppercase tracking-wider">
-              Quy trình chuyên nghiệp
-            </span>
             <h2 className="text-xl md:text-4xl font-bold text-q8-primary-900 mt-6 mb-4">
               Quy trình làm việc chuyên nghiệp
             </h2>
-            <p className="text-lg text-q8-primary-700 max-w-3xl mx-auto">
+            <p className="text-lg text-q8-primary-700 max-w-4xl mx-auto">
               Quy trình 5 bước minh bạch và chuyên nghiệp, đảm bảo chất lượng 
               và sự hài lòng của khách hàng
             </p>
@@ -509,7 +504,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Benefits */}
-      <section className="py-20 bg-white">
+      <section className="py-6 md:py-8 mb-8 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-xl md:text-4xl font-bold text-q8-primary-900 mb-4">
@@ -541,34 +536,7 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-8 bg-gradient-to-r from-q8-primary-900 to-q8-primary-700">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-6xl mx-auto text-white">
-            <p className="text-xl md:text-4xl font-bold mb-3">
-              Bạn đã sẵn sàng bắt đầu dự án của mình?
-            </p>
-            <p className="text-base text-q8-primary-100 leading-relaxed mb-6">
-              Đội ngũ chuyên gia của Q8 Design luôn sẵn sàng tư vấn miễn phí để tìm ra giải pháp phù hợp nhất cho không gian của bạn. Chúng tôi cam kết mang lại một quy trình chuyên nghiệp, minh bạch và tận tâm.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/lien-he"
-                className="inline-flex items-center justify-center px-8 py-4 bg-white text-q8-primary-900 font-bold rounded-full hover:bg-q8-primary-50 transition-colors duration-300"
-              >
-                Tư vấn miễn phí ngay
-                <FaArrowRight className="ml-3" />
-              </Link>
-              <Link
-                href="/du-an"
-                className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-bold rounded-full hover:bg-white/10 transition-all duration-300"
-              >
-                Xem portfolio
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CTABannerSection />
     </div>
   );
 }

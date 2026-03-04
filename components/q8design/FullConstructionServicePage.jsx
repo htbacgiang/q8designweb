@@ -34,6 +34,7 @@ import {
   FaWrench
 } from "react-icons/fa";
 import ContactForm from "../header/ContactForm";
+import CTABannerSection from "../q8design/CTABannerSection";
 
 const FullConstructionServicePage = () => {
   const [isContactPopupOpen, setIsContactPopupOpen] = useState(false);
@@ -256,7 +257,7 @@ const FullConstructionServicePage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="q8-hero-section relative md:h-[70vh] h-[50vh] flex items-center justify-center overflow-hidden">
+      <section className="q8-hero-section relative h-[45vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/images/service-architecture.webp"
@@ -273,12 +274,9 @@ const FullConstructionServicePage = () => {
             Dịch vụ Thi công Trọn gói 
             <span className=" "> Chuyên nghiệp</span>
           </span>
-          <p className="text-lg md:text-xl mt-2 text-q8-primary-100 max-w-5xl mx-auto leading-relaxed mb-8">
-            Q8 Design – Đơn vị thi công trọn gói chuyên nghiệp từ thiết kế đến hoàn thiện. Cam kết đúng tiến độ, kiểm soát chi phí, đảm bảo chất lượng và thẩm mỹ cao nhất.
-          </p>
           <button
             onClick={() => setIsContactPopupOpen(true)}
-            className="inline-flex items-center px-8 py-4 bg-q8-primary-900 text-white font-bold rounded-full hover:bg-q8-primary-700 transition-all duration-300 group"
+            className="inline-flex items-center px-8 py-4 mt-6 bg-q8-primary-900 text-white font-bold rounded-full hover:bg-q8-primary-700 transition-all duration-300 group"
           >
             Tư vấn miễn phí
             <FaArrowRight className="ml-3 transition-transform group-hover:translate-x-1" />
@@ -523,48 +521,7 @@ const FullConstructionServicePage = () => {
       </section>
 
       {/* IX. CTA Section */}
-      <section className="py-8 bg-gradient-to-r from-q8-primary-900 to-q8-primary-700">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-6xl mx-auto text-white">
-            <p className="text-xl md:text-4xl font-bold mb-3">
-              Bạn đã sẵn sàng bắt đầu dự án của mình?
-            </p>
-            <p className="text-base text-q8-primary-100 leading-relaxed mb-6">
-              Hãy để Q8 Design biến bản vẽ thành hiện thực. Với dịch vụ thi công trọn gói chuyên nghiệp, tiết kiệm và đẳng cấp, chúng tôi cam kết mang lại một quy trình chuyên nghiệp, minh bạch và tận tâm, đảm bảo mọi chi tiết đều phản ánh trọn vẹn phong cách và cá tính riêng của bạn.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={() => setIsContactPopupOpen(true)}
-                className="inline-flex items-center justify-center px-8 py-4 bg-white text-q8-primary-900 font-bold rounded-full hover:bg-q8-primary-50 transition-colors duration-300"
-              >
-                <FaPhoneAlt className="mr-3" />
-                Liên hệ tư vấn miễn phí
-                <FaArrowRight className="ml-3" />
-              </button>
-              <Link
-                href="/dich-vu"
-                className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-bold rounded-full hover:bg-white/10 transition-all duration-300"
-              >
-                Xem các dịch vụ khác
-              </Link>
-            </div>
-
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 max-w-3xl mx-auto border-2 border-white/20 mt-8">
-              <div className="grid md:grid-cols-2 gap-4 text-left">
-                <div>
-                  <p className="text-q8-primary-100 text-sm mb-1">Địa chỉ:</p>
-                  <p className="font-bold text-white">Đ. Nam An Khánh - KĐT Nam An Khánh, Hà Nội</p>
-                </div>
-                <div>
-                  <p className="text-q8-primary-100 text-sm mb-1">Hotline / Zalo:</p>
-                  <p className="font-bold text-2xl text-white">098 811 68 28</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CTABannerSection />
 
       {/* Contact Popup */}
       {isContactPopupOpen && (

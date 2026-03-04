@@ -20,7 +20,7 @@ import {
 // import { getProjectBySlug, projects } from "../../data/projects";
 import NoiThatViewer from "./NoiThatViewer";
 import ContactForm from "../header/ContactForm";
-
+import CTABannerSection from "./CTABannerSection";
 export default function ProjectDetailPage({ project }) {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [targetRowHeight, setTargetRowHeight] = useState(350);
@@ -472,8 +472,9 @@ export default function ProjectDetailPage({ project }) {
     <>
     <div className="min-h-screen bg-white">
       {/* Hero Section with Cover Image */}
+      
       <section className="relative">
-        <div className="relative h-screen overflow-hidden">
+        <div className="q8-hero-section relative h-[45vh] flex items-center justify-center overflow-hidden">
           {coverImage && (
             <SafeImage
               src={coverImage}
@@ -484,7 +485,7 @@ export default function ProjectDetailPage({ project }) {
             />
           )}
           {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/70 to-black/60"></div>
           
           {/* Project Info Overlay - Centered */}
           <div className="absolute inset-0 flex items-center justify-center p-6 md:p-12">
@@ -769,34 +770,8 @@ export default function ProjectDetailPage({ project }) {
       )}
 
       {/* CTA Section */}
-      <section className="py-20 bg-q8-primary-50">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-q8-primary-900">
-            Bạn có muốn kiến tạo một không gian sống như thế này?
-          </h2>
-          <p className="text-xl text-q8-primary-600 mb-8 max-w-2xl mx-auto">
-            Liên hệ ngay với chúng tôi để được tư vấn miễn phí và bắt đầu
-            hành trình thiết kế không gian sống mơ ước của bạn.
-          </p>
-
-          <div className="flex flex-row gap-4 justify-center flex-nowrap">
-            <button
-              onClick={toggleForm}
-              className="inline-flex items-center px-10 py-4 bg-q8-primary-900 hover:bg-q8-primary-700 text-white font-bold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg"
-            >
-              Liên hệ tư vấn
-            </button>
-            <Link
-              href="/dich-vu"
-              className="inline-flex items-center px-8 py-4 border-2 border-q8-primary-900 text-q8-primary-900 hover:bg-q8-primary-900 hover:text-white font-bold rounded-full transition-all duration-300"
-            >
-              Xem dịch vụ
-            </Link>
-          </div>
-        </div>
-      </section>
-
-
+      <CTABannerSection />
+      
       {/* Lightbox Modal */}
       {selectedImage && (
         <div 

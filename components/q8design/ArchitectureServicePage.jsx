@@ -27,6 +27,7 @@ import {
   FaTimes
 } from "react-icons/fa";
 import ContactForm from "../header/ContactForm";
+import CTABannerSection from "../q8design/CTABannerSection";
 
 export default function ArchitectureServicePage() {
   const [isContactPopupOpen, setIsContactPopupOpen] = useState(false);
@@ -217,7 +218,7 @@ export default function ArchitectureServicePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="q8-hero-section relative md:h-[70vh] h-[50vh] flex items-center justify-center overflow-hidden">
+      <section className="q8-hero-section relative h-[45vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/images/service-architecture.webp"
@@ -231,13 +232,11 @@ export default function ArchitectureServicePage() {
         
         <div className="relative z-10 text-center text-white max-w-5xl mx-auto px-4">
           
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6">
+          <h1 className="text-3xl md:text-5xl font-bold mb-6">
           Dịch vụ Thiết kế Kiến trúc: <br />
             <span className="">Kiến tạo Không gian Sống Đẳng cấp</span>
           </h1>
-          <p className="text-lg md:text-xl text-q8-primary-100 max-w-5xl mx-auto leading-relaxed mb-8">
-          Kiến tạo không gian sống mơ ước của bạn với dịch vụ thiết kế kiến trúc chuyên nghiệp từ Q8 Design. Chúng tôi cam kết đồng hành cùng bạn để tạo ra những công trình độc đáo, bền vững, phản ánh trọn vẹn phong cách và cá tính riêng.
-          </p>
+
           <button
             onClick={() => setIsContactPopupOpen(true)}
             className="inline-flex items-center px-8 py-4 bg-q8-primary-900 text-white font-bold rounded-full hover:bg-q8-primary-700 transition-all duration-300 group"
@@ -626,36 +625,7 @@ export default function ArchitectureServicePage() {
       </section>
 
       {/* IX. Kêu gọi Hành động (CTA) */}
-      <section className="py-8 bg-gradient-to-r from-q8-primary-900 to-q8-primary-700">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-6xl mx-auto text-white">
-            <p className="text-xl md:text-4xl font-bold mb-3">
-              Bạn đã sẵn sàng bắt đầu dự án của mình?
-            </p>
-            <p className="text-base text-q8-primary-100 leading-relaxed mb-6">
-              Nếu bạn đang ấp ủ một ý tưởng về không gian sống hoàn hảo, đừng ngần ngại biến nó thành hiện thực. Thiết kế kiến trúc không chỉ là một dịch vụ, mà là một hành trình để kiến tạo nên những giá trị bền vững và độc bản.
-              Hãy để Q8 Design đồng hành cùng bạn từ những nét phác thảo đầu tiên cho đến khi công trình được hoàn thiện. Chúng tôi cam kết mang lại một quy trình chuyên nghiệp, minh bạch và tận tâm.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={() => setIsContactPopupOpen(true)}
-                className="inline-flex items-center justify-center px-8 py-4 bg-white text-q8-primary-900 font-bold rounded-full hover:bg-q8-primary-50 transition-colors duration-300"
-              >
-                <FaPhoneAlt className="mr-3" />
-                Liên hệ tư vấn miễn phí
-                <FaArrowRight className="ml-3" />
-              </button>
-              <Link
-                href="/dich-vu"
-                className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-bold rounded-full hover:bg-white/10 transition-all duration-300"
-              >
-                Xem các dịch vụ khác
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CTABannerSection />
 
       {/* Contact Popup Modal */}
       {isContactPopupOpen && (

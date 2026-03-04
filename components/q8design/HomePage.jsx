@@ -5,10 +5,8 @@ import ServicesSection from './ServicesSection';
 import WorkProcessSection from './WorkProcessSection';
 import ProjectsSection from './ProjectsSection';
 import BlogSection from './BlogSection';
-import ClientsSection from './ClientsSection';
 import FAQSection from './FAQSection';
 import CTABannerSection from './CTABannerSection';
-import FurnitureViewer from '../q8design/FurnitureViewer';
 
 export default function HomePage() {
   return (

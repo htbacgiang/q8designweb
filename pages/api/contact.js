@@ -46,17 +46,23 @@ export default async function handler(req, res) {
     }
 
     // Create new subscription/contact record
-    const newSubscription = new Subscription({
+    const payload = {
       name: name.trim(),
       phone: phone.trim(),
-      email: email ? email.trim().toLowerCase() : null,
       purpose: message ? message.trim() : undefined,
-      courseSlug: 'thiet-ke-noi-that', // Default service for Q8 Design
+      courseSlug: 'thiet-ke-noi-that',
       status: 'active',
       source: 'website_contact_form',
       ipAddress: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
       userAgent: req.headers['user-agent']
-    });
+    };
+
+    const cleanedEmail = typeof email === 'string' && email.trim() ? email.trim().toLowerCase() : undefined;
+    if (cleanedEmail) {
+      payload.email = cleanedEmail;
+    }
+
+    const newSubscription = new Subscription(payload);
 
     await newSubscription.save();
 

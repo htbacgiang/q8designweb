@@ -4,17 +4,12 @@ import SafeImage from "../common/SafeImage";
 import Image from "next/image";
 import Link from "next/link";
 import { 
-  FaArrowRight, 
-  FaPlay, 
   FaCube, 
-  FaFilter, 
   FaMapMarkerAlt,
   FaRuler,
-  FaCog,
-  FaSearch
 } from "react-icons/fa";
 import { useProjects } from "../../hooks/useProjects";
-
+import CTABannerSection from './CTABannerSection';
 export default function ProjectsPage() {
   const [activeFilter, setActiveFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
@@ -165,7 +160,7 @@ export default function ProjectsPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
+      <section className="q8-hero-section relative h-[45vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/images/banner2.jpg"
@@ -178,16 +173,11 @@ export default function ProjectsPage() {
         </div>
         
         <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-2">
-          <div className="mb-6">
-            <span className="inline-block px-4 py-2 bg-gradient-to-r from-q8-primary-900/30 to-q8-primary-600/30 backdrop-blur-sm rounded-full border border-q8-primary-600/40 text-q8-primary-100 font-bold shadow-lg">
-              Portfolio của chúng tôi
-            </span>
-          </div>
           <h2 className="text-2xl md:text-5xl font-bold mb-3">
             <span className="bg-gradient-to-r from-q8-primary-50 via-white to-q8-primary-100 bg-clip-text text-transparent">Kiệt tác</span> Kiến trúc & 
             Không gian sống
           </h2>
-          <p className="text-xl text-q8-primary-50 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-q8-primary-50 max-w-4xl mx-auto leading-relaxed">
             Mỗi dự án tại Q8 Design là một hành trình sáng tạo, nơi chúng tôi biến ý tưởng của bạn 
             thành một không gian sống độc đáo. Khám phá các công trình đã hoàn thiện của chúng tôi.
           </p>
@@ -198,24 +188,8 @@ export default function ProjectsPage() {
       {/* All Projects */}
       <section className="py-8 bg-q8-primary-50 relative">
         <div className="container mx-auto px-4">
-
           {/* Filter Bar */}
-          <div ref={filterBarRef} className="bg-gradient-to-br from-white via-q8-primary-50 to-white rounded-2xl p-6 shadow-lg mb-12 border border-q8-primary-200/50">
-            {/* Search Input */}
-            <div className="mb-6">
-              <div className="relative max-w-md mx-auto">
-                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-q8-primary-400" />
-                <input
-                  type="text"
-                  placeholder="Tìm kiếm dự án..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-q8-primary-300 rounded-full focus:outline-none focus:ring-2 focus:ring-q8-primary-900 focus:border-transparent transition-all"
-                  disabled={loading}
-                />
-              </div>
-            </div>
-            
+          <div ref={filterBarRef} className="bg-gradient-to-br from-white via-q8-primary-50 to-white p-6 shadow-lg mb-12 border border-q8-primary-200/50">
             {/* Category Filters */}
             <div className="flex flex-wrap gap-2 justify-center">
               {filterCategories.map((category) => (
@@ -268,7 +242,7 @@ export default function ProjectsPage() {
                   href={`/du-an/${project.slug}`}
                   className="group block"
                 >
-                  <div className="relative w-full aspect-[5/3] rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer">
+                  <div className="relative w-full aspect-[5/3] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer">
                     {/* Background Image */}
                     <div className="absolute inset-0">
                       <SafeImage
@@ -424,32 +398,8 @@ export default function ProjectsPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-10 bg-gradient-to-br from-q8-primary-50 via-white to-q8-primary-100">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-q8-primary-900 via-q8-primary-700 to-q8-primary-900 bg-clip-text text-transparent mb-4">
-            Bạn có dự án mới?
-          </h2>
-          <p className="text-xl text-q8-primary-600 mb-8 max-w-2xl mx-auto">
-            Hãy để Q8 Design biến ý tưởng của bạn thành hiện thực. 
-            Liên hệ ngay để được tư vấn miễn phí và báo giá chi tiết.
-          </p>
-          <div className="flex flex-row gap-2 sm:gap-4 justify-center flex-wrap">
-            <Link 
-              href="/lien-he" 
-              className="inline-flex items-center px-4 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-q8-primary-900 to-q8-primary-700 hover:from-q8-primary-700 hover:to-q8-primary-600 text-white font-bold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 text-sm sm:text-base"
-            >
-              Tư vấn miễn phí
-              <FaArrowRight className="ml-2" />
-            </Link>
-            <Link 
-              href="/dich-vu" 
-              className="inline-flex items-center px-4 sm:px-8 py-3 sm:py-4 border-2 border-q8-primary-900 text-q8-primary-900 hover:bg-gradient-to-r hover:from-q8-primary-900 hover:to-q8-primary-700 hover:text-white font-bold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 text-sm sm:text-base"
-            >
-              Xem dịch vụ
-            </Link>
-          </div>
-        </div>
-      </section>
+        <CTABannerSection />
+
     </div>
   );
 }

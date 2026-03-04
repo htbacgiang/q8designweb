@@ -301,7 +301,7 @@ export default function ContactPage() {
       {/* Contact/Booking Form */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             {activeTab === "contact" ? (
               /* Contact Form */
               <div>
@@ -329,11 +329,11 @@ export default function ContactPage() {
                           value={formData.name}
                           onChange={handleInputChange}
                           className={`w-full pl-12 pr-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-q8-primary-900 focus:border-transparent ${
-                            errors.name ? 'border-red-500' : 'border-q8-primary-300'
+                            errors.name ? 'border-red-500' : 'border-q8-primary-500'
                           }`}
                           placeholder="Nhập họ và tên của bạn"
                         />
-                        <FaUser className="absolute left-4 top-1/2 transform -translate-y-1/2 text-q8-primary-400" />
+                        <FaUser className="absolute left-4 top-1/2 transform -translate-y-1/2 text-q8-primary-500" />
                       </div>
                       {errors.name && (
                         <p className="mt-1 text-sm text-red-600">{errors.name}</p>
@@ -352,11 +352,11 @@ export default function ContactPage() {
                           value={formData.phone}
                           onChange={handleInputChange}
                           className={`w-full pl-12 pr-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-q8-primary-900 focus:border-transparent ${
-                            errors.phone ? 'border-red-500' : 'border-q8-primary-300'
+                            errors.phone ? 'border-red-500' : 'border-q8-primary-500'
                           }`}
                           placeholder="Nhập số điện thoại"
                         />
-                        <FaPhone className="absolute left-4 top-1/2 transform -translate-y-1/2 text-q8-primary-400" />
+                        <FaPhone className="absolute left-4 top-1/2 transform -translate-y-1/2 text-q8-primary-500" />
                       </div>
                       {errors.phone && (
                         <p className="mt-1 text-sm text-red-600">{errors.phone}</p>
@@ -375,11 +375,11 @@ export default function ContactPage() {
                         value={formData.email}
                         onChange={handleInputChange}
                         className={`w-full pl-12 pr-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-q8-primary-900 focus:border-transparent ${
-                          errors.email ? 'border-red-500' : 'border-q8-primary-300'
+                          errors.email ? 'border-red-500' : 'border-q8-primary-500'
                         }`}
                         placeholder="Nhập địa chỉ email"
                       />
-                      <FaEnvelope className="absolute left-4 top-1/2 transform -translate-y-1/2 text-q8-primary-400" />
+                      <FaEnvelope className="absolute left-4 top-1/2 transform -translate-y-1/2 text-q8-primary-500" />
                     </div>
                     {errors.email && (
                       <p className="mt-1 text-sm text-red-600">{errors.email}</p>
@@ -395,7 +395,7 @@ export default function ContactPage() {
                         name="projectType"
                         value={formData.projectType}
                         onChange={handleInputChange}
-                        className="w-full py-3 px-4 border border-q8-primary-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-q8-primary-900 focus:border-transparent"
+                        className="w-full py-3 px-4 border border-q8-primary-500 rounded-xl focus:outline-none focus:ring-2 focus:ring-q8-primary-900 focus:border-transparent"
                       >
                         <option value="">Chọn loại dự án</option>
                         {projectTypes.map((type, index) => (
@@ -414,10 +414,12 @@ export default function ContactPage() {
                           name="area"
                           value={formData.area}
                           onChange={handleInputChange}
-                          className="w-full pl-12 pr-4 py-3 border border-q8-primary-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-q8-primary-900 focus:border-transparent"
+                          className={`w-full pl-12 pr-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-q8-primary-900 focus:border-transparent ${
+                            errors.area ? 'border-red-500' : 'border-q8-primary-500'
+                          }`}
                           placeholder="VD: 80m², 120m²"
                         />
-                        <FaRuler className="absolute left-4 top-1/2 transform -translate-y-1/2 text-q8-primary-400" />
+                        <FaRuler className="absolute left-4 top-1/2 transform -translate-y-1/2 text-q8-primary-500" />
                       </div>
                     </div>
                   </div>
@@ -431,7 +433,7 @@ export default function ContactPage() {
                         name="budget"
                         value={formData.budget}
                         onChange={handleInputChange}
-                        className="w-full py-3 px-4 border border-q8-primary-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-q8-primary-900 focus:border-transparent"
+                        className="w-full py-3 px-4 border border-q8-primary-500 rounded-xl focus:outline-none focus:ring-2 focus:ring-q8-primary-900 focus:border-transparent"
                       >
                         <option value="">Chọn mức ngân sách</option>
                         {budgetRanges.map((range, index) => (
@@ -450,10 +452,12 @@ export default function ContactPage() {
                           name="location"
                           value={formData.location}
                           onChange={handleInputChange}
-                          className="w-full pl-12 pr-4 py-3 border border-q8-primary-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-q8-primary-900 focus:border-transparent"
+                          className={`w-full pl-12 pr-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-q8-primary-900 focus:border-transparent ${
+                            errors.location ? 'border-red-500' : 'border-q8-primary-500'
+                          }`}
                           placeholder="VD: Hà Nội, TP.HCM"
                         />
-                        <FaMapMarkerAlt className="absolute left-4 top-1/2 transform -translate-y-1/2 text-q8-primary-400" />
+                        <FaMapMarkerAlt className="absolute left-4 top-1/2 transform -translate-y-1/2 text-q8-primary-500" />     
                       </div>
                     </div>
                   </div>
@@ -467,7 +471,9 @@ export default function ContactPage() {
                       rows={5}
                       value={formData.message}
                       onChange={handleInputChange}
-                      className="w-full py-3 px-4 border border-q8-primary-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-q8-primary-900 focus:border-transparent resize-none"
+                      className={`w-full py-3 px-4 border rounded-xl focus:outline-none focus:ring-2 focus:ring-q8-primary-900 focus:border-transparent resize-none ${
+                        errors.message ? 'border-red-500' : 'border-q8-primary-500'
+                      }`}
                       placeholder="Mô tả chi tiết về dự án, yêu cầu đặc biệt hoặc câu hỏi của bạn..."
                     />
                   </div>

@@ -4,7 +4,6 @@ const subscriptionSchema = new mongoose.Schema({
   email: {
     type: String,
     required: false, // Email is optional
-    unique: true,
     sparse: true, // Allow multiple null values
     trim: true,
     lowercase: true,

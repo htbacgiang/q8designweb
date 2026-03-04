@@ -23,7 +23,7 @@ export default function Footer() {
       { name: "Giới thiệu", href: "/gioi-thieu" },
       { name: "Tầm nhìn & Sứ mệnh", href: "/gioi-thieu#tam-nhin" },
       { name: "Đội ngũ chuyên gia", href: "/gioi-thieu#doi-ngu" },
-      { name: "Văn hóa doanh nghiệp", href: "/gioi-thieu#van-hoa" }
+      { name: "Hồ sơ năng lực", href: "/ho-so-nang-luc" }
     ],
     services: [
       { name: "Thiết kế kiến trúc", href: "/dich-vu/thiet-ke-kien-truc" },

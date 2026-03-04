@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { 
-  FaRulerCombined, 
-  FaArrowRight, 
+import {
+  FaRulerCombined,
+  FaArrowRight,
   FaCheckCircle,
   FaStar,
   FaClock,
@@ -30,10 +30,10 @@ import {
   FaCouch
 } from "react-icons/fa";
 import ContactForm from "../header/ContactForm";
-
+import CTABannerSection from "../q8design/CTABannerSection";
 export default function InteriorDesignServicePage() {
   const [isContactPopupOpen, setIsContactPopupOpen] = useState(false);
-  
+
   // Các loại hình Thiết kế Nội thất Q8 Design thực hiện
   const serviceTypes = [
     {
@@ -241,7 +241,7 @@ export default function InteriorDesignServicePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="q8-hero-section relative md:h-[70vh] h-[50vh] flex items-center justify-center overflow-hidden">
+      <section className="q8-hero-section relative h-[45vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/images/service-interior-2.webp"
@@ -252,15 +252,12 @@ export default function InteriorDesignServicePage() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50"></div>
         </div>
-        
+
         <div className="relative z-10 text-center text-white max-w-5xl mx-auto px-4">
           <span className="text-3xl md:text-5xl font-bold mb-8">
-            Dịch vụ Thiết kế Nội thất 
+            Dịch vụ Thiết kế Nội thất
             <span className=""> Chuyên nghiệp</span>
           </span>
-          <p className="text-lg md:text-xl mt-2 text-q8-primary-100 max-w-5xl mx-auto leading-relaxed mb-8">
-            Q8 Design – Chuyên thiết kế nội thất nhà ở, biệt thự, văn phòng và công trình thương mại. Mang đến không gian sống tinh tế, tiện nghi và đậm dấu ấn cá nhân.
-          </p>
           <button
             onClick={() => setIsContactPopupOpen(true)}
             className="inline-flex items-center px-8 py-4 bg-q8-primary-900 text-white font-bold rounded-full hover:bg-q8-primary-700 transition-all duration-300 group"
@@ -280,7 +277,7 @@ export default function InteriorDesignServicePage() {
                 Giới thiệu về Dịch vụ Thiết kế Nội thất
               </h2>
             </div>
-            
+
             <div className="grid md:grid-cols-2 gap-12 items-center mb-8">
               <div className="prose prose-lg max-w-none">
                 <p className="text-q8-primary-700 leading-relaxed mb-6 text-lg">
@@ -290,7 +287,7 @@ export default function InteriorDesignServicePage() {
                   <Link href="/" className="text-q8-primary-900">Q8 Design</Link> tự hào mang đến dịch vụ thiết kế nội thất chuyên nghiệp, nơi mỗi công trình được tạo nên bởi sự thấu hiểu, sáng tạo và tinh tế. Chúng tôi không chỉ trang trí, mà kiến tạo nên một không gian phản ánh phong cách sống của chủ nhân.
                 </p>
               </div>
-              
+
               <div className="relative h-[300px] md:h-[400px] rounded-3xl overflow-hidden">
                 <Image
                   src="/images/xu-huong-cong-nghe-ai-kien-truc-2026.webp"
@@ -608,7 +605,7 @@ export default function InteriorDesignServicePage() {
       </section>
 
       {/* VIII. Xu hướng Thiết kế Nội thất năm 2026 */}
-      <section className="py-12 bg-q8-primary-50">
+      <section className="py-6 md:py-8 bg-q8-primary-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
             <h2 className="text-xl md:text-4xl font-bold text-q8-primary-900 mt-6 mb-2">
@@ -633,7 +630,7 @@ export default function InteriorDesignServicePage() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                   </div>
-                  
+
                   <div className="p-4">
                     <div className="flex items-center gap-4 mb-4">
                       <div className="flex-shrink-0 w-12 h-12 bg-q8-primary-900 rounded-xl flex items-center justify-center shadow-lg">
@@ -688,37 +685,7 @@ export default function InteriorDesignServicePage() {
       </section>
 
       {/* X. Kêu gọi Hành động (CTA) */}
-      <section className="py-8 bg-gradient-to-r from-q8-primary-900 to-q8-primary-700">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-6xl mx-auto text-white">
-            <p className="text-xl md:text-4xl font-bold mb-3">
-              Bạn đã sẵn sàng bắt đầu dự án của mình?
-            </p>
-            <p className="text-base text-q8-primary-100 leading-relaxed mb-6">
-              Nếu bạn đang ấp ủ một ý tưởng về không gian sống hoàn hảo, đừng ngần ngại biến nó thành hiện thực. Thiết kế nội thất không chỉ là một dịch vụ, mà là một hành trình để kiến tạo nên những giá trị bền vững và độc bản.
-              Hãy để Q8 Design đồng hành cùng bạn từ những nét phác thảo đầu tiên cho đến khi công trình được hoàn thiện. Chúng tôi cam kết mang lại một quy trình chuyên nghiệp, minh bạch và tận tâm.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={() => setIsContactPopupOpen(true)}
-                className="inline-flex items-center justify-center px-8 py-4 bg-white text-q8-primary-900 font-bold rounded-full hover:bg-q8-primary-50 transition-colors duration-300"
-              >
-                <FaPhoneAlt className="mr-3" />
-                Liên hệ tư vấn miễn phí
-                <FaArrowRight className="ml-3" />
-              </button>
-              <Link
-                href="/dich-vu"
-                className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-bold rounded-full hover:bg-white/10 transition-all duration-300"
-              >
-                Xem các dịch vụ khác
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      <CTABannerSection />
       {/* Contact Popup Modal */}
       {isContactPopupOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
@@ -730,7 +697,7 @@ export default function InteriorDesignServicePage() {
             >
               <FaTimes className="text-q8-primary-900 text-xl" />
             </button>
-            
+
             <div className="p-6 md:p-8">
               <div className="text-center mb-6">
                 <h2 className="text-2xl md:text-3xl font-bold text-q8-primary-900 mb-2">

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
-import { FaCalendarAlt, FaUser, FaArrowRight, FaClock } from "react-icons/fa";
+import { FaCalendarAlt, FaUser, FaArrowRight } from "react-icons/fa";
 
 export default function BlogSection() {
   const [blogPosts, setBlogPosts] = useState([]);
@@ -102,38 +102,12 @@ export default function BlogSection() {
                   </div>
                 )}
 
-                {/* Category Badge */}
-                {post.category && (
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-q8-primary-900 text-white px-3 py-1 rounded-full text-sm font-medium">
-                      {post.category}
-                    </span>
-                  </div>
-                )}
-
-                {/* Featured Badge - First 3 are featured */}
-                <div className="absolute top-4 right-4">
-                  <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                    Nổi bật
-                  </span>
-                </div>
-
                 {/* Overlay on hover */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
 
               {/* Post Content */}
               <div className="py-6 px-0">
-                {/* Tags */}
-                {post.tags && post.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    {post.tags.slice(0, 2).map((tag, idx) => (
-                      <span key={idx} className="px-2 py-1 bg-q8-primary-100 text-q8-primary-600 text-xs rounded-full">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
 
                 {/* Title */}
                 <h3 className="text-xl font-bold text-q8-primary-900 mb-3 leading-tight group-hover:text-q8-primary-700 transition-colors line-clamp-2">
@@ -142,24 +116,6 @@ export default function BlogSection() {
                   </Link>
                 </h3>
 
-                {/* Excerpt */}
-                <p className="text-q8-primary-600 leading-relaxed mb-4 line-clamp-3">
-                  {post.meta || "Không có mô tả"}
-                </p>
-
-                {/* Meta Info */}
-                <div className="flex items-center justify-between text-sm text-q8-primary-500 mb-4">
-                  <div className="flex items-center space-x-4">
-                    <div className="flex items-center">
-                      <FaUser className="mr-1" />
-                      <span>Q8 Design Team</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center">
-                    <FaCalendarAlt className="mr-1" />
-                    <span>{formatDate(post.createdAt)}</span>
-                  </div>
-                </div>
 
                 {/* Read More */}
                 <Link

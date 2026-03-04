@@ -3,7 +3,7 @@ import {
   NextPage,
 } from "next";
 import parse from "html-react-parser";
-import DefaultLayout from "../../components/layout/DefaultLayout";
+import DefaultLayout2 from "../../components/layout/DefaultLayout2";
 import db from "../../utils/db";
 import Post from "../../models/Post";
 import Share from "../../components/common/Share";
@@ -88,7 +88,7 @@ const SinglePost: NextPage<Props> = ({ post, meta }) => {
     };
 
     return (
-      <DefaultLayout 
+      <DefaultLayout2 
         title={errorMeta.title}
         desc={errorMeta.description}
         thumbnail={errorMeta.og.image}
@@ -103,7 +103,7 @@ const SinglePost: NextPage<Props> = ({ post, meta }) => {
             </Link>
           </div>
         </div>
-      </DefaultLayout>
+      </DefaultLayout2>
     );
   }
 
@@ -152,7 +152,7 @@ const SinglePost: NextPage<Props> = ({ post, meta }) => {
   })();
 
   return (
-    <DefaultLayout 
+    <DefaultLayout2 
       title={meta?.title}
       desc={meta?.description}
       thumbnail={meta?.og?.image}
@@ -161,7 +161,7 @@ const SinglePost: NextPage<Props> = ({ post, meta }) => {
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row">
           {/* Main Content - 75% width on md and up */}
-          <div className="w-full md:w-3/4 pr-0 md:pr-4 mb-4 md:mb-0 ">
+          <div className="w-full md:w-3/4 pr-0 md:pr-4 mb-4 md:mb-0 overflow-visible">
             <div className="md:pb-20 pb-6 container mx-auto ">
               {/* Breadcrumb */}
               <div className="flex font-bold gap-2 text-base text-gray-600">
@@ -184,8 +184,11 @@ const SinglePost: NextPage<Props> = ({ post, meta }) => {
               <div className="mt-2 uppercase text-blue-800 font-xl">
                 <b>{category}</b>
               </div>
-              <div className="blog prose prose-lg dark:prose-invert [&_img]:mx-auto">
+              <div className="blog prose prose-lg dark:prose-invert [&_img]:mx-auto overflow-visible">
                 <style jsx>{`
+                  .blog {
+                    overflow: visible;
+                  }
                   .blog img {
                     display: block;
                     margin: 1.5em auto;
@@ -279,7 +282,7 @@ const SinglePost: NextPage<Props> = ({ post, meta }) => {
           </div>
         </div>
       </div>
-    </DefaultLayout>
+    </DefaultLayout2>
   );
 };
 

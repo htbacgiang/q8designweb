@@ -106,7 +106,7 @@ export default function ContactForm() {
               priority
             />
           </div>
-          <div ref={rightSectionRef} className="md:col-span-7 px-4 md:px-8 py-6 md:py-10 opacity-0">
+          <div ref={rightSectionRef} className="md:col-span-7 px-4 md:px-8 opacity-0">
             <div className="flex items-center gap-2 text-[var(--q8-primary-600)] text-sm font-bold uppercase mb-2">
               <h2 className="inline-flex items-center gap-1">
                 Form liên hệ

@@ -176,7 +176,29 @@ const Blogs: NextPage<Props> = ({ initialPosts = [] }) => {
       </Head>
 
       <DefaultLayout>
+        <section className="q8-hero-section relative h-[45vh] flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0">
+            <Image
+              src="/images/banner2.jpg"
+              alt="Q8 Design Blog"
+              fill
+              className="object-cover brightness-50"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/40"></div>
+          </div>
+          
+          <div className="relative z-10 text-center text-white max-w-5xl mx-auto px-4">
+            <h1 className="text-4xl md:text-5xl font-bold mb-3">
+              Bài viết & Chia sẻ
+            </h1>
+            <p className="text-xl text-q8-primary-200 max-w-3xl mx-auto leading-relaxed">
+              Khám phá kiến thức, cảm hứng và kinh nghiệm từ Q8 Design
+            </p>
+          </div>
+        </section>
         <div className="pb-12 mt-6 container mx-auto px-4">
+          
           <div className="flex flex-col gap-4 justify-center w-full">
             {/* Breadcrumb */}
             <div className="flex gap-2 uppercase">

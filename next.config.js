@@ -1,6 +1,25 @@
   /** @type {import('next').NextConfig} */
   const nextConfig = {
     reactStrictMode: true,
+    transpilePackages: ["react-pdf", "pdfjs-dist"],
+    experimental: {
+      esmExternals: "loose",
+    },
+    webpack: (config) => {
+      config.resolve.alias = {
+        ...(config.resolve.alias || {}),
+        "pdfjs-dist": "pdfjs-dist/legacy",
+        "pdfjs-dist/build/pdf": "pdfjs-dist/legacy/build/pdf",
+        "pdfjs-dist/build/pdf.worker": "pdfjs-dist/legacy/build/pdf.worker",
+        "pdfjs-dist/build/pdf.mjs": "pdfjs-dist/legacy/build/pdf.js",
+      };
+      config.module.rules.push({
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: "javascript/auto",
+      });
+      return config;
+    },
     async headers() {
       return [
         {
@@ -25,7 +44,7 @@
             },
             {
               key: "X-Frame-Options",
-              value: "DENY",
+              value: "SAMEORIGIN",
             },
             {
               key: "X-XSS-Protection",

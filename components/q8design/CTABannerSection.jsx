@@ -101,7 +101,7 @@ export default function CTABannerSection() {
               Đặt lịch tư vấn
             </button>
 
-            <div className="flex flex-wrap gap-8 md:gap-8 lg:gap-12">
+            <div className="flex flex-wrap gap-8 md:gap-8 lg:gap-8">
               <a
                 href="tel:0988116828"
                 className="flex items-start gap-4 group"

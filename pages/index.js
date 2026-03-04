@@ -51,8 +51,6 @@ export default function Home({ posts = [], meta = {} }) {
 }
 
 export async function getServerSideProps() {
-  const fs = require('fs');
-  const path = require('path');
   
   try {
     // Lấy bài viết và format
@@ -60,7 +58,6 @@ export async function getServerSideProps() {
     const posts = formatPosts(raw) || [];
 
     // Projects are now fetched client-side via API
-2
   const meta = {
     title: "Q8 Design | Thiết kế & Thi công Nội thất Trọn gói",
     description:

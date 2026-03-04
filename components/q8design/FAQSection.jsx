@@ -52,7 +52,7 @@ const listVariants = {
 };
 
 export default function FAQSection() {
-  const [openIndex, setOpenIndex] = useState(0);
+  const [openIndex, setOpenIndex] = useState(-1);
 
   return (
     <section className="py-6 md:py-12 bg-white">
@@ -92,7 +92,7 @@ export default function FAQSection() {
                     <button
                       type="button"
                       onClick={() => setOpenIndex(isOpen ? -1 : index)}
-                      className="w-full flex items-start justify-between gap-4 text-left py-4 px-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 rounded-lg"
+                      className="w-full flex items-start justify-between gap-4 text-left py-2 px-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 rounded-lg"
                       aria-expanded={isOpen}
                       aria-controls={`faq-answer-${index}`}
                       id={`faq-question-${index}`}

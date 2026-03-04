@@ -2,8 +2,8 @@ import { useState } from "react";
 import Image from "next/image";
 import SafeImage from "../common/SafeImage";
 import Link from "next/link";
-import { 
-  FaArrowRight, 
+import {
+  FaArrowRight,
   FaCheckCircle,
   FaStar,
   FaClock,
@@ -19,18 +19,16 @@ import {
   FaPhoneAlt,
   FaTimes,
   FaTools,
-  FaHardHat,
   FaPaintRoller,
-  FaClipboardCheck,
-  FaRecycle,
   FaCouch,
   FaLeaf
 } from "react-icons/fa";
 import ContactForm from "../header/ContactForm";
+import CTABannerSection from "../q8design/CTABannerSection";
 
 export default function ApartmentRenovationServicePage() {
   const [isContactPopupOpen, setIsContactPopupOpen] = useState(false);
-  
+
   // Tại sao cần cải tạo nội thất chung cư
   const whyRenovate = [
     {
@@ -147,7 +145,7 @@ export default function ApartmentRenovationServicePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="q8-hero-section relative md:h-[70vh] h-[50vh] flex items-center justify-center overflow-hidden">
+      <section className="q8-hero-section relative h-[45vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/images/service-renovation.webp"
@@ -158,17 +156,15 @@ export default function ApartmentRenovationServicePage() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50"></div>
         </div>
-        
+
         <div className="relative z-10 text-center text-white max-w-5xl mx-auto px-4">
-          <span className="text-3xl md:text-5xl lg:text-6xl font-bold mb-8">
-            Cải tạo Nội thất Chung cư 
+          <span className="text-3xl md:text-5xl font-bold mb-8">
+            Cải tạo Nội thất Chung cư
           </span>
-          <p className="text-lg md:text-xl text-q8-primary-100 max-w-5xl mx-auto leading-relaxed mb-8">
-            Q8 Design chuyên cải tạo nội thất chung cư cũ tại Hà Nội. Đội ngũ KTS giàu kinh nghiệm, quy trình minh bạch, cam kết không phát sinh chi phí, mang lại không gian sống tiện nghi, hiện đại cho gia đình bạn.
-          </p>
+          <br />
           <button
             onClick={() => setIsContactPopupOpen(true)}
-            className="inline-flex items-center px-8 py-4 bg-q8-primary-900 text-white font-bold rounded-full hover:bg-q8-primary-700 transition-all duration-300 group"
+            className="inline-flex items-center px-8 py-4 mt-4 bg-q8-primary-900 text-white font-bold rounded-full hover:bg-q8-primary-700 transition-all duration-300 group"
           >
             Tư vấn miễn phí
             <FaArrowRight className="ml-3 transition-transform group-hover:translate-x-1" />
@@ -185,7 +181,7 @@ export default function ApartmentRenovationServicePage() {
                 Biến không gian cũ thành tổ ấm trong mơ
               </h2>
             </div>
-            
+
             <div className="grid md:grid-cols-2 gap-12 items-center mb-8">
               <div className="prose prose-lg max-w-none">
                 <p className="text-q8-primary-700 leading-relaxed mb-6 text-lg">
@@ -198,7 +194,7 @@ export default function ApartmentRenovationServicePage() {
                   Tại Q8 Design, chúng tôi tin rằng một không gian sống lý tưởng không phải là một căn hộ mới, mà là một không gian được thiết kế và &quot;đo ni đóng giày&quot; riêng cho bạn. Với đội ngũ kiến trúc sư và kỹ sư dày dặn kinh nghiệm, cùng quy trình làm việc chuyên nghiệp, chúng tôi cam kết sẽ mang đến một giải pháp toàn diện, giúp bạn kiến tạo nên một không gian sống không chỉ đẹp mà còn tiện nghi và phản ánh trọn vẹn cá tính của mình.
                 </p>
               </div>
-              
+
               <div className="relative h-[400px] md:h-[500px] rounded-3xl overflow-hidden">
                 <Image
                   src="/images/xu-huong-vat-lieu-ben-vung-2025.webp"
@@ -363,7 +359,7 @@ export default function ApartmentRenovationServicePage() {
                   />
                   <div className="absolute top-4 left-4 flex flex-wrap gap-2">
                     {project.tags.map((tag, idx) => (
-                      <span 
+                      <span
                         key={idx}
                         className="px-3 py-1 bg-q8-primary-900 text-white rounded-full text-xs font-bold"
                       >
@@ -377,7 +373,7 @@ export default function ApartmentRenovationServicePage() {
                     {project.title}
                   </h3>
                   <p className="text-q8-primary-900 font-bold mb-4">{project.subtitle}</p>
-                  
+
                   <div className="space-y-4 mb-6">
                     <div className="flex items-center text-q8-primary-600">
                       <FaHome className="text-q8-primary-900 mr-3" />
@@ -452,48 +448,7 @@ export default function ApartmentRenovationServicePage() {
       </section>
 
       {/* VII. Kêu gọi Hành động (CTA) */}
-      <section className="py-8 bg-gradient-to-r from-q8-primary-900 to-q8-primary-700">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-6xl mx-auto text-white">
-            <p className="text-xl md:text-4xl font-bold mb-3">
-              Bạn đã sẵn sàng bắt đầu dự án của mình?
-            </p>
-            <p className="text-base text-q8-primary-100 leading-relaxed mb-6">
-              Nếu bạn đã sẵn sàng biến không gian cũ thành tổ ấm trong mơ, hãy để Q8 Design đồng hành cùng bạn. Chúng tôi cam kết mang lại một quy trình chuyên nghiệp, minh bạch và tận tâm, đảm bảo mọi chi tiết đều phản ánh trọn vẹn phong cách và cá tính riêng của bạn.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={() => setIsContactPopupOpen(true)}
-                className="inline-flex items-center justify-center px-8 py-4 bg-white text-q8-primary-900 font-bold rounded-full hover:bg-q8-primary-50 transition-colors duration-300"
-              >
-                <FaPhoneAlt className="mr-3" />
-                Liên hệ tư vấn miễn phí
-                <FaArrowRight className="ml-3" />
-              </button>
-              <Link
-                href="/dich-vu"
-                className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-bold rounded-full hover:bg-white/10 transition-all duration-300"
-              >
-                Xem các dịch vụ khác
-              </Link>
-            </div>
-
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 max-w-3xl mx-auto border-2 border-white/20 mt-8">
-              <div className="grid md:grid-cols-2 gap-4 text-left">
-                <div>
-                  <p className="text-q8-primary-100 text-sm mb-1">Địa chỉ:</p>
-                  <p className="font-bold text-white">Đ. Nam An Khánh - KĐT Nam An Khánh, Hà Nội</p>
-                </div>
-                <div>
-                  <p className="text-q8-primary-100 text-sm mb-1">Hotline / Zalo:</p>
-                  <p className="font-bold text-2xl text-white">098 811 68 28</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CTABannerSection />
 
       {/* Contact Popup Modal */}
       {isContactPopupOpen && (
@@ -506,7 +461,7 @@ export default function ApartmentRenovationServicePage() {
             >
               <FaTimes className="text-q8-primary-900 text-xl" />
             </button>
-            
+
             <div className="p-6 md:p-8">
               <div className="text-center mb-6">
                 <h2 className="text-2xl md:text-3xl font-bold text-q8-primary-900 mb-2">

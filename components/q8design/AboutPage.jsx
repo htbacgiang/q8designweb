@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaLightbulb, FaHandshake, FaCog, FaCheckCircle, FaQuoteLeft, FaAward, FaUsers, FaRocket, FaFacebook, FaLinkedin, FaInstagram, FaTwitter, FaYoutube, FaTiktok } from "react-icons/fa";
-
+import AboutSection from "./AboutSection";
+import AboutMaterialsSection from "./AboutMaterialsSection";
+import FAQSection from "./FAQSection";
 export default function AboutPage() {
   const coreValues = [
     {
@@ -103,7 +105,6 @@ export default function AboutPage() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="q8-hero-section relative h-[45vh] flex items-center justify-center overflow-hidden">
-        
         <div className="absolute inset-0">
           <Image
             src="/images/doi-ngu-thiet-ke-noi-that-q8design.webp"
@@ -116,11 +117,7 @@ export default function AboutPage() {
         </div>
         
         <div className="relative z-10 text-center text-white max-w-5xl mx-auto px-4">
-          <div className="mb-6">
-            <span className="inline-block px-4 py-2 bg-q8-primary-900/20 backdrop-blur-sm rounded-full border border-q8-primary-600/30 text-q8-primary-100 font-bold">
-              Câu chuyện thương hiệu
-            </span>
-          </div>
+        
           <span className="text-4xl md:text-6xl font-bold mb-6">
             Câu chuyện thương hiệu {""}
             <span className="text-q8-primary-100">Q8 Design</span>
@@ -133,6 +130,7 @@ export default function AboutPage() {
         </div>
       </section>
     
+      <AboutSection />
       {/* Vision & Mission */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
@@ -140,7 +138,7 @@ export default function AboutPage() {
             {/* Left: Content */}
             <div>
               <div className="mb-8">
-                <span className="px-4 py-2 bg-q8-primary-100 text-q8-primary-700 rounded-full text-sm font-medium uppercase tracking-wider">
+                <span className="text-q8-primary-600 text-sm font-medium uppercase tracking-wide">
                   Tầm nhìn & Sứ mệnh
                 </span>
               </div>
@@ -182,7 +180,7 @@ export default function AboutPage() {
 
             {/* Right: Image */}
             <div className="relative">
-              <div className="relative overflow-hidden rounded-3xl shadow-2xl">
+              <div className="relative overflow-hidden  shadow-2xl">
                 <Image
                   src="/images/tam-nhin-q8.jpg"
                   alt="Q8 Design Vision"
@@ -205,25 +203,19 @@ export default function AboutPage() {
         </div>
       </section>
 
+
       {/* Core Values */}
-      <section className="py-8 bg-q8-primary-50">
+      <section className="py-8 ">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <span className="px-4 py-2 bg-q8-primary-100 text-q8-primary-700 rounded-full text-base font-medium uppercase tracking-wider">
+          <div className="text-center mb-6">
+            <h2 className="flex items-center gap-2 text-[var(--q8-primary-600)] text-sm font-bold uppercase mb-2">
             Giá trị cốt lõi của Q8 Design
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-q8-primary-900 mt-6 mb-4 visually-hidden">
-              Giá trị cốt lõi của Q8 Design
             </h2>
-            <p className="text-lg text-q8-primary-600 max-w-3xl mx-auto mt-4">
-              Bốn giá trị cốt lõi định hình nên phong cách làm việc và cam kết chất lượng của Q8 Design
-            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {coreValues.map((value, index) => {
               const Icon = value.icon;
-              
               return (
                 <div 
                   key={index}
@@ -254,16 +246,13 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
+      <AboutMaterialsSection />
 
       {/* Team */}
-      <section className="py-20 bg-q8-primary-50">
+      <section className="py-6 md:py-8">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <span className="px-4 py-2 bg-q8-primary-100 text-q8-primary-700 rounded-full text-sm font-medium uppercase tracking-wider">
-              Đội ngũ chuyên gia
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-q8-primary-900 mt-6 mb-4">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl md:text-4xl lg:text-[2.5rem] font-bold text-q8-primary-900 mt-6 mb-4">
               Đội ngũ sáng tạo và tận tâm
             </h2>
             <p className="text-lg text-q8-primary-600 max-w-5xl mx-auto">
@@ -369,15 +358,13 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
+        <FAQSection />
       {/* Office & Process */}
-      <section className="py-10 bg-white">
+      <section className="py-8 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
-            <span className="px-4 py-2 bg-q8-primary-100 text-q8-primary-700 rounded-full text-sm font-medium uppercase tracking-wider">
-              Văn phòng & Quy trình
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-q8-primary-900 mt-6">
+            
+            <h2 className="text-3xl md:text-4xl font-bold text-q8-primary-900 mt-3">
               Một ngày tại Q8 Design
             </h2>
           </div>
@@ -385,11 +372,11 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="relative">
               <Image
-                src="/images/q8-desgin.webp"
+                src="/images/mot-ngay-la-viec-tai-q8.webp"
                 alt="Q8 Design Office"
                 width={600}
                 height={400}
-                className="object-cover w-full h-96 rounded-3xl shadow-2xl"
+                className="object-cover w-full h-96 "
               />
             </div>
             
