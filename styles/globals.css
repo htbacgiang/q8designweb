@@ -5,17 +5,12 @@
 
 /* Hanken Grotesk - set by next/font in _app.js as --font-hanken-grotesk */
 :root {
-  /* Default fallbacks; will be overridden by next/font/local variables */
-  --font-hanken-grotesk: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-judson: 'Judson', Georgia, 'Times New Roman', serif;
-  --font-primary: var(--font-hanken-grotesk), 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-hanken-grotesk: 'Hanken Grotesk', sans-serif;
+  --font-judson: 'Judson', serif;
+  --font-primary: var(--font-hanken-grotesk), sans-serif;
 }
 
 /* Global Font Application */
-* {
-  font-family: var(--font-primary) !important;
-}
-
 body {
   font-family: var(--font-primary) !important;
 }

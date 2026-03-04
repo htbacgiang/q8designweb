@@ -3,7 +3,6 @@ import "../styles/toast.css";
 import "../styles/dashboard.css";
 import "../styles/about-animations.css";
 import "../styles/q8design.css";
-import "../styles/optimized-fonts.css";
 import localFont from "next/font/local";
 import { SessionProvider } from "next-auth/react"
 import { ToastContainer } from "react-toastify";

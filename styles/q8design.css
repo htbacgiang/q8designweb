@@ -653,20 +653,7 @@ body {
                0 10px 20px rgba(0, 0, 0, 0.4);
 }
 
-/* Global Font Override - Ensure Hanken Grotesk is used everywhere */
-*, *::before, *::after {
-  font-family: var(--font-hanken-grotesk), 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-}
-
-/* Ensure body uses Hanken Grotesk */
-body {
-  font-family: var(--font-hanken-grotesk), 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-}
-
-/* Override any inherited fonts */
-h1, h2, h3, h4, h5, h6, p, span, div, button, input, textarea, a {
-  font-family: var(--q8-font-family) !important;
-}
+/* Typography is controlled globally via --font-hanken-grotesk in globals.css */
 
 /* Fixed Navigation Spacing */
 .q8-main-content {
