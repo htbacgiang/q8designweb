@@ -4,13 +4,33 @@ import "../styles/dashboard.css";
 import "../styles/about-animations.css";
 import "../styles/q8design.css";
 import "../styles/optimized-fonts.css";
+import localFont from "next/font/local";
 import { SessionProvider } from "next-auth/react"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
 import { createSiteNavigation } from "../utils/metaUtils";
 
-const DISABLE_GOOGLE_FONTS = process.env.DISABLE_GOOGLE_FONTS === "true";
+const hankenGrotesk = localFont({
+  variable: "--font-hanken-grotesk",
+  display: "swap",
+  src: [
+    { path: "../public/fonts/HankenGrotesk-Light.ttf", weight: "300", style: "normal" },
+    { path: "../public/fonts/HankenGrotesk-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../public/fonts/HankenGrotesk-Medium.ttf", weight: "500", style: "normal" },
+    { path: "../public/fonts/HankenGrotesk-SemiBold.ttf", weight: "600", style: "normal" },
+    { path: "../public/fonts/HankenGrotesk-Bold.ttf", weight: "700", style: "normal" }
+  ],
+});
+
+const judson = localFont({
+  variable: "--font-judson",
+  display: "swap",
+  src: [
+    { path: "../public/fonts/Judson-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../public/fonts/Judson-Bold.ttf", weight: "700", style: "normal" }
+  ],
+});
   
 function MyApp({ Component, pageProps: { session, meta, posts, ...pageProps } }) {
   return (
@@ -164,7 +184,7 @@ function MyApp({ Component, pageProps: { session, meta, posts, ...pageProps } })
             </Head>
           )}
           <SessionProvider session={session}>
-            <div style={{ fontFamily: "var(--font-hanken-grotesk), -apple-system, BlinkMacSystemFont, sans-serif" }}>
+            <div className={`${hankenGrotesk.variable} ${judson.variable}`} style={{ fontFamily: "var(--font-hanken-grotesk), -apple-system, BlinkMacSystemFont, sans-serif" }}>
               <ToastContainer
                 position="top-right"
                 autoClose={3000}

@@ -35,9 +35,11 @@ export default function Document() {
         <link rel="dns-prefetch" href="//zalo.me" />
         <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
         <link rel="dns-prefetch" href="//unpkg.com" />
-        
-        {/* Fonts: Hanken Grotesk loaded via next/font in _app.js */}
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/HankenGrotesk-Regular.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/HankenGrotesk-Medium.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/HankenGrotesk-Bold.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/Judson-Regular.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/Judson-Bold.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
       </Head>
       <body>
         <Main />
@@ -46,4 +48,3 @@ export default function Document() {
     </Html>
   );
 }
-
