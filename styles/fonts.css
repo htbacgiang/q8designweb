@@ -1,0 +1,61 @@
+/* styles/fonts.css - Optimized font loading */
+/* Only load essential font weights to improve performance */
+
+/* Satoshi - Primary font family */
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/Satoshi-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/Satoshi-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/Satoshi-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Only include italic if actually used in design */
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/Satoshi-Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Geogrotesque - Secondary font family (only essential weights) */
+@font-face {
+  font-family: 'Geogrotesque';
+  src: url('/fonts/Geogtq-Rg.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geogrotesque';
+  src: url('/fonts/Geogtq-Md.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geogrotesque';
+  src: url('/fonts/Geogtq-Bd.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}

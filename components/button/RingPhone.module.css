@@ -1,0 +1,101 @@
+/* HelpComponent.module.css */
+
+.helpContainer {
+    position: fixed;
+    bottom: 50px;
+    right: 1px;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  .phoneRing {
+    position: relative;
+    width: 120px;
+    cursor: pointer;
+    top: 50px;
+    right: -35px;
+  }
+  .zaloRing {
+    position: relative;
+    width: 120px;
+    height: 70px;
+    top: 0px;
+    right: -35px;
+    cursor: pointer;
+  }
+  
+  .phoneRingCircleFill {
+    width: 55px;
+    height: 55px;
+    position: absolute;
+    border-radius: 100%;
+    animation: phoneRingCircleFillAnim 3.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: 50% 50%;
+    
+  }
+  .zaloRingCircleFill {
+    width: 55px;
+    height: 55px;
+    position: absolute;
+    border-radius: 100%;
+    animation: phoneRingCircleFillAnim 3.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: 50% 50%;
+    
+  }
+  
+  
+  
+  .phoneRingImgCircle img {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .zaloRingImgCircle img {
+    width: 20px;
+    height: 20px;
+  }
+  
+  
+  @keyframes phoneRingCircleAnim {
+    0% {
+        transform: rotate(0) scale(0.8);
+        opacity: 0.1;
+    }
+    30% {
+        transform: rotate(0) scale(0.9);
+        opacity: 0.5;
+    }
+    100% {
+        transform: rotate(0) scale(1);
+        opacity: 0.1;
+    }
+  }
+  
+  @keyframes phoneRingCircleFillAnim {
+    0% {
+        transform: scale(0.95);
+        opacity: 0.9;
+    }
+    50% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.95);
+        opacity: 0.9;
+    }
+  }
+  @media (max-width: 768px) {
+    .helpContainer {
+      right: -40px;
+    }
+    .phoneRing {
+      top: 30px;
+      right: -10px;
+    }
+    .zaloRing {
+      top: -25px;
+      right: -10px;
+    }
+  }
+  
