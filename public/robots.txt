@@ -6,4 +6,4 @@ Allow: /
 Host: https://q8design.vn/
 
 # Sitemaps
-Sitemap: https://q8design.vn/api/sitemap.xml
+Sitemap: https://q8design.vn/sitemap.xml

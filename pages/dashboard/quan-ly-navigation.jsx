@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import {
   Plus, Trash2, Edit2, ChevronDown, ChevronRight,
   GripVertical, Save, X, Check, AlertCircle, Menu,
-  Link as LinkIcon, Eye, EyeOff, Layers
+  Link as LinkIcon, Eye, EyeOff, Layers, Bookmark, Download, Star
 } from "lucide-react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
@@ -254,12 +254,17 @@ export default function QuanLyNavigation() {
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState(null);
   const [dirty, setDirty] = useState(false);
-  // Add an internal state to prevent hydration mismatch with dnd
   const [isBrowser, setIsBrowser] = useState(false);
 
-  useEffect(() => {
-    setIsBrowser(true);
-  }, []);
+  // Preset states
+  const [presets, setPresets] = useState([]);
+  const [showPresets, setShowPresets] = useState(false);
+  const [newPresetName, setNewPresetName] = useState("");
+  const [newPresetDesc, setNewPresetDesc] = useState("");
+  const [savingPreset, setSavingPreset] = useState(false);
+  const [editingPreset, setEditingPreset] = useState(null); // { id, name, desc }
+
+  useEffect(() => { setIsBrowser(true); }, []);
 
   // Auth guard
   useEffect(() => {
@@ -267,14 +272,96 @@ export default function QuanLyNavigation() {
     if (!session || session.user?.role !== "admin") router.push("/dang-nhap");
   }, [session, status, router]);
 
-  // Fetch
+  // Fetch nav + presets
   useEffect(() => {
     fetch("/api/navigation")
       .then((r) => r.json())
       .then((d) => { if (d.success) setItems(d.items || []); })
       .catch(() => showToast("Lỗi tải dữ liệu menu", "error"))
       .finally(() => setLoading(false));
+    fetchPresets();
   }, []);
+
+  const fetchPresets = async () => {
+    try {
+      const r = await fetch("/api/navigation/presets");
+      const d = await r.json();
+      if (d.success) setPresets(d.presets || []);
+    } catch {}
+  };
+
+  const saveAsPreset = async () => {
+    if (!newPresetName.trim()) return;
+    setSavingPreset(true);
+    try {
+      const r = await fetch("/api/navigation/presets", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: newPresetName, description: newPresetDesc, items }),
+      });
+      const d = await r.json();
+      if (d.success) {
+        setPresets((p) => [d.preset, ...p]);
+        setNewPresetName("");
+        setNewPresetDesc("");
+        showToast("Đã lưu bộ menu!", "success");
+      } else showToast(d.message, "error");
+    } catch { showToast("Lỗi kết nối", "error"); }
+    finally { setSavingPreset(false); }
+  };
+
+  const applyPreset = async (preset) => {
+    if (!confirm(`Áp dụng bộ menu "${preset.name}" vào navigation hiện tại?`)) return;
+    try {
+      const r = await fetch("/api/navigation/presets", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: preset._id, setAsDefault: true }),
+      });
+      const d = await r.json();
+      if (d.success) {
+        setItems(preset.items || []);
+        setPresets((p) => p.map((x) => ({ ...x, isDefault: x._id === preset._id })));
+        setDirty(false);
+        // Xóa cache navigation
+        try { localStorage.removeItem("nav_items"); } catch {}
+        showToast(`Đã áp dụng bộ menu "${preset.name}"!`, "success");
+      } else showToast(d.message, "error");
+    } catch { showToast("Lỗi kết nối", "error"); }
+  };
+
+  const deletePreset = async (preset) => {
+    if (!confirm(`Xóa bộ menu "${preset.name}"?`)) return;
+    try {
+      const r = await fetch("/api/navigation/presets", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: preset._id }),
+      });
+      const d = await r.json();
+      if (d.success) {
+        setPresets((p) => p.filter((x) => x._id !== preset._id));
+        showToast("Đã xóa bộ menu", "success");
+      }
+    } catch { showToast("Lỗi kết nối", "error"); }
+  };
+
+  const saveEditPreset = async () => {
+    if (!editingPreset || !editingPreset.name.trim()) return;
+    try {
+      const r = await fetch("/api/navigation/presets", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: editingPreset.id, name: editingPreset.name, description: editingPreset.desc }),
+      });
+      const d = await r.json();
+      if (d.success) {
+        setPresets((p) => p.map((x) => x._id === d.preset._id ? d.preset : x));
+        setEditingPreset(null);
+        showToast("Đã cập nhật tên", "success");
+      }
+    } catch { showToast("Lỗi kết nối", "error"); }
+  };
 
   const showToast = (msg, type = "success") => {
     setToast({ msg, type });
@@ -385,7 +472,7 @@ export default function QuanLyNavigation() {
     <AdminLayout title="Quản lý Navigation - Q8 Design">
       <div className="min-h-screen bg-gray-50/50 p-6">
         {/* Header */}
-        <div className="container mx-auto container">
+        <div className="container mx-auto">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center shadow-lg shadow-blue-200">
@@ -404,6 +491,18 @@ export default function QuanLyNavigation() {
                 </span>
               )}
               <button
+                onClick={() => setShowPresets((v) => !v)}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold transition-all duration-200 border ${
+                  showPresets ? "bg-purple-600 text-white border-purple-600" : "bg-white text-purple-700 border-purple-300 hover:bg-purple-50"
+                }`}
+              >
+                <Bookmark className="w-5 h-5" />
+                Bộ menu đã lưu
+                {presets.length > 0 && (
+                  <span className="ml-1 bg-purple-100 text-purple-700 text-xs font-bold rounded-full px-2 py-0.5">{presets.length}</span>
+                )}
+              </button>
+              <button
                 onClick={handleSave}
                 disabled={saving || !dirty}
                 className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-xl shadow-md shadow-blue-200 transition-all duration-200 active:scale-95"
@@ -417,6 +516,97 @@ export default function QuanLyNavigation() {
               </button>
             </div>
           </div>
+
+          {/* Preset Panel */}
+          {showPresets && (
+            <div className="mb-6 bg-white rounded-2xl border border-purple-200 shadow-sm p-5">
+              <h3 className="text-base font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <Bookmark className="w-4 h-4 text-purple-500" /> Quản lý bộ menu đã lưu
+              </h3>
+
+              {/* Save current as preset */}
+              <div className="flex flex-col sm:flex-row gap-2 mb-5 p-4 bg-purple-50 rounded-xl border border-purple-100">
+                <input
+                  type="text"
+                  placeholder="Tên bộ menu..."
+                  value={newPresetName}
+                  onChange={(e) => setNewPresetName(e.target.value)}
+                  className="flex-1 border border-purple-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400"
+                />
+                <input
+                  type="text"
+                  placeholder="Mô tả (tuỳ chọn)"
+                  value={newPresetDesc}
+                  onChange={(e) => setNewPresetDesc(e.target.value)}
+                  className="flex-1 border border-purple-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400"
+                />
+                <button
+                  onClick={saveAsPreset}
+                  disabled={savingPreset || !newPresetName.trim()}
+                  className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white rounded-lg text-sm font-semibold whitespace-nowrap"
+                >
+                  <Save className="w-4 h-4" />
+                  {savingPreset ? "Đang lưu..." : "Lưu menu hiện tại"}
+                </button>
+              </div>
+
+              {/* List presets */}
+              {presets.length === 0 ? (
+                <p className="text-sm text-gray-400 text-center py-4">Chưa có bộ menu nào được lưu.</p>
+              ) : (
+                <div className="space-y-2">
+                  {presets.map((preset) => (
+                    <div key={preset._id} className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${
+                      preset.isDefault ? "border-green-300 bg-green-50" : "border-gray-100 bg-gray-50 hover:bg-white"
+                    }`}>
+                      {preset.isDefault && <Star className="w-4 h-4 text-green-500 shrink-0" fill="currentColor" />}
+                      {editingPreset?.id === preset._id ? (
+                        <>
+                          <input
+                            autoFocus
+                            value={editingPreset.name}
+                            onChange={(e) => setEditingPreset({ ...editingPreset, name: e.target.value })}
+                            className="flex-1 border border-blue-300 rounded-lg px-2 py-1 text-sm focus:outline-none"
+                          />
+                          <input
+                            value={editingPreset.desc}
+                            onChange={(e) => setEditingPreset({ ...editingPreset, desc: e.target.value })}
+                            placeholder="Mô tả"
+                            className="flex-1 border border-blue-300 rounded-lg px-2 py-1 text-sm focus:outline-none"
+                          />
+                          <button onClick={saveEditPreset} className="p-1.5 text-green-600 hover:bg-green-100 rounded-lg"><Check className="w-4 h-4" /></button>
+                          <button onClick={() => setEditingPreset(null)} className="p-1.5 text-gray-400 hover:bg-gray-100 rounded-lg"><X className="w-4 h-4" /></button>
+                        </>
+                      ) : (
+                        <>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-semibold text-gray-800 truncate">{preset.name}</p>
+                            {preset.description && <p className="text-xs text-gray-400 truncate">{preset.description}</p>}
+                            <p className="text-xs text-gray-300">{preset.items?.length || 0} mục • {new Date(preset.createdAt).toLocaleDateString("vi-VN")}</p>
+                          </div>
+                          <button
+                            onClick={() => applyPreset(preset)}
+                            title="Áp dụng bộ menu này"
+                            className="flex items-center gap-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg"
+                          >
+                            <Download className="w-3.5 h-3.5" /> Áp dụng
+                          </button>
+                          <button
+                            onClick={() => setEditingPreset({ id: preset._id, name: preset.name, desc: preset.description || "" })}
+                            className="p-1.5 text-blue-400 hover:bg-blue-50 rounded-lg"
+                          ><Edit2 className="w-4 h-4" /></button>
+                          <button
+                            onClick={() => deletePreset(preset)}
+                            className="p-1.5 text-red-400 hover:bg-red-50 rounded-lg"
+                          ><Trash2 className="w-4 h-4" /></button>
+                        </>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Legend */}
           <div className="flex flex-wrap gap-x-6 gap-y-3 mb-8 p-4 bg-white rounded-2xl border border-gray-200 shadow-sm">

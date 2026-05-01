@@ -100,7 +100,7 @@ const saveDraft: NextApiHandler = async (req, res) => {
         title: title || "Nháp bài viết",
         content: content || "",
         slug: slug || `draft-${Date.now()}`,
-        meta: meta || "",
+        meta: meta || "(Nháp - chưa có mô tả)",
         tags,
         category: normalizedCategory,
         author: session.user.sub,

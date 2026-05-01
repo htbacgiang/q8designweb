@@ -104,7 +104,7 @@ const PostCard: FC<Props> = ({
             </div>
 
             {/* Title - Enhanced responsive typography */}
-            <Link href={`/bai-viet/${slug}`} className="group/title mb-2">
+            <Link href={post.isDirectPost ? `/${slug}` : `/bai-viet/${slug}`} className="group/title mb-2">
               <h2 className="text-base  md:text-xl font-bold text-gray-900 dark:text-white group-hover/title:text-orange-600 dark:group-hover/title:text-orange-400 transition-colors duration-300 line-clamp-2 lg:line-clamp-3 leading-tight lg:leading-snug">
                 {title}
               </h2>

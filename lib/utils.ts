@@ -32,7 +32,8 @@ export const readPostsFromDb = async (
   limit?: number,
   pageNo?: number,
   skip?: number,
-  includeDrafts: boolean = false
+  includeDrafts: boolean = false,
+  includeDirectPosts: boolean = false
 ) => {
   // Nếu không có limit, lấy tất cả bài viết
   if (limit && limit > 50)
@@ -41,7 +42,15 @@ export const readPostsFromDb = async (
   const finalSkip = skip || (limit && pageNo ? limit * pageNo : 0);
   await db.connectDb();
   
-  const filter = includeDrafts ? { deletedAt: null } : { isDraft: { $ne: true }, deletedAt: null };
+  const filter: any = { deletedAt: null };
+  if (!includeDrafts) {
+    filter.isDraft = { $ne: true };
+  }
+  // Mặc định loại bỏ bài viết 2 cấp (isDirectPost) khỏi danh sách chung (trang chủ, blog)
+  // Chỉ hiện trong dashboard hoặc sitemap khi được yêu cầu
+  if (!includeDirectPosts) {
+    filter.isDirectPost = { $ne: true };
+  }
   
   let query = Post.find(filter)
     .sort({ createdAt: "desc" })
@@ -70,6 +79,7 @@ export const formatPosts = (posts: PostModelSchema[]): PostDetail[] => {
     isDraft: post.isDraft || false,
     isFeatured: post.isFeatured || false,
     featuredOrder: post.featuredOrder ?? null,
+    isDirectPost: post.isDirectPost || false,
   }));
 };
 

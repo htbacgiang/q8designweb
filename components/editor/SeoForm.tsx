@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FC, useEffect, useState } from "react";
+import { ChangeEventHandler, FC, useEffect, useState, useRef } from "react";
 import classnames from "classnames";
 import slugify from "slugify";
 import SeoAnalysisV2 from "./SeoAnalysisV2";
@@ -178,21 +178,32 @@ const SEOForm: FC<Props> = ({
     focusKeyword: "",
   });
 
+  // Khi user tự sửa slug hoặc đang edit bài cũ → ngừng auto-gen slug từ title
+  const slugManuallyEdited = useRef(false);
+
   const handleChange: ChangeEventHandler<
     HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement
   > = ({ target }) => {
     let { name, value } = target;
     if (name === "meta") value = value.substring(0, 250);
+    // Nếu user tự sửa slug → đánh dấu để không auto-gen nữa
+    if (name === "slug") {
+      slugManuallyEdited.current = true;
+    }
     const newValues = { ...values, [name]: value };
     setValues(newValues);
     onChange(newValues);
   };
 
+  // Tự động tạo slug từ title, CHỈ khi user chưa tự sửa slug
   useEffect(() => {
+    if (slugManuallyEdited.current) return;
+
     const slug = slugify(title.toLowerCase(), {
       strict: true,
     });
     setValues((prevValues) => {
+      if (prevValues.slug === slug) return prevValues;
       const newValues = { ...prevValues, slug };
       onChange(newValues);
       return newValues;
@@ -201,17 +212,22 @@ const SEOForm: FC<Props> = ({
 
   useEffect(() => {
     if (initialValue) {
-      setValues({
+      // Nếu initialValue có slug → đang edit bài cũ → không auto-gen
+      if (initialValue.slug) {
+        slugManuallyEdited.current = true;
+      }
+      const newValues = {
         meta: initialValue.meta || "",
-        slug: slugify(initialValue.slug || "", {
-          strict: true,
-        }),
+        slug: initialValue.slug || "",
         tags: initialValue.tags || "",
         category: initialValue.category || "",
         focusKeyword: initialValue.focusKeyword || "",
-      });
+      };
+      setValues(newValues);
+      // Gửi dữ liệu đúng lên Editor để đảm bảo post state không bị ghi đè bởi giá trị rỗng
+      onChange(newValues);
     }
-  }, [initialValue]);
+  }, [initialValue, onChange]);
 
   const { meta, slug, category, focusKeyword } = values;
 

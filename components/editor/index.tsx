@@ -82,7 +82,7 @@ const Editor: FC<Props> = ({
   useEffect(() => {
     axios.get("/api/posts/featured")
       .then(({ data }) => setFeaturedCount(data.count ?? 0))
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   const fetchImages = useCallback(async (retryCount = 0) => {
@@ -359,18 +359,7 @@ const Editor: FC<Props> = ({
     }
   }, [post.id]);
 
-  // Tự động lưu nháp mỗi 30 giây chỉ khi tạo bài viết mới
-  useEffect(() => {
-    if (!isCreatingNewPost) return;
 
-    const autoSaveInterval = setInterval(() => {
-      if (editor && (post.title || editor.getHTML().trim())) {
-        saveDraft();
-      }
-    }, 30000);
-
-    return () => clearInterval(autoSaveInterval);
-  }, [saveDraft, editor, post.title, isCreatingNewPost]);
 
 
 
@@ -379,7 +368,7 @@ const Editor: FC<Props> = ({
   const updateTitle: ChangeEventHandler<HTMLInputElement> = ({ target }) =>
     setPost({ ...post, title: target.value });
 
-  const updateSeoValue = (result: SeoResult) => setPost({ ...post, ...result });
+  const updateSeoValue = useCallback((result: SeoResult) => setPost((prev) => ({ ...prev, ...result })), []);
 
   const updateThumbnail = (file: File) => setPost({ ...post, thumbnail: file });
 
@@ -503,7 +492,63 @@ const Editor: FC<Props> = ({
             <WordCount editor={editor} />
           </div>
 
+          {/* Tùy chọn: Nổi bật + Kiểu URL — gọn 1 dòng */}
+          <div className="mt-3 flex flex-wrap items-center gap-3">
+            {/* Toggle nổi bật */}
+            <button
+              type="button"
+              onClick={() => !featuredDisabled && setIsFeatured((prev) => !prev)}
+              disabled={featuredDisabled}
+              title={featuredDisabled ? "Đã đủ 4 bài nổi bật. Vào dashboard/bai-viet để quản lý." : ""}
+              className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium transition-all ${featuredDisabled
+                ? "border-gray-200 bg-gray-50 text-gray-300 cursor-not-allowed"
+                : isFeatured
+                  ? "border-amber-400 bg-amber-50 text-amber-700"
+                  : "border-gray-300 bg-white text-gray-500 hover:border-amber-300 hover:text-amber-600"
+                }`}
+            >
+              <svg className="w-3.5 h-3.5" fill={isFeatured && !featuredDisabled ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+              </svg>
+              {isFeatured ? "★ Nổi bật" : "Nổi bật"}
+            </button>
 
+            {/* Chọn kiểu URL */}
+            <div className="inline-flex items-center rounded-full border border-gray-300 bg-white overflow-hidden text-xs font-medium">
+              <button
+                type="button"
+                onClick={() => setIsDirectPost(false)}
+                className={`px-3 py-1.5 transition-all ${!isDirectPost
+                  ? "bg-[#105d97] text-white"
+                  : "text-gray-500 hover:bg-gray-50"
+                  }`}
+              >
+                3 cấp
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsDirectPost(true)}
+                className={`px-3 py-1.5 transition-all border-l border-gray-300 ${isDirectPost
+                  ? "bg-emerald-600 text-white"
+                  : "text-gray-500 hover:bg-gray-50"
+                  }`}
+              >
+                2 cấp
+              </button>
+            </div>
+
+            {/* Link xem trước — hiện full URL */}
+            {post.slug && (
+              <a
+                href={isDirectPost ? `/${post.slug}` : `/bai-viet/${post.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center text-xs text-blue-600 hover:text-blue-800 hover:underline transition-colors font-mono"
+              >
+                {`https://q8design.vn${isDirectPost ? `/${post.slug}` : `/bai-viet/${post.slug}`}`}
+              </a>
+            )}
+          </div>
         </div>
 
         {/* Basic Info - Right 350px */}
@@ -552,91 +597,7 @@ const Editor: FC<Props> = ({
             />
           </div>
 
-          {/* Bài viết nổi bật */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-4">
-            <h2 className="text-xl font-bold text-gray-900 mb-2">Bài viết nổi bật</h2>
-            <p className="text-sm text-gray-500 mb-4">
-              Tối đa 4 bài viết nổi bật được hiển thị ở đầu trang /bai-viet.
-            </p>
-            <button
-              type="button"
-              onClick={() => !featuredDisabled && setIsFeatured((prev) => !prev)}
-              disabled={featuredDisabled}
-              title={featuredDisabled ? "Đã đủ 4 bài nổi bật. Vào dashboard/bai-viet để quản lý." : ""}
-              className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 font-medium text-sm ${
-                featuredDisabled
-                  ? "border-gray-100 bg-gray-50 text-gray-300 cursor-not-allowed opacity-60"
-                  : isFeatured
-                  ? "border-amber-400 bg-amber-50 text-amber-700"
-                  : "border-gray-200 bg-gray-50 text-gray-500 hover:border-gray-300"
-              }`}
-            >
-              <svg
-                className={`w-5 h-5 flex-shrink-0 ${featuredDisabled ? "text-gray-300" : isFeatured ? "text-amber-500" : "text-gray-400"}`}
-                fill={isFeatured && !featuredDisabled ? "currentColor" : "none"}
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
-                />
-              </svg>
-              {isFeatured ? "Đang là bài viết nổi bật" : "Đánh dấu là nổi bật"}
-            </button>
-          </div>
 
-          {/* Kiểu hiển thị URL */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-4">
-            <h2 className="text-xl font-bold text-gray-900 mb-2">Kiểu hiển thị</h2>
-            <p className="text-sm text-gray-500 mb-4">
-              Chọn cấu trúc URL hiển thị cho bài viết.
-            </p>
-            <div className="space-y-2">
-              {/* Option 1: 3 cấp */}
-              <button
-                type="button"
-                onClick={() => setIsDirectPost(false)}
-                className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 font-medium text-sm ${
-                  !isDirectPost
-                    ? "border-[#105d97] bg-blue-50 text-[#105d97]"
-                    : "border-gray-200 bg-gray-50 text-gray-500 hover:border-gray-300"
-                }`}
-              >
-                <div className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${
-                  !isDirectPost ? "border-[#105d97]" : "border-gray-400"
-                }`}>
-                  {!isDirectPost && <div className="w-2 h-2 rounded-full bg-[#105d97]" />}
-                </div>
-                <div className="text-left">
-                  <div className="font-semibold">3 cấp (mặc định)</div>
-                  <div className="text-xs text-gray-400 font-normal">trangchu / bai-viet / slug</div>
-                </div>
-              </button>
-              {/* Option 2: 2 cấp */}
-              <button
-                type="button"
-                onClick={() => setIsDirectPost(true)}
-                className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 font-medium text-sm ${
-                  isDirectPost
-                    ? "border-emerald-500 bg-emerald-50 text-emerald-700"
-                    : "border-gray-200 bg-gray-50 text-gray-500 hover:border-gray-300"
-                }`}
-              >
-                <div className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${
-                  isDirectPost ? "border-emerald-500" : "border-gray-400"
-                }`}>
-                  {isDirectPost && <div className="w-2 h-2 rounded-full bg-emerald-500" />}
-                </div>
-                <div className="text-left">
-                  <div className="font-semibold">2 cấp (bài viết chi tiết)</div>
-                  <div className="text-xs text-gray-400 font-normal">trangchu / slug</div>
-                </div>
-              </button>
-            </div>
-          </div>
 
         </div>
       </div>

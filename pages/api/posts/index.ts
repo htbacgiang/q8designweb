@@ -250,12 +250,14 @@ const readPosts: NextApiHandler = async (req, res) => {
     const session = token ? { user: token } : null;
     const isAdmin = session?.user?.role === 'admin';
     const shouldIncludeDrafts = includeDrafts === 'true' && isAdmin;
+    const shouldIncludeDirectPosts = isAdmin; // Luôn hiện tất cả bài viết trong dashboard admin
     
     const posts = await readPostsFromDb(
       limit ? parseInt(limit) : undefined,
       pageNo ? parseInt(pageNo) : undefined,
       skip ? parseInt(skip) : undefined,
-      shouldIncludeDrafts
+      shouldIncludeDrafts,
+      shouldIncludeDirectPosts
     );
     
     console.log(`Returning ${posts.length} posts from API`);

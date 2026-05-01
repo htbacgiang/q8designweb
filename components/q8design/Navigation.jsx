@@ -19,16 +19,37 @@ export default function Navigation() {
   const [navigationItems, setNavigationItems] = useState([]);
   const router = useRouter();
 
-  // Load navigation từ API
+  // Load navigation từ API (cache localStorage 5 phút)
   useEffect(() => {
-    fetch("/api/navigation")
-      .then((r) => r.json())
-      .then((d) => {
-        if (d.success && Array.isArray(d.items)) {
-          setNavigationItems(d.items.filter((i) => i.isActive !== false));
+    const CACHE_KEY = "nav_items";
+    const CACHE_TTL = 5 * 60 * 1000; // 5 phút
+
+    const loadNav = async () => {
+      // Đọc cache trước — hiện ngay, không delay
+      try {
+        const cached = localStorage.getItem(CACHE_KEY);
+        if (cached) {
+          const { data, ts } = JSON.parse(cached);
+          if (Date.now() - ts < CACHE_TTL) {
+            setNavigationItems(data);
+            return; // Cache còn hạn, không cần fetch
+          }
         }
-      })
-      .catch(() => {});
+      } catch (_) {}
+
+      // Cache hết hạn hoặc không có → fetch API
+      try {
+        const r = await fetch("/api/navigation");
+        const d = await r.json();
+        if (d.success && Array.isArray(d.items)) {
+          const items = d.items.filter((i) => i.isActive !== false);
+          setNavigationItems(items);
+          localStorage.setItem(CACHE_KEY, JSON.stringify({ data: items, ts: Date.now() }));
+        }
+      } catch (_) {}
+    };
+
+    loadNav();
   }, []);
 
   // Detect desktop và scroll

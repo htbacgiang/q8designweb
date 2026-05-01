@@ -140,19 +140,35 @@ const updatePost: NextApiHandler = async (req, res) => {
     console.log("Updating post - permission granted:", { isAdmin, isOwner });
 
     const { files, body } = await readFile<IncomingPost>(req);
+    console.log("Update post body:", { 
+      title: body.title ? `"${body.title.substring(0, 50)}..."` : "(empty)", 
+      slug: body.slug || "(empty)", 
+      meta: body.meta ? `"${body.meta.substring(0, 50)}..."` : "(empty)", 
+      content: body.content ? `(${body.content.length} chars)` : "(empty)",
+      allKeys: Object.keys(body)
+    });
     const error = validateSchema(postValidationSchema, { ...body });
-    if (error) return res.status(400).json({ error });
+    if (error) {
+      console.log("Validation error:", error);
+      return res.status(400).json({ error });
+    }
 
     const { title, content, meta, slug, category } = body;
     const normalizedCategory = normalizePostCategory(category);
     const isDraft = (body as any).isDraft;
     const isFeatured = (body as any).isFeatured === 'true' || (body as any).isFeatured === true;
     const isDirectPost = (body as any).isDirectPost === 'true' || (body as any).isDirectPost === true;
+
+    // Đảm bảo slug duy nhất, loại trừ chính bài viết đang update
+    const uniqueSlug = await ensureUniqueSlug(
+      slug && slug.trim() ? slug.trim() : post.slug,
+      postId
+    );
     
     post.title = title;
     post.content = content;
     post.meta = meta;
-    post.slug = slug;
+    post.slug = uniqueSlug;
     post.category = normalizedCategory;
     
     // Cập nhật trạng thái nháp nếu có
@@ -279,6 +295,26 @@ const restorePost: NextApiHandler = async (req, res) => {
       console.error("Database disconnect error:", disconnectError);
     }
   }
+};
+
+const ensureUniqueSlug = async (
+  rawSlug?: string,
+  excludePostId?: string
+): Promise<string> => {
+  const baseSlug = (rawSlug && rawSlug.trim()) ? rawSlug.trim() : `post-${Date.now()}`;
+  let candidate = baseSlug;
+  let suffix = 1;
+
+  while (
+    await Post.findOne({
+      slug: candidate,
+      ...(excludePostId ? { _id: { $ne: excludePostId } } : {}),
+    })
+  ) {
+    candidate = `${baseSlug}-${suffix++}`;
+  }
+
+  return candidate;
 };
 
 export default handler;

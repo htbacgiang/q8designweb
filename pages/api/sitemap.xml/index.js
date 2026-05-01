@@ -53,7 +53,7 @@ const getPostsForSitemap = async () => {
     await db.connectDb();
     const posts = await Post.find(
       { isDraft: false, $or: [{ deletedAt: null }, { deletedAt: { $exists: false } }] },
-      'slug updatedAt createdAt'
+      'slug updatedAt createdAt isDirectPost'
     ).lean();
     console.log(`Found ${posts.length} published posts for sitemap`);
     return posts || [];
@@ -124,11 +124,13 @@ const handler = async (req, res) => {
 <url><loc>${baseUrl}/du-an/${project.slug}</loc><lastmod>${lastmod}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>`;
     });
 
-    // Thêm post routes
+    // Thêm post routes - phân biệt URL 2 cấp và 3 cấp
     posts.forEach(post => {
       const lastmod = post.updatedAt ? new Date(post.updatedAt).toISOString() : currentDate;
+      // Bài viết 2 cấp: /slug | Bài viết 3 cấp: /bai-viet/slug
+      const postUrl = post.isDirectPost ? `${baseUrl}/${post.slug}` : `${baseUrl}/bai-viet/${post.slug}`;
       sitemapXml += `
-<url><loc>${baseUrl}/bai-viet/${post.slug}</loc><lastmod>${lastmod}</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>`;
+<url><loc>${postUrl}</loc><lastmod>${lastmod}</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>`;
     });
 
     sitemapXml += `

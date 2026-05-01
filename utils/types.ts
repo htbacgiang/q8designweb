@@ -10,6 +10,7 @@ export interface PostDetail {
   isDraft?: boolean;
   isFeatured?: boolean;
   featuredOrder?: number | null;
+  isDirectPost?: boolean;
 }
 
 export interface IncomingPost {
