@@ -50,7 +50,7 @@ const DropdownOptions: FC<Props> = ({ head, options, onToggle }): JSX.Element =>
         {head}
       </button>
       {showOptions && (
-        <div className="min-w-max absolute top-full mt-2 right-0 z-40 border border-gray-300 dark:border-gray-600 rounded-md text-left bg-white dark:bg-gray-800 shadow-lg">
+        <div className="min-w-max absolute top-full mt-2 right-0 z-[200] border border-gray-300 dark:border-gray-600 rounded-md text-left bg-white dark:bg-gray-800 shadow-lg">
           <ul className="py-2 space-y-1">
             {options.map(({ label, onClick }, index) => {
               return (

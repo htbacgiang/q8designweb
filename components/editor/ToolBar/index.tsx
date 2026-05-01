@@ -1,5 +1,4 @@
-import { FC } from "react";
-import { useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { Editor } from "@tiptap/react";
 import { AiFillCaretDown } from "react-icons/ai";
 import { RiDoubleQuotesL } from "react-icons/ri";
@@ -38,6 +37,19 @@ const ToolBar: FC<Props> = ({
   onDropdownToggle,
 }): JSX.Element | null => {
   const [textColor, setTextColor] = useState<string>("#000000");
+  // Force re-render khi cursor di chuyển để cập nhật label heading
+  const [, forceUpdate] = useState(0);
+
+  useEffect(() => {
+    if (!editor) return;
+    const update = () => forceUpdate((n) => n + 1);
+    editor.on("selectionUpdate", update);
+    editor.on("transaction", update);
+    return () => {
+      editor.off("selectionUpdate", update);
+      editor.off("transaction", update);
+    };
+  }, [editor]);
 
   const handleTextColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!editor) return;

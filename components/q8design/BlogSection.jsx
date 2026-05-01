@@ -16,8 +16,9 @@ export default function BlogSection() {
         const response = await axios.get('/api/posts?includeDrafts=false');
 
         if (response.data && response.data.posts) {
-          // Take first 3 posts for homepage
-          setBlogPosts(response.data.posts.slice(0, 3));
+          // Loại bỏ bài viết 2 cấp (isDirectPost) — không hiện ở trang chủ
+          const filtered = response.data.posts.filter((p) => !p.isDirectPost);
+          setBlogPosts(filtered.slice(0, 3));
         }
       } catch (error) {
         console.error('Error fetching blog posts:', error);
@@ -111,7 +112,7 @@ export default function BlogSection() {
 
                 {/* Title */}
                 <h3 className="text-xl font-bold text-q8-primary-900 mb-3 leading-tight group-hover:text-q8-primary-700 transition-colors line-clamp-2">
-                  <Link href={`/bai-viet/${post.slug}`}>
+                  <Link href={post.isDirectPost ? `/${post.slug}` : `/bai-viet/${post.slug}`}>
                     {post.title}
                   </Link>
                 </h3>
@@ -119,7 +120,7 @@ export default function BlogSection() {
 
                 {/* Read More */}
                 <Link
-                  href={`/bai-viet/${post.slug}`}
+                  href={post.isDirectPost ? `/${post.slug}` : `/bai-viet/${post.slug}`}
                   className="inline-flex items-center text-q8-primary-700 hover:text-q8-primary-900 font-medium transition-colors group/link"
                 >
                   Đọc thêm

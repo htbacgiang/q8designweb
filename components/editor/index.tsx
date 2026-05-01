@@ -472,7 +472,7 @@ const Editor: FC<Props> = ({
           </div>
 
           <div className="border border-gray-200 rounded-lg flex flex-col bg-white flex-1 min-h-0">
-            <div className="bg-gray-50 border-b border-gray-200 p-2 flex-shrink-0 z-10">
+            <div className="bg-gray-50 border-b border-gray-200 p-2 flex-shrink-0 z-[100] overflow-visible relative">
               <ToolBar
                 editor={editor}
                 onOpenImageClick={() => setShowGallery(true)}

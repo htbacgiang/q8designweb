@@ -42,8 +42,9 @@ const PostSchema = new Schema<PostModelSchema>(
   },
     meta: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
+      default: "",
     },
     tags: {
       type: [String],
