@@ -6,6 +6,10 @@ import {
   FaBars,
   FaTimes,
   FaChevronDown,
+  FaFacebookF,
+  FaLinkedin,
+  FaInstagram,
+  FaYoutube,
 } from "react-icons/fa";
 
 const DESKTOP_BREAKPOINT = 1024;
@@ -230,7 +234,7 @@ export default function Navigation() {
           </div>
 
           <div className="flex flex-col h-full overflow-y-auto">
-            <div className="flex-1 p-6 space-y-3">
+            <div className="flex-1 p-6 space-y-2">
               {navigationItems.map((item, index) => (
                 <div key={item._id || index}>
                   {item.children && item.children.length > 0 ? (
@@ -307,6 +311,33 @@ export default function Navigation() {
                   )}
                 </div>
               ))}
+
+              {/* Social Media Links */}
+              <div className="pt-6 mt-4 border-t border-gray-100">
+                <p className="text-sm font-semibold text-gray-500 mb-4 text-center">Kết nối với chúng tôi</p>
+                <div className="flex justify-center space-x-4">
+                  {[
+                    { name: "Facebook", icon: FaFacebookF, href: "https://facebook.com/Q8designvn", color: "text-blue-600 hover:bg-blue-50 hover:border-blue-200" },
+                    { name: "LinkedIn", icon: FaLinkedin, href: "https://www.linkedin.com/company/q8-design-vietnam/", color: "text-blue-700 hover:bg-blue-50 hover:border-blue-200" },
+                    { name: "Instagram", icon: FaInstagram, href: "https://instagram.com/q8design", color: "text-pink-600 hover:bg-pink-50 hover:border-pink-200" },
+                    { name: "YouTube", icon: FaYoutube, href: "https://youtube.com/@q8design", color: "text-red-600 hover:bg-red-50 hover:border-red-200" },
+                  ].map((social, idx) => {
+                    const Icon = social.icon;
+                    return (
+                      <a
+                        key={idx}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`w-10 h-10 rounded-full flex items-center justify-center bg-white shadow-sm border border-gray-100 transition-all duration-300 ${social.color}`}
+                        aria-label={social.name}
+                      >
+                        <Icon className="text-lg" />
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
         </div>

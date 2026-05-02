@@ -2,14 +2,18 @@ import {
   GetServerSideProps,
   NextPage,
 } from "next";
+import { useState, useEffect } from "react";
 import parse from "html-react-parser";
 import DefaultLayout2 from "../components/layout/DefaultLayout2";
 import db from "../utils/db";
 import Post from "../models/Post";
 import Share from "../components/common/Share";
 import Link from "next/link";
-import Image from "next/image";
 import { trimText } from "../utils/helper";
+import SidebarCTAForm from "../components/q8design/SidebarCTAForm";
+import { useProjects } from "../hooks/useProjects";
+import SafeImage from "../components/common/SafeImage";
+import { FaMapMarkerAlt, FaRuler, FaCube } from "react-icons/fa";
 
 type PostData = {
   id: string;
@@ -71,6 +75,29 @@ const normalizeImageUrl = (imageUrl: string | undefined, baseUrl: string = "http
 };
 
 const DirectPost: NextPage<Props> = ({ post, meta }) => {
+  const { projects = [] } = useProjects({
+    limit: 15,
+    page: 1,
+    sort: "createdAt",
+    order: "desc",
+  });
+
+  const [sidebarProjects, setSidebarProjects] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (projects.length > 0 && sidebarProjects.length === 0) {
+      const shuffled = [...projects].sort(() => 0.5 - Math.random());
+      setSidebarProjects(shuffled.slice(0, 3));
+    }
+  }, [projects, sidebarProjects.length]);
+
+  const filterCategories = [
+    { id: "apartment", name: "Căn hộ" },
+    { id: "townhouse", name: "Nhà phố" },
+    { id: "villa", name: "Biệt thự - vila" },
+    { id: "office", name: "Văn phòng" },
+  ];
+
   if (!post) {
     const errorMeta = {
       title: "Bài viết không tồn tại | Q8 Design",
@@ -118,6 +145,7 @@ const DirectPost: NextPage<Props> = ({ post, meta }) => {
 
   const { title, content, meta: postMeta, slug, thumbnail, category, createdAt, recentPosts } = post;
   const host = "https://q8design.vn";
+
 
   // Xử lý content để thêm figcaption cho ảnh có data-show-caption="true"
   const processedContent = (() => {
@@ -211,65 +239,66 @@ const DirectPost: NextPage<Props> = ({ post, meta }) => {
             </div>
           </div>
 
-          {/* Recent Posts Section - 25% width on md and up */}
-          <div className="w-full md:w-1/4 px-0.5 pl-3">
-            <div className="pt-5">
-              <p className="text-3xl font-bold text-primary-dark dark:text-primary p-2 mb-4">
-                Bài viết gần đây
-              </p>
-              <div className="flex flex-col space-y-4">
-                {recentPosts && recentPosts.length > 0 ? recentPosts.slice(0, 5).map((p) => (
-                  <Link
-                    key={p.slug}
-                    href={p.isDirectPost ? `/${p.slug}` : `/bai-viet/${p.slug}`}
-                    legacyBehavior
-                  >
-                    <a className="flex space-x-3 w-full">
-                      {p.thumbnail && (
-                        <Image
-                          src={p.thumbnail}
-                          alt={`Thumbnail for ${p.title}`}
-                          width={80}
-                          height={80}
-                          className="w-32 h-32 object-cover rounded"
-                        />
-                      )}
-                      <div className="flex flex-col flex-1">
-                        <span className="text-base font-bold text-gray-800">
-                          {p.title}
-                        </span>
-                        <div className="text-base flex items-center mt-1 gap-2">
-                          <span className="text-orange-700">
-                            <svg
-                              className="w-4 h-4 mr-1"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                              ></path>
-                            </svg>
-                          </span>
-                          <span>
-                            {new Date(p.createdAt).toLocaleDateString("vi-VN", {
-                              day: "numeric",
-                              month: "long",
-                              year: "numeric",
-                            }).replace("tháng ", "Tháng ")}
-                          </span>
+          {/* CTA Form Section - 25% width on md and up */}
+          <div className="w-full md:w-1/4 px-0.5 pl-3 lg:pl-6">
+            <div className="pt-5 sticky top-24 space-y-8">
+              <SidebarCTAForm />
+
+              {/* Dự án tiêu biểu */}
+              {sidebarProjects && sidebarProjects.length > 0 && (
+                <div className="sidebar-projects">
+                  <p className="text-2xl flex items-center font-bold text-primary-dark dark:text-primary mb-4 border-b border-gray-200 pb-2">
+                    Dự án tiêu biểu
+                  </p>
+                  <div className="flex flex-col gap-4 space-y-2 mt-2">
+                    {sidebarProjects.map((project: any, index: number) => (
+                      <Link key={project._id || project.id} href={`/du-an/${project.slug}`} className="group block">
+                        <div className="relative w-full aspect-[5/3] rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1 cursor-pointer">
+                          <div className="absolute inset-0">
+                            <SafeImage
+                              src={project.image}
+                              alt={project.title}
+                              fill
+                              className="object-cover transition-transform duration-700 group-hover:scale-110"
+                              priority={index < 3}
+                            />
+                          </div>
+                          <div className="absolute inset-0 bg-gradient-to-br from-black/0 via-black/0 to-black/0 group-hover:from-black/80 group-hover:via-black/70 group-hover:to-black/80 transition-all duration-500"></div>
+                          <div className="absolute top-2 left-2 z-20 opacity-100 group-hover:opacity-0 transition-opacity duration-300">
+                            <span className="px-2 py-1 bg-white/90 backdrop-blur-sm text-q8-primary-900 rounded-full text-[10px] font-semibold shadow-sm">
+                              {filterCategories.find((cat) => cat.id === project.category)?.name || project.category}
+                            </span>
+                          </div>
+                          <div className="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                            <div className="text-center px-4 max-w-sm">
+                              <h3 className="text-white font-bold text-sm mb-1.5 drop-shadow-md">
+                                {project.title}
+                              </h3>
+                              <div className="flex flex-col items-center justify-center text-white/90 text-[11px] space-y-0.5">
+                                <span className="flex items-center">
+                                  <FaMapMarkerAlt className="mr-1.5 text-[#c4a77d]" />
+                                  {project.location}
+                                </span>
+                                <span className="flex items-center">
+                                  <FaRuler className="mr-1.5 text-[#c4a77d]" />
+                                  {project.area}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          {project.has3D && (
+                            <div className="absolute top-2 right-2 z-20 opacity-100 group-hover:opacity-0 transition-opacity duration-300">
+                              <div className="w-6 h-6 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm">
+                                <FaCube className="text-q8-primary-900 text-[10px]" />
+                              </div>
+                            </div>
+                          )}
                         </div>
-                      </div>
-                    </a>
-                  </Link>
-                )) : (
-                  <p className="text-gray-600">Không có bài viết gần đây.</p>
-                )}
-              </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

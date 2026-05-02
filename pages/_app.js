@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import "../styles/seo-analysis.css";
 import "../styles/toast.css";
 import "../styles/dashboard.css";
 import "../styles/about-animations.css";

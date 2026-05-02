@@ -49,7 +49,7 @@ export default function Footer() {
     {
       name: "LinkedIn",
       icon: FaLinkedin,
-      href: "https://linkedin.com/q8design",
+      href: "https://www.linkedin.com/company/q8-design-vietnam/",
       color: "hover:bg-red-500"
     },
 
