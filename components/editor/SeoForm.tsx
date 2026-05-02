@@ -195,9 +195,10 @@ const SEOForm: FC<Props> = ({
     onChange(newValues);
   };
 
-  // Tự động tạo slug từ title, CHỈ khi user chưa tự sửa slug
+  // Tự động tạo slug từ title, CHỈ khi user chưa tự sửa slug VÀ đang tạo bài mới
   useEffect(() => {
-    if (slugManuallyEdited.current) return;
+    // Nếu đã có slug cũ (đang edit) hoặc user đã tự sửa -> không auto-gen
+    if (slugManuallyEdited.current || initialValue?.slug) return;
 
     const slug = slugify(title.toLowerCase(), {
       strict: true,
@@ -208,7 +209,7 @@ const SEOForm: FC<Props> = ({
       onChange(newValues);
       return newValues;
     });
-  }, [title, onChange]);
+  }, [title, onChange, initialValue?.slug]);
 
   useEffect(() => {
     if (initialValue) {

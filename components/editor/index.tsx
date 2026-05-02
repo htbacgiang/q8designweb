@@ -366,11 +366,11 @@ const Editor: FC<Props> = ({
 
 
   const updateTitle: ChangeEventHandler<HTMLInputElement> = ({ target }) =>
-    setPost({ ...post, title: target.value });
+    setPost((prev) => ({ ...prev, title: target.value }));
 
   const updateSeoValue = useCallback((result: SeoResult) => setPost((prev) => ({ ...prev, ...result })), []);
 
-  const updateThumbnail = (file: File) => setPost({ ...post, thumbnail: file });
+  const updateThumbnail = (file: File) => setPost((prev) => ({ ...prev, thumbnail: file }));
 
   useEffect(() => {
     if (editor && selectionRange) {

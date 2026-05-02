@@ -230,11 +230,10 @@ const DirectPost: NextPage<Props> = ({ post, meta }) => {
                     width: 100%;
                     max-width: 100%;
                   }
-                  .dark .blog figcaption {
-                    color: #9ca3af;
-                  }
                 `}</style>
-                {parse(processedContent || content)}
+                {parse((processedContent || content || '')
+                  .replace(/<table/gi, '<div class="q8-table-container" style="width: 100%; overflow-x: auto; margin: 1rem 0; border: 1px solid #e2e8f0; border-radius: 8px;"><table style="min-width: 800px !important; width: 100% !important; table-layout: auto !important; border-collapse: collapse !important;"')
+                  .replace(/<\/table>/gi, '</table></div>'))}
               </div>
             </div>
           </div>

@@ -1253,7 +1253,7 @@ body {
   margin-top: 5px !important;
   margin-bottom: 5px !important;
   line-height: 1.5rem !important;
-  margin-top: 10px !important;
+  margin-top: 15px !important;
 
 }
 
@@ -1269,7 +1269,7 @@ body {
   margin-top: 0px !important;
   margin-bottom: 5px !important;
   line-height: 1.5rem !important;
-  margin-top: 10px !important;
+  margin-top: 15px !important;
 }
 
 .blog h3 {
@@ -7286,4 +7286,44 @@ html {
 
 .service-text-orange {
   color: #b45309;
+}
+
+/* FIX TABLE OVERFLOW AND ADD BORDERS FOR BLOG CONTENT */
+.blog table,
+.prose table {
+  width: 100% !important;
+  max-width: 100% !important;
+  table-layout: fixed !important;
+  border-collapse: collapse !important;
+  margin: 0 !important;
+  display: table !important;
+}
+
+.blog table th,
+.blog table td,
+.prose table th,
+.prose table td {
+  border: 1px solid #e2e8f0 !important;
+  padding: 0.75rem 0.5rem !important;
+  word-wrap: break-word !important;
+  overflow-wrap: anywhere !important;
+  white-space: normal !important;
+  min-width: 0 !important;
+  vertical-align: middle !important;
+}
+
+.blog table th,
+.prose table th {
+  background-color: #f8fafc !important;
+  font-weight: 700 !important;
+  color: #1e293b !important;
+}
+
+@media (max-width: 768px) {
+
+  .blog table th,
+  .blog table td {
+    font-size: 0.75rem !important;
+    padding: 0.25rem !important;
+  }
 }
