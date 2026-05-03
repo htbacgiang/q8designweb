@@ -3,9 +3,29 @@
 import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 
 export default function ServicesSection() {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const handler = (e) => setIsDesktop(e.matches);
+    setIsDesktop(mq.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  const xTransform = useTransform(
+    scrollYProgress,
+    [0, 0.35, 0.7],
+    isDesktop ? [800, 0, -800] : [200, 0, -200]
+  );
+
   const services = [
     {
       overline: "Thiết kế. Sáng tạo.",
@@ -55,14 +75,6 @@ export default function ServicesSection() {
     },
   });
 
-  const [isDesktop, setIsDesktop] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 768px)");
-    const handler = (e) => setIsDesktop(e.matches);
-    setIsDesktop(mq.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
 
   const cardVariants = (fromLeft) => ({
     hidden: {
@@ -81,10 +93,32 @@ export default function ServicesSection() {
   });
 
   return (
-    <section className="py-12 bg-white">
-      <div className="container mx-auto px-4">
+    <section ref={containerRef} className="relative py-12 bg-white overflow-hidden">
+      {/* Background Decor Text */}
+      <div className="absolute top-5 md:top-[40%] left-0 w-full flex justify-center pointer-events-none opacity-[0.06] select-none overflow-hidden">
+        <h2 className="text-3xl md:text-[10vw] font-black uppercase text-gray-900 leading-none whitespace-nowrap text-center">
+          Q8 Design & Build
+        </h2>
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        {/* Top 3D Image Section */}
+        <div className="flex justify-center">
+          <motion.div
+            style={{ x: xTransform }}
+            className="relative w-full max-w-6xl aspect-[16/9] z-20"
+          >
+            <Image
+              src="/images/counter-img-1.png"
+              alt="3D Floor Plan Architecture"
+              fill
+              className="object-contain"
+              priority
+            />
+          </motion.div>
+        </div>
         <div className="mb-10">
-              <h2 className="flex items-center gap-2 text-[var(--q8-primary-600)] text-sm font-bold uppercase mb-2">
+          <h2 className="flex items-center gap-2 text-[var(--q8-primary-600)] text-sm font-bold uppercase mb-2">
             Dịch vụ của Q8 Design
           </h2>
           <p className="text-[#7a6a5e] mt-2">

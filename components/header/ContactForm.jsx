@@ -147,7 +147,7 @@ export default function ContactForm() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="Email*"
+                    placeholder="Email (tùy chọn)"
                     aria-invalid={!!errors.email}
                     aria-describedby={errors.email ? "email-error" : undefined}
                     className={`w-full h-10 md:h-11 px-3 md:px-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-q8-primary-900 ${errors.email ? "border-red-500" : "border-q8-primary-500"

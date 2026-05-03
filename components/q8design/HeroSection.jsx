@@ -36,6 +36,30 @@ export default function HeroSection() {
     };
   }, [isFormOpen]);
 
+  useEffect(() => {
+    const html = document.documentElement;
+    if (isFormOpen) {
+      html.style.overflow = "hidden";
+      html.style.overscrollBehavior = "contain";
+      document.body.style.overflow = "hidden";
+      document.body.style.overscrollBehavior = "contain";
+      document.body.style.touchAction = "none";
+    } else {
+      html.style.overflow = "";
+      html.style.overscrollBehavior = "";
+      document.body.style.overflow = "";
+      document.body.style.overscrollBehavior = "";
+      document.body.style.touchAction = "";
+    }
+    return () => {
+      html.style.overflow = "";
+      html.style.overscrollBehavior = "";
+      document.body.style.overflow = "";
+      document.body.style.overscrollBehavior = "";
+      document.body.style.touchAction = "";
+    };
+  }, [isFormOpen]);
+
   return (
     <>
       <style jsx>{`
@@ -94,7 +118,7 @@ export default function HeroSection() {
                 <path d="M7.7,145.6C109,125,299.9,116.2,401,121.3c42.1,2.2,87.6,11.8,87.3,25.7" />
               </svg>
             </span>{" "}
-            - Kiến tạo không gian sống
+            - Kiến tạo chuẩn mực sống
 
           </h2>
           <p className="text-white/90 text-base sm:text-lg md:text-2xl max-w-3xl mb-10 leading-relaxed">
@@ -112,34 +136,43 @@ export default function HeroSection() {
             >
               Dự án của chúng tôi
             </Link>
-            <Link
-              href="/dich-vu"
+            <button
+              onClick={toggleForm}
               className="inline-flex items-center justify-center px-8 py-4 font-semibold uppercase tracking-wide text-sm text-white border-2 border-white/80 bg-transparent hover:bg-white/10 hover:border-white hover:-translate-y-px transition-all focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent"
             >
-              Xem dịch vụ
+              Nhận tư vấn
               <FaChevronRight className="ml-2 w-4 h-4" aria-hidden />
-            </Link>
+            </button>
           </motion.div>
         </div>
       </section>
 
       {isFormOpen && (
         <div
-          className="fixed inset-0 z-[110] flex items-center justify-center bg-black/60"
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 p-4"
           onClick={(e) => e.target === e.currentTarget && toggleForm()}
+          role="dialog"
+          aria-modal="true"
         >
-          <div ref={modalRef} className="rounded-lg w-full max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-5xl relative bg-white">
-            <button
-              type="button"
-              className="absolute top-2 right-2 p-1 text-gray-600 hover:text-gray-800"
-              onClick={toggleForm}
-              aria-label="Đóng form"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-            <ContactForm />
+          <div
+            ref={modalRef}
+            className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto bg-white rounded-3xl shadow-xl"
+          >
+            <div className="sticky top-0 z-50 flex justify-end p-2 bg-white/95 backdrop-blur border-b">
+              <button
+                type="button"
+                className="inline-flex items-center gap-2 px-2 py-2 rounded-full bg-gray-200 text-gray-700 hover:bg-red-500 text-white focus:outline-none"
+                onClick={toggleForm}
+                aria-label="Đóng popup"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-4 md:p-6">
+              <ContactForm />
+            </div>
           </div>
         </div>
       )}

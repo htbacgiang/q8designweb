@@ -1,8 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 export default function WorkProcessSection() {
+  const containerRef = useRef(null);
+
   const accentColor = "var(--q8-primary-700)";
   const steps = [
     { step: 1, label: "BƯỚC 1", title: "Lắng nghe & Thấu hiểu", iconSrc: "/icons/step-1.png" },
@@ -10,8 +14,7 @@ export default function WorkProcessSection() {
     { step: 3, label: "BƯỚC 3", title: "Hoàn thiện Hồ sơ Kỹ thuật", iconSrc: "/icons/step-3.png" },
     { step: 4, label: "BƯỚC 4", title: "Thi công & Bàn giao", iconSrc: "/icons/step-4.png" },
   ];
-  const sectionRef = useRef(null);
-  const inView = useInView(sectionRef, { once: true, amount: 0.2 });
+  const containerInView = useInView(containerRef, { once: true, amount: 0.2 });
   const stepVariants = {
     hidden: { opacity: 0, y: 16, scale: 0.98 },
     visible: (i) => ({
@@ -23,22 +26,22 @@ export default function WorkProcessSection() {
   };
 
   return (
-    <section ref={sectionRef} className="py-6 md:py-12 bg-white"
-         style={{
+    <section ref={containerRef} className="relative py-6 md:py-12 bg-white overflow-hidden"
+      style={{
         backgroundImage: "url('/images/section-bg-shape-1.svg')",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundSize: "contain",
       }}
     >
+      <div className="container mx-auto px-4 relative z-10">
 
-      <div className="container mx-auto px-4">
         {/* Section Header - centered */}
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
           <div className="flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-wider mb-3" style={{ color: accentColor }}>
             <span>Quy trình làm việc</span>
           </div>
-         
+
           <p className="text-[var(--q8-primary-600)] text-base md:text-lg leading-relaxed">
             Chúng tôi làm việc theo quy trình rõ ràng từ tiếp nhận nhu cầu đến bàn giao công trình, đảm bảo tiến độ và chất lượng từng giai đoạn.
           </p>
@@ -51,7 +54,7 @@ export default function WorkProcessSection() {
               className="w-full text-center py-6 px-4"
               custom={index}
               initial="hidden"
-              animate={inView ? "visible" : "hidden"}
+              animate={containerInView ? "visible" : "hidden"}
               variants={stepVariants}
             >
               <div className="mb-4 flex justify-center">
@@ -80,7 +83,7 @@ export default function WorkProcessSection() {
               className="flex flex-row items-center flex-1"
               custom={index}
               initial="hidden"
-              animate={inView ? "visible" : "hidden"}
+              animate={containerInView ? "visible" : "hidden"}
               variants={stepVariants}
             >
               <div className="flex-1 w-full text-center py-6 px-4">
@@ -106,7 +109,7 @@ export default function WorkProcessSection() {
                   style={{ color: accentColor }}
                   aria-hidden
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: inView ? 1 : 0 }}
+                  animate={{ opacity: containerInView ? 1 : 0 }}
                   transition={{ duration: 0.5, delay: (index + 0.5) * 0.12 }}
                 >
                   <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
