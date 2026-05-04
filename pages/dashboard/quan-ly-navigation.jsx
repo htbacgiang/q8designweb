@@ -444,6 +444,13 @@ export default function QuanLyNavigation() {
       if (data.success) {
         setItems(data.items || items);
         setDirty(false);
+        // Xóa cache và thông báo cho tất cả tab frontend cùng origin
+        try { localStorage.removeItem("nav_items"); } catch {}
+        try {
+          const bc = new BroadcastChannel("nav_updates");
+          bc.postMessage({ type: "nav_updated" });
+          bc.close();
+        } catch {}
         showToast("Lưu navigation thành công!", "success");
       } else {
         showToast(data.message || "Lỗi lưu dữ liệu", "error");

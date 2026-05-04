@@ -654,7 +654,7 @@ export default function AddProjectForm({ onSuccess, editingProject = null }) {
                   <option value="portrait">Ảnh dọc (3:4)</option>
                 </select>
                 {img.src && (
-                  <div className={`border border-gray-300 rounded-lg overflow-hidden ${
+                  <div className={`relative border border-gray-300 rounded-lg overflow-hidden ${
                     img.aspectRatio === 'square' ? 'w-16 h-16' : 
                     img.aspectRatio === 'portrait' ? 'w-12 h-16' : 
                     img.aspectRatio === 'landscape-3-4' ? 'w-16 h-12' :

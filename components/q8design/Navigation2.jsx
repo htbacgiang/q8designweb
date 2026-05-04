@@ -59,6 +59,29 @@ export default function Navigation2() {
     loadNav();
   }, []);
 
+  // Lắng nghe thông báo từ admin khi navigation được cập nhật
+  useEffect(() => {
+    const CACHE_KEY = "nav_items";
+    let bc;
+    try {
+      bc = new BroadcastChannel("nav_updates");
+      bc.onmessage = async (e) => {
+        if (e.data?.type !== "nav_updated") return;
+        try { localStorage.removeItem(CACHE_KEY); } catch {}
+        try {
+          const r = await fetch("/api/navigation");
+          const d = await r.json();
+          if (d.success && Array.isArray(d.items)) {
+            const items = d.items.filter((i) => i.isActive !== false);
+            setNavigationItems(items);
+            localStorage.setItem(CACHE_KEY, JSON.stringify({ data: items, ts: Date.now() }));
+          }
+        } catch {}
+      };
+    } catch {}
+    return () => { try { bc?.close(); } catch {} };
+  }, []);
+
   useEffect(() => {
     setIsMenuOpen(false);
     setActiveDropdown(null);

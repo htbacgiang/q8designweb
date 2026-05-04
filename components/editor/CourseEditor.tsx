@@ -9,7 +9,12 @@ import { Image as TipTapImage } from "@tiptap/extension-image";
 import { TextStyle } from "@tiptap/extension-text-style";
 import { Color } from "@tiptap/extension-color";
 import { TextAlign } from "@tiptap/extension-text-align";
+import { Table } from "@tiptap/extension-table";
+import { TableRow } from "@tiptap/extension-table-row";
+import { TableHeader } from "@tiptap/extension-table-header";
+import { TableCell } from "@tiptap/extension-table-cell";
 import { BubbleMenu as BubbleMenuExtension } from "@tiptap/extension-bubble-menu";
+import TableBubbleMenu from "../editor/Table/TableBubbleMenu";
 import ToolBar from "../editor/ToolBar";
 import EditLink from "../editor/Link/EditLink";
 import EditImage from "../editor/Image/EditImage";
@@ -102,6 +107,12 @@ const Editor: FC<Props> = ({ content, onChange }): JSX.Element => {
           };
         },
       }),
+      Table.configure({
+        resizable: true,
+      }),
+      TableRow,
+      TableHeader,
+      TableCell,
       BubbleMenuExtension,
     ],
     editorProps: {
@@ -202,6 +213,7 @@ const Editor: FC<Props> = ({ content, onChange }): JSX.Element => {
             <>
               <EditLink editor={editor} />
               <EditImage editor={editor} />
+              <TableBubbleMenu editor={editor} />
             </>
           ) : null}
           <EditorContent
