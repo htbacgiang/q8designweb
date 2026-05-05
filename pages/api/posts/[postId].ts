@@ -158,6 +158,8 @@ const updatePost: NextApiHandler = async (req, res) => {
     const isDraft = (body as any).isDraft;
     const isFeatured = (body as any).isFeatured === 'true' || (body as any).isFeatured === true;
     const isDirectPost = (body as any).isDirectPost === 'true' || (body as any).isDirectPost === true;
+    const rawFaqs = (body as any).faqs;
+    const rawPostAuthorId = (body as any).postAuthorId;
 
     // Đảm bảo slug duy nhất, loại trừ chính bài viết đang update
     const uniqueSlug = await ensureUniqueSlug(
@@ -183,6 +185,22 @@ const updatePost: NextApiHandler = async (req, res) => {
 
     // Cập nhật kiểu hiển thị URL
     post.isDirectPost = isDirectPost;
+
+    // Cập nhật FAQs nếu có
+    if (rawFaqs !== undefined) {
+      try {
+        post.faqs = typeof rawFaqs === "string" ? JSON.parse(rawFaqs) : rawFaqs;
+      } catch {
+        post.faqs = [];
+      }
+    }
+
+    // Cập nhật tác giả hiển thị
+    if (rawPostAuthorId !== undefined) {
+      post.postAuthor = (rawPostAuthorId && rawPostAuthorId.trim())
+        ? (rawPostAuthorId.trim() as any)
+        : (undefined as any);
+    }
 
     // Cập nhật thumbnail: có thể là file mới upload hoặc URL từ gallery
     const thumbnailFile = files.thumbnail as formidable.File | undefined;

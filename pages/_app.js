@@ -32,7 +32,8 @@ const judson = localFont({
   ],
 });
 
-function MyApp({ Component, pageProps: { session, meta, posts, ...pageProps } }) {
+function MyApp({ Component, pageProps }) {
+  const { session, meta, posts } = pageProps;
   return (
     <>
       {meta && (

@@ -18,6 +18,7 @@ import {
   PanelLeftOpen,
   ChevronRight,
   Menu,
+  UserCircle,
 } from "lucide-react";
 
 import { useRouter } from "next/router";
@@ -40,6 +41,7 @@ const NAV_GROUPS = [
     items: [
       { title: "Bài viết", icon: Notebook, href: "/dashboard/bai-viet" },
       { title: "Thêm bài viết", icon: SquarePen, href: "/dashboard/them-bai-viet" },
+      { title: "Tác giả", icon: UserCircle, href: "/dashboard/tac-gia" },
       { title: "Thùng rác", icon: Trash2, href: "/dashboard/bai-viet/trash" },
     ],
   },

@@ -15,6 +15,8 @@ export interface PostModelSchema {
   isFeatured?: boolean;
   featuredOrder?: number; // Thứ tự hiển thị trong section nổi bật (1-4)
   isDirectPost?: boolean; // Bài viết hiển thị ở URL 2 cấp: trangchu/slug (thay vì trangchu/bai-viet/slug)
+  faqs?: { question: string; answer: string }[];
+  postAuthor?: ObjectId; // ref to Author model (hiển thị tên tác giả công khai)
   deletedAt?: Date | null;
   createdAt: Date;
 }
@@ -73,6 +75,15 @@ const PostSchema = new Schema<PostModelSchema>(
     isDirectPost: {
       type: Boolean,
       default: false,
+    },
+    faqs: {
+      type: [{ question: String, answer: String }],
+      default: [],
+    },
+    postAuthor: {
+      type: Schema.Types.ObjectId,
+      ref: "Author",
+      default: null,
     },
     deletedAt: {
       type: Date,

@@ -5,7 +5,8 @@ import HomePage from "../components/q8design/HomePage";
 export default function Home({ posts = [], meta = {} }) {
   const jsonLdData = {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": ["Organization", "LocalBusiness"],
+    "priceRange": "$$",
     "name": "Q8 Design",
     "url": "https://q8design.vn",
     "logo": "https://q8design.vn/logo-q8.png",
@@ -26,6 +27,13 @@ export default function Home({ posts = [], meta = {} }) {
       "areaServed": "VN",
       "availableLanguage": "Vietnamese"
     },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "opens": "08:00",
+      "closes": "18:00"
+    },
+
     "sameAs": ["https://www.facebook.com/Q8designvn"],
     "description":
       "Q8 Design là đơn vị thiết kế và thi công kiến trúc, nội thất uy tín tại Hà Nội và các tỉnh lân cận. Chúng tôi kiến tạo không gian sống và kinh doanh đẳng cấp, khác biệt cho Biệt thự, Villa và Chung cư.",
@@ -71,7 +79,7 @@ export async function getServerSideProps() {
         title: "Q8 Design | Thiết kế & Thi công Nội thất Trọn gói",
         description: "Q8 Design là đơn vị thiết kế và thi công kiến trúc, nội thất uy tín tại Hà Nội và các tỉnh lân cận. Chúng tôi kiến tạo không gian sống và kinh doanh đẳng cấp, khác biệt cho Biệt thự, Villa và Chung cư.",
         type: "website",
-        image: "https://q8design.vn/images/og-image.jpg",
+        image: "https://q8design.vn/images/og-thiet-ke-kien-truc.jpg",
         imageWidth: "1200",
         imageHeight: "630",
         url: "https://q8design.vn",
@@ -81,7 +89,7 @@ export async function getServerSideProps() {
         card: "summary_large_image",
         title: "Q8 Design | Thiết kế & Thi công Nội thất Trọn gói",
         description: "Q8 Design là đơn vị thiết kế và thi công kiến trúc, nội thất uy tín tại Hà Nội và các tỉnh lân cận. Chúng tôi kiến tạo không gian sống và kinh doanh đẳng cấp, khác biệt cho Biệt thự, Villa và Chung cư.",
-        image: "https://q8design.vn/images/og-image.jpg",
+        image: "https://q8design.vn/images/og-thiet-ke-kien-truc.jpg",
       },
     };
 

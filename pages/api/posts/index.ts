@@ -107,6 +107,12 @@ const createNewPost: NextApiHandler = async (req, res) => {
       if (typeof parsedIsDraft === "boolean") {
         existingPost.isDraft = parsedIsDraft;
       }
+      const rawPostAuthorId = (body as any).postAuthorId;
+      if (rawPostAuthorId !== undefined) {
+        existingPost.postAuthor = (rawPostAuthorId && rawPostAuthorId.trim())
+          ? (rawPostAuthorId.trim() as any)
+          : (undefined as any);
+      }
 
       const thumbnailUrl = (body as any).thumbnail as string | undefined;
       const thumbnailFile = files.thumbnail as formidable.File | undefined;
@@ -157,6 +163,7 @@ const createNewPost: NextApiHandler = async (req, res) => {
       isDraft: false, // Bài viết được đăng sẽ không phải là nháp
       isFeatured: isFeatured || false, // Bài viết nổi bật
       isDirectPost: isDirectPost || false, // Bài viết chi tiết URL 2 cấp
+      postAuthor: (body as any).postAuthorId || undefined,
     });
 
     // Xử lý thumbnail: có thể là file mới upload hoặc URL từ gallery

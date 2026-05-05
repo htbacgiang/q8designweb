@@ -24,6 +24,8 @@ import axios from "axios";
 import SEOForm, { SeoResult } from "./SeoForm";
 import ThumbnailSelector from "./ThumbnailSelector";
 import WordCount from "./WordCount";
+import FAQEditor, { FAQ } from "./FAQEditor";
+import AuthorSelector from "./AuthorSelector";
 import { toast } from "react-toastify";
 
 export interface FinalPost extends SeoResult {
@@ -35,6 +37,8 @@ export interface FinalPost extends SeoResult {
   isDraft?: boolean;
   isFeatured?: boolean; // Bài viết nổi bật
   isDirectPost?: boolean; // Bài viết hiển thị ở URL 2 cấp (trangchu/slug)
+  faqs?: FAQ[];
+  postAuthorId?: string;
 }
 
 interface Props {
@@ -58,6 +62,8 @@ const Editor: FC<Props> = ({
   const [isDraft, setIsDraft] = useState(true); // Mặc định là nháp khi tạo mới
   const [isFeatured, setIsFeatured] = useState(false); // Mặc định không phải bài nổi bật
   const [isDirectPost, setIsDirectPost] = useState(false); // Mặc định hiển thị 3 cấp
+  const [faqs, setFaqs] = useState<FAQ[]>([]);
+  const [postAuthorId, setPostAuthorId] = useState("");
   const [featuredCount, setFeaturedCount] = useState(0); // Số bài nổi bật hiện tại
   const [images, setImages] = useState<{ src: string; altText?: string; id?: string }[]>([]);
   const [loadingImages, setLoadingImages] = useState(true); // Loading state cho images
@@ -251,7 +257,7 @@ const Editor: FC<Props> = ({
 
   const handleSubmit = () => {
     if (!editor) return;
-    onSubmit({ ...post, content: editor.getHTML(), isDraft, isFeatured, isDirectPost });
+    onSubmit({ ...post, content: editor.getHTML(), isDraft, isFeatured, isDirectPost, faqs, postAuthorId });
   };
 
   const saveDraft = useCallback(async () => {
@@ -400,6 +406,12 @@ const Editor: FC<Props> = ({
 
       // Cập nhật trạng thái direct post từ initialValue
       setIsDirectPost(initialValue.isDirectPost ?? false);
+
+      // Cập nhật danh sách FAQs từ initialValue
+      setFaqs(initialValue.faqs ?? []);
+
+      // Cập nhật tác giả từ initialValue
+      setPostAuthorId(initialValue.postAuthorId ?? "");
     }
   }, [initialValue, editor]);
 
@@ -597,7 +609,17 @@ const Editor: FC<Props> = ({
             />
           </div>
 
+          {/* FAQ */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-4">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">FAQ (Câu hỏi thường gặp)</h2>
+            <FAQEditor value={faqs} onChange={setFaqs} />
+          </div>
 
+          {/* Tác giả */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-4">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">Tác giả bài viết</h2>
+            <AuthorSelector value={postAuthorId} onChange={setPostAuthorId} />
+          </div>
 
         </div>
       </div>

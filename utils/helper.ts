@@ -34,6 +34,8 @@ export const generateFormData = (post: FinalPost) => {
         formData.append("category", String(value));
       }
       // Nếu value là undefined hoặc null, không append (đã được xử lý ở trên)
+    } else if (key === "faqs") {
+      formData.append("faqs", JSON.stringify(value || []));
     } else {
       // Các field khác
       formData.append(key, value);

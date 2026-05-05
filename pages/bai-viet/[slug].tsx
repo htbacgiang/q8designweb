@@ -2,14 +2,12 @@ import {
   GetServerSideProps,
   NextPage,
 } from "next";
-import parse from "html-react-parser";
 import DefaultLayout2 from "../../components/layout/DefaultLayout2";
 import db from "../../utils/db";
 import Post from "../../models/Post";
-import Share from "../../components/common/Share";
 import Link from "next/link";
 import Image from "next/image";
-import { trimText } from "../../utils/helper";
+import BlogPostContent from "../../components/blog/BlogPostContent";
 
 type PostData = {
   id: string;
@@ -21,6 +19,14 @@ type PostData = {
   thumbnail: string;
   createdAt: string;
   category: string;
+  faqs: { question: string; answer: string }[];
+  postAuthor?: {
+    name: string;
+    slug: string;
+    role?: string;
+    bio?: string;
+    avatar?: string;
+  };
   recentPosts: {
     id: string;
     title: string;
@@ -107,49 +113,8 @@ const SinglePost: NextPage<Props> = ({ post, meta }) => {
     );
   }
 
-  const { title, content, meta: postMeta, slug, thumbnail, category, createdAt, recentPosts } = post;
+  const { slug, recentPosts } = post;
   const host = "https://q8design.vn";
-
-  // Xử lý content để thêm figcaption cho ảnh có data-show-caption="true"
-  const processedContent = (() => {
-    if (!content) return content;
-    
-    let processed = content;
-    
-    // Tìm tất cả các thẻ img (không nằm trong figure)
-    // Regex này sẽ match img không nằm trong figure tag
-    processed = processed.replace(
-      /(<figure[^>]*>[\s\S]*?<\/figure>)|<img([^>]*)>/gi,
-      (match, figureTag, imgAttrs) => {
-        // Nếu là figure tag thì giữ nguyên
-        if (figureTag) {
-          return match;
-        }
-        
-        // Xử lý img tag
-        if (!imgAttrs) return match;
-        
-        // Kiểm tra xem có data-show-caption="true" không
-        const showCaptionMatch = imgAttrs.match(/data-show-caption=["']true["']/i);
-        if (!showCaptionMatch) {
-          return match; // Không có data-show-caption="true", giữ nguyên
-        }
-        
-        // Lấy alt text
-        const altMatch = imgAttrs.match(/alt=["']([^"']+)["']/i);
-        if (!altMatch || !altMatch[1]) {
-          return match; // Không có alt text, giữ nguyên
-        }
-        
-        const altText = altMatch[1];
-        
-        // Bọc ảnh trong figure và thêm figcaption
-        return `<figure><img${imgAttrs}><figcaption>${altText}</figcaption></figure>`;
-      }
-    );
-    
-    return processed;
-  })();
 
   return (
     <DefaultLayout2 
@@ -162,63 +127,13 @@ const SinglePost: NextPage<Props> = ({ post, meta }) => {
         <div className="flex flex-col md:flex-row">
           {/* Main Content - 75% width on md and up */}
           <div className="w-full md:w-3/4 pr-0 md:pr-4 mb-4 md:mb-0 overflow-visible">
-            <div className="md:pb-20 pb-6 container mx-auto ">
-              {/* Breadcrumb */}
-              <div className="flex font-bold gap-2 text-base text-gray-600">
-                <Link href="/bai-viet" className="hover:text-blue-800 whitespace-nowrap">
-                  Bài viết
-                </Link>
-                <span>›</span>
-                <span className="flex font-bold gap-2 mb-4 text-base text-gray-600">
-                  {trimText(title, 35)}
-                </span>
-              </div>
-
-              {/* Tiêu đề bài viết */}
-              <h1 className="md:text-3xl text-xl font-bold text-primary-dark dark:text-primary">
-                {title}
-              </h1>
-              <div className="mt-2 mb-2">
-                <Share url={`${host}/bai-viet/${slug}`} />
-              </div>
-              <div className="mt-2 uppercase text-blue-800 font-xl">
-                <b>{category}</b>
-              </div>
-              <div className="blog prose prose-lg dark:prose-invert [&_img]:mx-auto overflow-visible">
-                <style jsx>{`
-                  .blog {
-                    overflow: visible;
-                  }
-                  .blog img {
-                    display: block;
-                    margin: 1.5em auto;
-                  }
-                  .blog figure {
-                    margin: 1.5em 0;
-                    text-align: center;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                  }
-                  .blog figure img {
-                    display: block;
-                    margin: 0 auto;
-                  }
-                  .blog figcaption {
-                    margin-top: 0.5em;
-                    font-size: 0.875em;
-                    color: #6b7280;
-                    font-style: italic;
-                    text-align: center;
-                    width: 100%;
-                    max-width: 100%;
-                  }
-                `}</style>
-                {parse((processedContent || content || '')
-                  .replace(/<table/gi, '<div class="q8-table-container" style="width: 100%; overflow-x: auto; margin: 1rem 0; border: 1px solid #e2e8f0; border-radius: 8px;"><table style="min-width: 800px !important; width: 100% !important; table-layout: auto !important; border-collapse: collapse !important;"')
-                  .replace(/<\/table>/gi, '</table></div>'))}
-              </div>
+            <div className="md:pb-20 pb-6 container mx-auto">
+              <BlogPostContent
+                post={post}
+                shareUrl={`${host}/bai-viet/${slug}`}
+                breadcrumbHref="/bai-viet"
+                breadcrumbLabel="Bài viết"
+              />
             </div>
           </div>
 
@@ -308,11 +223,11 @@ export const getServerSideProps: GetServerSideProps<
     await db.connectDb();
 
     // Chỉ lấy bài viết đã publish (không phải nháp) và chưa bị xóa
-    const post = await Post.findOne({ 
+    const post = await Post.findOne({
       slug: params?.slug,
       isDraft: false,
       deletedAt: null
-    });
+    }).populate("postAuthor");
     if (!post) {
       console.log(`Post not found for slug: ${params?.slug}`);
       return { notFound: true };
@@ -345,8 +260,9 @@ export const getServerSideProps: GetServerSideProps<
       };
     });
 
-    const { _id, title, content, meta, slug, tags, thumbnail, category, createdAt } = post;
+    const { _id, title, content, meta, slug, tags, thumbnail, category, createdAt, faqs, postAuthor } = post;
     const thumbnailUrl = normalizeImageUrl(thumbnail?.url, baseUrl);
+    const postAuthorDoc = postAuthor as any;
 
     const metaData = {
       title: `${title} | Q8 Design`,
@@ -374,14 +290,30 @@ export const getServerSideProps: GetServerSideProps<
 
     const postData: PostData = {
       id: _id.toString(),
-      title,
-      content,
-      meta,
-      slug,
-      tags,
-      category,
+      title: title || "",
+      content: content || "",
+      meta: meta || "",
+      slug: slug || "",
+      tags: tags || [],
+      category: category || "Uncategorized",
       thumbnail: thumbnail?.url || "",
       createdAt: createdAt.toString(),
+      faqs: (faqs || []).map((f: any) => ({ question: f.question || "", answer: f.answer || "" })),
+      postAuthor: postAuthorDoc
+        ? {
+            name: postAuthorDoc.name || "Team Q8 Design",
+            slug: postAuthorDoc.slug || "",
+            role: postAuthorDoc.role || "Biên tập viên",
+            bio: postAuthorDoc.bio || "",
+            avatar: postAuthorDoc.avatar || "/logo-q8-01.png",
+          }
+        : {
+            name: "Team Q8 Design",
+            slug: "",
+            role: "Biên tập viên",
+            bio: "Đội ngũ chuyên gia thiết kế và biên tập nội dung tại Q8 Design.",
+            avatar: "/logo-q8-01.png",
+          },
       recentPosts,
     };
 

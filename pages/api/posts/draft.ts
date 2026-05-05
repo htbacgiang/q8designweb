@@ -80,6 +80,12 @@ const saveDraft: NextApiHandler = async (req, res) => {
         existingPost.tags = tags;
         existingPost.category = normalizedCategory || existingPost.category;
         existingPost.isDraft = true;
+        const postAuthorId = (fields as any).postAuthorId;
+        if (postAuthorId !== undefined) {
+          existingPost.postAuthor = (postAuthorId && postAuthorId.trim())
+            ? (postAuthorId.trim() as any)
+            : (undefined as any);
+        }
 
         // Nếu có thumbnail mới, upload lên Cloudinary
         if (files.thumbnail) {
@@ -104,6 +110,7 @@ const saveDraft: NextApiHandler = async (req, res) => {
         tags,
         category: normalizedCategory,
         author: session.user.sub,
+        postAuthor: (fields as any).postAuthorId || undefined,
         isDraft: true,
       });
 

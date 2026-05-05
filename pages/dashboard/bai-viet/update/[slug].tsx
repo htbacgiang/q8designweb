@@ -67,7 +67,7 @@ export const getServerSideProps: GetServerSideProps<ServerSideResponse> = async 
     const post = await Post.findOne({ slug });
     if (!post) return { notFound: true };
 
-    const { _id, meta, title, content, thumbnail, tags, category, isDraft, isFeatured, isDirectPost } = post;
+    const { _id, meta, title, content, thumbnail, tags, category, isDraft, isFeatured, isDirectPost, faqs, postAuthor } = post;
 
     return {
       props: {
@@ -84,6 +84,11 @@ export const getServerSideProps: GetServerSideProps<ServerSideResponse> = async 
           isDraft: isDraft || false,
           isFeatured: isFeatured || false,
           isDirectPost: isDirectPost || false, // Kiểu hiển thị URL (2 hoặc 3 cấp)
+          faqs: (faqs || []).map((f: any) => ({
+            question: f.question || "",
+            answer: f.answer || "",
+          })),
+          postAuthorId: postAuthor ? postAuthor.toString() : "",
         },
       },
     };
